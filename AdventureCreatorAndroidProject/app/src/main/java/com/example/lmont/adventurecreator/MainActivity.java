@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 "&phrase2=" + word2;
 
         // Request a string response from the provided URL.
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.main_progressBar);
+        progressBar.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         // Display the first 500 characters of the response string.
                         //Log.d("LEO", "onResponse: " + response);
                         textView.setText(response);
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 }, new Response.ErrorListener() {
             @Override
