@@ -221,6 +221,7 @@ public class APIHelper {
                                                     public void onResponse(Models.Transition[] response) {
                                                         counter[0]++;
                                                         story[0].chapters[x[0]].scenes[y[0]].transitions = response;
+                                                        // This Counter is wrong
                                                         if ((one[0] * two[0])-2 == counter[0]) {
                                                             Log.d(TAG, "onResponse: SUCCESS");
                                                             listener.onResponse(story[0]);
