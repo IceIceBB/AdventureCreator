@@ -14,6 +14,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
@@ -33,7 +34,8 @@ public class APIHelper {
     public final static String TAG = "API_HELPER";
 
     public static APIHelper instance;
-    RequestQueue requestQueue;
+
+    private RequestQueue requestQueue;
 
     private Context context;
 
@@ -123,5 +125,117 @@ public class APIHelper {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, TRANSITION_URL, jsonBody, listener, errorListener);
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public void downloadStory(String storyID, final Response.Listener<Models.Story> listener, Response.ErrorListener errorListener) {
+        String getURL = STORY_URL + "/" + storyID;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getURL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Gson gson = new Gson();
+                Models.Story story = gson.fromJson(response.toString(), Models.StoryResponse.class).story;
+                listener.onResponse(story);
+                AdventureDBHelper.getInstance(context).addStory(story);
+            }
+        }, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void downloadChapters(String storyID, final Response.Listener<Models.Chapter[]> listener, Response.ErrorListener errorListener) {
+        String getURL = CHAPTER_URL + "/" + storyID;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getURL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Gson gson = new Gson();
+                Models.Chapter[] array = gson.fromJson(response.toString(), Models.ChapterResponseArray.class).chapters;
+                listener.onResponse(array);
+                for (Models.Chapter chapter: array) {
+                    AdventureDBHelper.getInstance(context).addChapter(chapter);
+                }
+            }
+        }, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void downloadScenes(String chapterID, final Response.Listener<Models.Scene[]> listener, Response.ErrorListener errorListener) {
+        String getURL = SCENE_URL + "/" + chapterID;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getURL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Gson gson = new Gson();
+                Models.Scene[] array = gson.fromJson(response.toString(), Models.SceneResponseArray.class).scenes;
+                listener.onResponse(array);
+                for (Models.Scene scene: array) {
+                    AdventureDBHelper.getInstance(context).addScene(scene);
+                }
+            }
+        }, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void downloadTransitions(String sceneID, final Response.Listener<Models.Transition[]> listener, Response.ErrorListener errorListener) {
+        String getURL = TRANSITION_URL + "/" + sceneID;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getURL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Gson gson = new Gson();
+                Models.Transition[] array = gson.fromJson(response.toString(), Models.TransitionResponseArray.class).transitions;
+                listener.onResponse(array);
+                for (Models.Transition transition: array) {
+                    AdventureDBHelper.getInstance(context).addTransition(transition);
+                }
+            }
+        }, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void downloadFullGame(final String gameID, final Response.Listener<Models.Story> listener, Response.ErrorListener errorListener) {
+        final Models.Story[] story = new Models.Story[1];
+        final int[] one = new int[1];
+        final int[] two = new int[1];
+        final int[] counter = new int[1];
+        counter[0] = 0;
+        downloadStory(gameID, new Response.Listener<Models.Story>() {
+            @Override
+            public void onResponse(Models.Story response) {
+                story[0] = response;
+                downloadChapters(response._id,
+                        new Response.Listener<Models.Chapter[]>() {
+                            @Override
+                            public void onResponse(Models.Chapter[] response) {
+                                one[0] = response.length;
+                                story[0].chapters = response;
+                                for (Models.Chapter chapter: response) {
+                                    final int[] x = new int[1];
+                                    x[0] = 0;
+                                    downloadScenes(chapter._id, new Response.Listener<Models.Scene[]>() {
+                                        @Override
+                                        public void onResponse(Models.Scene[] response) {
+                                            two[0] = response.length;
+                                            story[0].chapters[x[0]].scenes = response;
+                                            for (Models.Scene scene: response) {
+                                                final int[] y = new int[1];
+                                                y[0]=0;
+                                                downloadTransitions(scene._id, new Response.Listener<Models.Transition[]>() {
+                                                    @Override
+                                                    public void onResponse(Models.Transition[] response) {
+                                                        counter[0]++;
+                                                        story[0].chapters[x[0]].scenes[y[0]].transitions = response;
+                                                        if ((one[0] * two[0])-2 == counter[0]) {
+                                                            Log.d(TAG, "onResponse: SUCCESS");
+                                                            listener.onResponse(story[0]);
+                                                        }
+                                                    }
+                                                }, null);
+                                                y[0]++;
+                                            }
+                                        }
+                                    }, null);
+                                    x[0]++;
+                                }
+                            }
+                        }, null);
+            }
+        }, null);
     }
 }
