@@ -1,8 +1,10 @@
 package com.example.lmont.adventurecreator;
 
+import android.graphics.PointF;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        apiHelper.downloadFullGame("57fd2445be28a8485ceec97f", new Response.Listener<Models.Story>() {
+        apiHelper.downloadAll(new Response.Listener<Models.RemoteData>() {
             @Override
-            public void onResponse(Models.Story response) {
+            public void onResponse(Models.RemoteData response) {
                 addText(response.toString());
             }
         }, null);
