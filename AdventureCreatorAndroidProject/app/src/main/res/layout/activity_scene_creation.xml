@@ -71,8 +71,8 @@
         android:id="@+id/tags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/genre">
+        android:layout_below="@+id/genre"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,6 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="New Scene Node" />
+
         <ListView
             android:id="@+id/sceneNodeListView"
             android:layout_width="wrap_content"

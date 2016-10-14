@@ -9,17 +9,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.lmont.adventurecreator.StoryCreation">
+
     <Button
         android:id="@+id/newStoryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Story"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:text="New Story" />
 
     <ListView
         android:id="@+id/storyListView"
-        android:layout_below="@+id/newStoryButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newStoryButton"></ListView>
 
 </RelativeLayout>
