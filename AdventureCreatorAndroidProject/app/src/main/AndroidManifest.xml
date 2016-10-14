@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lmont.adventurecreator">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
     <application
         android:name=".StethoApplication"
@@ -24,22 +24,21 @@
 
         <service android:name=".PlaceholderAuthenticatorService">
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator"/>
+                <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
 
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator"/>
+                android:resource="@xml/authenticator" />
         </service>
-
         <service android:name=".MySyncService">
             <intent-filter>
-                <action android:name="android.content.SyncAdapter"/>
+                <action android:name="android.content.SyncAdapter" />
             </intent-filter>
 
             <meta-data
                 android:name="android.content.SyncAdapter"
-                android:resource="@xml/syncadapter"/>
+                android:resource="@xml/syncadapter" />
         </service>
 
         <provider
@@ -47,7 +46,12 @@
             android:authorities="com.example.lmont.adventurecreator.AdventureContentProvider"
             android:exported="true"
             android:label="my provider"
-            android:syncable="true"/>
+            android:syncable="true" />
+
+        <activity android:name=".StoryCreation" />
+        <activity android:name=".SceneCreation" />
+        <activity android:name=".SceneEditor" />
+        <activity android:name=".TransitionCreation"></activity>
     </application>
 
 </manifest>
