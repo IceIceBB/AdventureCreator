@@ -43,7 +43,7 @@ public class Models {
                     ", type='" + type + '\'' +
                     ", tags='" + tags + '\'' +
                     ", chapters=" + Arrays.toString(chapters) +
-                    '}';
+                    '}' + "\n";
         }
     }
 
@@ -79,7 +79,7 @@ public class Models {
                     ", type='" + type + '\'' +
                     ", storyID='" + storyID + '\'' +
                     ", scenes=" + Arrays.toString(scenes) +
-                    '}';
+                    '}' + "\n";
         }
     }
 
@@ -118,7 +118,7 @@ public class Models {
                     ", body='" + body + '\'' +
                     ", chapterID='" + chapterID + '\'' +
                     ", transitions=" + Arrays.toString(transitions) +
-                    '}';
+                    '}' + "\n";
         }
     }
 
@@ -132,12 +132,12 @@ public class Models {
 
     public static class Transition {
         String _id;
-        public String type;
-        public String verb;
-        public String flag;
-        public String attribute;
-        public String comparator;
-        public int challengeLevel;
+        public String type; // Action, Modifier, Blank_Action
+        public String verb; // User verb
+        public String flag; // For modifier
+        public String attribute; // Iced Boxed
+        public String comparator; // Ice Boxed
+        public int challengeLevel; // Ice Boxed
         public String fromSceneID; // Foreign Key
         public String toSceneID;   // Foreign Key
 
@@ -164,6 +164,23 @@ public class Models {
                     ", challengeLevel=" + challengeLevel +
                     ", fromSceneID='" + fromSceneID + '\'' +
                     ", toSceneID='" + toSceneID + '\'' +
+                    '}' + "\n";
+        }
+    }
+
+    public static class RemoteData {
+        Story[] stories;
+        Chapter[] chapters;
+        Scene[] scenes;
+        Transition[] transitions;
+
+        @Override
+        public String toString() {
+            return "RemoteData{" + "\n" +
+                    "stories=" + Arrays.toString(stories) + "\n" + "\n" +
+                    ", chapters=" + Arrays.toString(chapters) + "\n" + "\n" +
+                    ", scenes=" + Arrays.toString(scenes) + "\n" + "\n" +
+                    ", transitions=" + Arrays.toString(transitions) +
                     '}';
         }
     }

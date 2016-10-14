@@ -30,6 +30,7 @@ public class APIHelper {
     public final static String CHAPTER_URL = "https://infinite-shelf-21417.herokuapp.com/adventure/chapter";
     public final static String SCENE_URL = "https://infinite-shelf-21417.herokuapp.com/adventure/scene";
     public final static String TRANSITION_URL = "https://infinite-shelf-21417.herokuapp.com/adventure/transition";
+    public final static String ALL_URL = "https://infinite-shelf-21417.herokuapp.com/adventure/all";
     public final static String SWOOGLE_URL = "http://swoogle.umbc.edu/StsService/GetStsSim?operation=api";
     public final static String TAG = "API_HELPER";
 
@@ -184,6 +185,17 @@ public class APIHelper {
                 for (Models.Transition transition: array) {
                     AdventureDBHelper.getInstance(context).addTransition(transition);
                 }
+            }
+        }, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void downloadAll(final Response.Listener<Models.RemoteData> listener, Response.ErrorListener errorListener) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ALL_URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Gson gson = new Gson();
+                listener.onResponse(gson.fromJson(response.toString(), Models.RemoteData.class));
             }
         }, errorListener);
         requestQueue.add(jsonObjectRequest);
