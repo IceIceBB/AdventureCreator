@@ -1,10 +1,8 @@
 package com.example.lmont.adventurecreator;
 
-import android.graphics.PointF;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,12 +11,6 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
-
-import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText2;
     EditText editText1;
     AdventureDBHelper dbHelper;
+    Button libraryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
 
         setup();
         test();
+        libraryButton = (Button)findViewById(R.id.libraryButton);
+        libraryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     private void setup() {

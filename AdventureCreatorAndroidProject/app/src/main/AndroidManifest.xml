@@ -51,7 +51,8 @@
         <activity android:name=".StoryCreation" />
         <activity android:name=".SceneCreation" />
         <activity android:name=".SceneEditor" />
-        <activity android:name=".TransitionCreation"></activity>
+        <activity android:name=".TransitionCreation" />
+        <activity android:name=".GameLibraryActivity"></activity>
     </application>
 
 </manifest>
