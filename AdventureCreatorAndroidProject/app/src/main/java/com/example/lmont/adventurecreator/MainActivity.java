@@ -73,92 +73,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        apiHelper.downloadAll(new Response.Listener<Models.RemoteData>() {
+        dbHelper.deleteAll();
+
+        GameHelper gameHelper = GameHelper.getInstance(this);
+        Models.Story story = new Models.Story("Title", "Description", "Genre", "", "");
+        gameHelper.addStory(story, new Response.Listener<Models.Story>() {
             @Override
-            public void onResponse(Models.RemoteData response) {
+            public void onResponse(Models.Story response) {
                 addText(response.toString());
             }
-        }, null);
-
-//        apiHelper.downloadStory(
-//                "57fd2445be28a8485ceec97f", new Response.Listener<Models.Story>() {
-//                    @Override
-//                    public void onResponse(Models.Story response) {
-//                        addText(response.toString());
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                });
-//
-//        apiHelper.downloadChapters(
-//                "57fd2445be28a8485ceec97f",
-//                new Response.Listener<Models.Chapter[]>() {
-//                    @Override
-//                    public void onResponse(Models.Chapter[] response) {
-//                        addText(Arrays.toString(response));
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                });
-//
-//        apiHelper.downloadScenes(
-//                "57fd24afbe28a8485ceec981",
-//                new Response.Listener<Models.Scene[]>() {
-//                    @Override
-//                    public void onResponse(Models.Scene[] response) {
-//                        addText(Arrays.toString(response));
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                });
-//
-//        apiHelper.downloadTransitions(
-//                "57fd24cbbe28a8485ceec983",
-//                new Response.Listener<Models.Transition[]>() {
-//                    @Override
-//                    public void onResponse(Models.Transition[] response) {
-//                        addText(Arrays.toString(response));
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                });
-
-//        dbHelper.addStory(new Models.Story("t", "d", "g", "t", "t"), new Response.Listener() {
-//            @Override
-//            public void onResponse(Object response) {
-//                ((TextView) findViewById(R.id.main_scoreText)).setText(response.toString());
-//            }
-//        });
-//        dbHelper.addChapter(new Models.Chapter("t", "s", "t", "s"), new Response.Listener() {
-//            @Override
-//            public void onResponse(Object response) {
-//                ((TextView) findViewById(R.id.main_scoreText)).setText(response.toString());
-//            }
-//        });
-//        dbHelper.addScene(new Models.Scene("t", "j", "f", "b", "c"), new Response.Listener() {
-//            @Override
-//            public void onResponse(Object response) {
-//                ((TextView) findViewById(R.id.main_scoreText)).setText(response.toString());
-//            }
-//        });
-//        dbHelper.addTransition(new Models.Transition("t", "v", "f", "a", "c", 69, "f", "t"), new Response.Listener() {
-//            @Override
-//            public void onResponse(Object response) {
-//                ((TextView) findViewById(R.id.main_scoreText)).setText(response.toString());
-//            }
-//        });
+        });
     }
 
     public void addText(String text) {

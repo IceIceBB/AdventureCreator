@@ -1,184 +1,185 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_transition_creation"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.lmont.adventurecreator.TransitionCreation">
+<!--DEFUNCT-->
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:id="@+id/activity_transition_creation"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+    <!--tools:context="com.example.lmont.adventurecreator.TransitionCreation">-->
 
-    <LinearLayout
-        android:id="@+id/targetScene"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/targetScene"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Target Scene" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Target Scene" />-->
 
-        <EditText
-            android:id="@+id/titleEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Target Scene" />
-    </LinearLayout>
+        <!--<EditText-->
+            <!--android:id="@+id/titleEditText"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Target Scene" />-->
+    <!--</LinearLayout>-->
 
-    <LinearLayout
-        android:id="@+id/transitionTypeSelector"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/targetScene"
-        android:orientation="vertical">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/transitionTypeSelector"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/targetScene"-->
+        <!--android:orientation="vertical">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Transition Type" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Transition Type" />-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
 
-            <Button
-                android:id="@+id/actionTransitionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Action" />
+            <!--<Button-->
+                <!--android:id="@+id/actionTransitionButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Action" />-->
 
-            <Button
-                android:id="@+id/modifierTransitionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Modifier \n Check" />
+            <!--<Button-->
+                <!--android:id="@+id/modifierTransitionButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:text="Modifier \n Check" />-->
 
-            <Button
-                android:id="@+id/attributeTransitionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="Attribute \n Check" />
-        </RelativeLayout>
-    </LinearLayout>
+            <!--<Button-->
+                <!--android:id="@+id/attributeTransitionButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:text="Attribute \n Check" />-->
+        <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
 
-    <LinearLayout
-        android:id="@+id/transitionVerb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/transitionTypeSelector"
-        android:orientation="vertical"
-        android:visibility="gone">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/transitionVerb"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/transitionTypeSelector"-->
+        <!--android:orientation="vertical"-->
+        <!--android:visibility="gone">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Verb" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Verb" />-->
 
-        <EditText
-            android:id="@+id/verbEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Verb" />
-    </LinearLayout>
+        <!--<EditText-->
+            <!--android:id="@+id/verbEditText"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Verb" />-->
+    <!--</LinearLayout>-->
 
-    <LinearLayout
-        android:id="@+id/transitionModifierCheck"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/transitionTypeSelector"
-        android:orientation="vertical"
-        android:visibility="gone">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/transitionModifierCheck"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/transitionTypeSelector"-->
+        <!--android:orientation="vertical"-->
+        <!--android:visibility="gone">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Modifier Name" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Modifier Name" />-->
 
-        <EditText
-            android:id="@+id/modifierNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Modifier Name" />
-    </LinearLayout>
+        <!--<EditText-->
+            <!--android:id="@+id/modifierNameEditText"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Modifier Name" />-->
+    <!--</LinearLayout>-->
 
-    <RelativeLayout
-        android:id="@+id/transitionAttributeCheck"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/transitionTypeSelector"
-        android:visibility="gone">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/transitionAttributeCheck"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/transitionTypeSelector"-->
+        <!--android:visibility="gone">-->
 
-        <LinearLayout
-            android:id="@+id/attribute"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/attribute"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Attribute" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Attribute" />-->
 
-            <EditText
-                android:id="@+id/attributeEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Attribute" />
-        </LinearLayout>
+            <!--<EditText-->
+                <!--android:id="@+id/attributeEditText"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="Attribute" />-->
+        <!--</LinearLayout>-->
 
-        <RelativeLayout
-            android:id="@+id/compareButtons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/attribute"
-            android:orientation="horizontal">
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/compareButtons"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/attribute"-->
+            <!--android:orientation="horizontal">-->
 
-            <Button
-                android:id="@+id/lessThanButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LEFT" />
+            <!--<Button-->
+                <!--android:id="@+id/lessThanButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="(less that)" />-->
 
-            <Button
-                android:id="@+id/equalToButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="=" />
+            <!--<Button-->
+                <!--android:id="@+id/equalToButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:text="=" />-->
 
-            <Button
-                android:id="@+id/greaterThanButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="right" />
-        </RelativeLayout>
+            <!--<Button-->
+                <!--android:id="@+id/greaterThanButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:text="(greater than)" />-->
+        <!--</RelativeLayout>-->
 
-        <LinearLayout
-            android:id="@+id/value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/compareButtons"
-            android:orientation="vertical">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/value"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/compareButtons"-->
+            <!--android:orientation="vertical">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Value" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Value" />-->
 
-            <EditText
-                android:id="@+id/valueEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Value" />
-        </LinearLayout>
+            <!--<EditText-->
+                <!--android:id="@+id/valueEditText"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="Value" />-->
+        <!--</LinearLayout>-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
-</RelativeLayout>
+<!--</RelativeLayout>-->

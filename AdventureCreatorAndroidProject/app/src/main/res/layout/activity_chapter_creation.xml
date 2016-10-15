@@ -12,7 +12,7 @@
 
 
     <LinearLayout
-        android:id="@+id/chapterTitle"
+        android:id="@+id/storyTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -23,36 +23,36 @@
             android:text="Title" />
 
         <EditText
-            android:id="@+id/chapterTitleEditText"
+            android:id="@+id/titleEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Title" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/chapterGoal"
+        android:id="@+id/storyAuthor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chapterTitle"
+        android:layout_below="@+id/storyTitle"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Goal" />
+            android:text="Author" />
 
         <EditText
-            android:id="@+id/chapterGoalEditText"
+            android:id="@+id/storyAuthorEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Goal" />
+            android:hint="Tags" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/chapterSummary"
+        android:id="@+id/storySummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chapterGoal"
+        android:layout_below="@+id/storyAuthor"
         android:orientation="vertical">
 
         <TextView
@@ -61,16 +61,60 @@
             android:text="Summary" />
 
         <EditText
-            android:id="@+id/chapterSummaryEditText"
+            android:id="@+id/storySummaryEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Summary" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/genreAndTags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storySummary"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Genre" />
+<!--TODO: Make this a drop down-->
+            <EditText
+                android:id="@+id/genreEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Genre" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tags" />
+
+            <EditText
+                android:id="@+id/tagsEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Tags" />
+        </LinearLayout>
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/chapterSummary">
+        android:layout_below="@id/genreAndTags">
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="New Scene Node" />
-        <!--TODO: this will need to be a custom list view to show node "shape"-->
+
         <ListView
             android:id="@+id/sceneNodeListView"
             android:layout_width="wrap_content"
