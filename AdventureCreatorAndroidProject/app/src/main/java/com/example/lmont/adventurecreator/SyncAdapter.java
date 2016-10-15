@@ -2,6 +2,7 @@ package com.example.lmont.adventurecreator;
 
 import android.accounts.Account;
 import android.content.AbstractThreadedSyncAdapter;
+import android.content.ContentProvider;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -10,6 +11,7 @@ import android.content.SyncResult;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
@@ -75,7 +77,53 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
      */
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        Log.d("LEO", "onPerformSync: ");
+        APIHelper.getInstance(getContext()).downloadAll(new Response.Listener<Models.RemoteData>() {
+            @Override
+            public void onResponse(Models.RemoteData response) {
+                for (Models.Story story : response.stories) {
+                    ContentValues cv = new ContentValues();
+                    cv.put("title", story.title);
+                    cv.put("description", story.description);
+                    cv.put("genre", story.genre);
+                    cv.put("tags", story.tags);
+                    cv.put("type", story.type);
+                    cv.put("_id", story._id);
+                    mContentResolver.insert(AdventureContentProvider.CONTENT_URI_STORIES, cv);
+                }
+                for (Models.Chapter chapter : response.chapters) {
+                    ContentValues cv = new ContentValues();
+                    cv.put("storyID", chapter.storyID);
+                    cv.put("title", chapter.title);
+                    cv.put("summary", chapter.summary);
+                    cv.put("type", chapter.type);
+                    cv.put("_id", chapter._id);
+                    mContentResolver.insert(AdventureContentProvider.CONTENT_URI_CHAPTERS, cv);
+                }
+                for (Models.Scene scene : response.scenes) {
+                    ContentValues cv = new ContentValues();
+                    cv.put("chapterID", scene.chapterID);
+                    cv.put("title", scene.title);
+                    cv.put("body", scene.body);
+                    cv.put("journalText", scene.journalText);
+                    cv.put("flagModifiers", scene.flagModifiers);
+                    cv.put("_id", scene._id);
+                    mContentResolver.insert(AdventureContentProvider.CONTENT_URI_SCENES, cv);
+                }
+                for (Models.Transition transition : response.transitions) {
+                    ContentValues cv = new ContentValues();
+                    cv.put("fromSceneID", transition.fromSceneID);
+                    cv.put("toSceneID", transition.toSceneID);
+                    cv.put("type", transition.type);
+                    cv.put("verb", transition.verb);
+                    cv.put("flag", transition.flag);
+                    cv.put("attribute", transition.attribute);
+                    cv.put("comparator", transition.comparator);
+                    cv.put("challengeLevel", transition.challengeLevel);
+                    cv.put("_id", transition._id);
+                    mContentResolver.insert(AdventureContentProvider.CONTENT_URI_TRANSITIONS, cv);
+                }
+            }
+        }, null);
     }
 
     /**
