@@ -25,6 +25,9 @@ public class ContentResolverHelper {
     Account mAccount;
     Activity setupActivity;
 
+    private float refreshTime = 60f;
+    private boolean willAutoRefresh = false;
+
     public static ContentResolverHelper getInstance(Activity activity) {
         if (instance == null)
             instance = new ContentResolverHelper(activity);
@@ -53,7 +56,7 @@ public class ContentResolverHelper {
                 ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
 
         ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
-        ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
+        ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,willAutoRefresh);
         ContentResolver.addPeriodicSync(
                 mAccount,
                 AUTHORITY,
