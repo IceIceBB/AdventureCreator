@@ -119,32 +119,6 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().insert(STORY_TABLE_NAME, null, cv);
     }
 
-    public void addStory(final Models.Story story, final Response.Listener listener) {
-        apiHelper.addStory(
-                story,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-                        Gson gson = new Gson();
-                        ContentValues cv = new ContentValues();
-                        cv.put("title", story.title);
-                        cv.put("description", story.description);
-                        cv.put("genre", story.genre);
-                        cv.put("tags", story.tags);
-                        cv.put("type", story.type);
-                        cv.put("_id", gson.fromJson(response.toString(), Models.StoryResponse.class).story._id);
-                        getWritableDatabase().insert(STORY_TABLE_NAME, null, cv);
-                        listener.onResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-    }
-
     public void addChapter(ContentValues cv) {
         getWritableDatabase().insert(CHAPTER_TABLE_NAME, null, cv);
     }
@@ -157,31 +131,6 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         cv.put("type", chapter.type);
         cv.put("_id", chapter._id);
         getWritableDatabase().insert(CHAPTER_TABLE_NAME, null, cv);
-    }
-
-    public void addChapter(final Models.Chapter chapter, final Response.Listener listener) {
-        apiHelper.addChapter(
-                chapter,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-                        Gson gson = new Gson();
-                        ContentValues cv = new ContentValues();
-                        cv.put("storyID", chapter.storyID);
-                        cv.put("title", chapter.title);
-                        cv.put("summary", chapter.summary);
-                        cv.put("type", chapter.type);
-                        cv.put("_id", gson.fromJson(response.toString(), Models.ChapterResponse.class).chapter._id);
-                        getWritableDatabase().insert(CHAPTER_TABLE_NAME, null, cv);
-                        listener.onResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
     }
 
     public void addScene(ContentValues cv) {
@@ -197,32 +146,6 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         cv.put("flagModifiers", scene.flagModifiers);
         cv.put("_id", scene._id);
         getWritableDatabase().insert(SCENES_TABLE_NAME, null, cv);
-    }
-
-    public void addScene (final Models.Scene scene, final Response.Listener listener) {
-        apiHelper.addScene(
-                scene,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-                        Gson gson = new Gson();
-                        ContentValues cv = new ContentValues();
-                        cv.put("chapterID", scene.chapterID);
-                        cv.put("title", scene.title);
-                        cv.put("body", scene.body);
-                        cv.put("journalText", scene.journalText);
-                        cv.put("flagModifiers", scene.flagModifiers);
-                        cv.put("_id", gson.fromJson(response.toString(), Models.SceneResponse.class).scene._id);
-                        getWritableDatabase().insert(SCENES_TABLE_NAME, null, cv);
-                        listener.onResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
     }
 
     public void addTransition(ContentValues cv) {
@@ -243,32 +166,28 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().insert(TRANSITIONS_TABLE_NAME, null, cv);
     }
 
-    public void addTransition(final Models.Transition transition, final Response.Listener listener) {
-        apiHelper.addTransition(
-                transition,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-                        Gson gson = new Gson();
-                        ContentValues cv = new ContentValues();
-                        cv.put("fromSceneID", transition.fromSceneID);
-                        cv.put("toSceneID", transition.toSceneID);
-                        cv.put("type", transition.type);
-                        cv.put("verb", transition.verb);
-                        cv.put("flag", transition.flag);
-                        cv.put("attribute", transition.attribute);
-                        cv.put("comparator", transition.comparator);
-                        cv.put("challengeLevel", transition.challengeLevel);
-                        cv.put("_id", gson.fromJson(response.toString(), Models.TransitionResponse.class).transition._id);
-                        getWritableDatabase().insert(TRANSITIONS_TABLE_NAME, null, cv);
-                        listener.onResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+    public Models.Story getStory(String storyID) {
+        Cursor cursor = getReadableDatabase().query(STORY_TABLE_NAME, STORY_COLUMNS, "_id = " + storyID, null, null, null, null);
+        cursor.moveToFirst();
 
-                    }
-                });
+    }
+
+    public Models.Chapter getChapter(String chapterID) {
+        // Do dis
+    }
+
+    public Models.Scene getScene(String sceneID) {
+        // Do dis
+    }
+
+    public Models.Transition getTransition(String transitionID) {
+        // Do dis
+    }
+
+    public void deleteAll() {
+        getWritableDatabase().delete(STORY_TABLE_NAME,null,null);
+        getWritableDatabase().delete(CHAPTER_TABLE_NAME,null,null);
+        getWritableDatabase().delete(SCENES_TABLE_NAME,null,null);
+        getWritableDatabase().delete(TRANSITIONS_TABLE_NAME,null,null);
     }
 }
