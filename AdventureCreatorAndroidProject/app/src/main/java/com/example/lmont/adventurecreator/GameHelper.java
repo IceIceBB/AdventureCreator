@@ -143,10 +143,10 @@ public class GameHelper {
                 });
     }
 
-    public Models.Story getFullStory(String gameID) {
-        Models.Story story = dbHelper.getStory(gameID);
-        // Do dis
-        SDFLKJ
-        return story;
-    }
+//    public Models.Story getFullStory(String gameID) {
+//        Models.Story story = dbHelper.getStory(gameID);
+//        // Do dis
+//
+//        return story;
+//    }
 }
