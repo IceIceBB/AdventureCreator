@@ -142,11 +142,27 @@ public class GameHelper {
                     }
                 });
     }
+    public Models.Story[] getAllStories() {
+        return dbHelper.getAllStories();
+    }
 
-//    public Models.Story getFullStory(String gameID) {
-//        Models.Story story = dbHelper.getStory(gameID);
-//        // Do dis
-//
-//        return story;
-//    }
+    public Models.Chapter[] getChaptersForStory(String gameID) {
+        return dbHelper.getChaptersForStory(gameID);
+    }
+
+    public Models.Scene[] getScenesForChapter(String chapterID) {
+        return dbHelper.getScenesForChapter(chapterID);
+    }
+
+    public Models.Transition[] getTransitionsForScenes(String fromSceneID) {
+        return dbHelper.getTransitionsForScene(fromSceneID);
+    }
+
+    public Models.Story getFullStory(String gameID) {
+        Models.Story story = dbHelper.getStory(gameID);
+        // Do dis
+
+        return story;
+    }
+>>>>>>> upstream/master
 }
