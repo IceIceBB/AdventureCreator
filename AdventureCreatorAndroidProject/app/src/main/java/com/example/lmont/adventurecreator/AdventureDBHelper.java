@@ -119,6 +119,43 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().insert(STORY_TABLE_NAME, null, cv);
     }
 
+    public Models.Story getStory(String storyID) {
+        Cursor cursor = getReadableDatabase().query(STORY_TABLE_NAME, STORY_COLUMNS, "_id = " + storyID, null, null, null, null);
+        cursor.moveToFirst();
+
+        Models.Story story = new Models.Story(
+                cursor.getString(cursor.getColumnIndex("title")),
+                cursor.getString(cursor.getColumnIndex("description")),
+                cursor.getString(cursor.getColumnIndex("genre")),
+                cursor.getString(cursor.getColumnIndex("type")),
+                cursor.getString(cursor.getColumnIndex("tags"))
+        );
+
+        story._id = cursor.getString(cursor.getColumnIndex("_id"));
+
+        return story;
+    }
+
+    public Models.Story[] getAllStories() {
+        Cursor cursor = getReadableDatabase().query(STORY_TABLE_NAME, STORY_COLUMNS, null, null, null, null, null);
+
+        Models.Story[] stories = new Models.Story[cursor.getCount()];
+        while (cursor.moveToNext()) {
+            Models.Story story = new Models.Story(
+                    cursor.getString(cursor.getColumnIndex("title")),
+                    cursor.getString(cursor.getColumnIndex("description")),
+                    cursor.getString(cursor.getColumnIndex("genre")),
+                    cursor.getString(cursor.getColumnIndex("type")),
+                    cursor.getString(cursor.getColumnIndex("tags"))
+            );
+            story._id = cursor.getString(cursor.getColumnIndex("_id"));
+
+            stories[cursor.getPosition()] = story;
+        }
+
+        return stories;
+    }
+
     public void addChapter(ContentValues cv) {
         getWritableDatabase().insert(CHAPTER_TABLE_NAME, null, cv);
     }
@@ -131,6 +168,41 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         cv.put("type", chapter.type);
         cv.put("_id", chapter._id);
         getWritableDatabase().insert(CHAPTER_TABLE_NAME, null, cv);
+    }
+
+    public Models.Chapter getChapter(String chapterID) {
+        Cursor cursor = getReadableDatabase().query(CHAPTER_TABLE_NAME, CHAPTER_COLUMNS, "_id = " + chapterID, null, null, null, null);
+        cursor.moveToFirst();
+
+        Models.Chapter chapter = new Models.Chapter(
+                cursor.getString(cursor.getColumnIndex("title")),
+                cursor.getString(cursor.getColumnIndex("summary")),
+                cursor.getString(cursor.getColumnIndex("type")),
+                cursor.getString(cursor.getColumnIndex("storyID"))
+        );
+
+        chapter._id = cursor.getString(cursor.getColumnIndex("_id"));
+
+        return chapter;
+    }
+
+    public Models.Chapter[] getChaptersForStory(String storyID) {
+        Cursor cursor = getReadableDatabase().query(CHAPTER_TABLE_NAME, CHAPTER_COLUMNS, "storyID = '" + storyID + "'", null, null, null, null);
+
+        Models.Chapter[] chapters = new Models.Chapter[cursor.getCount()];
+        while (cursor.moveToNext()) {
+            Models.Chapter chapter = new Models.Chapter(
+                    cursor.getString(cursor.getColumnIndex("title")),
+                    cursor.getString(cursor.getColumnIndex("summary")),
+                    cursor.getString(cursor.getColumnIndex("type")),
+                    cursor.getString(cursor.getColumnIndex("storyID"))
+            );
+
+            chapter._id = cursor.getString(cursor.getColumnIndex("_id"));
+            chapters[cursor.getPosition()] = chapter;
+        }
+
+        return chapters;
     }
 
     public void addScene(ContentValues cv) {
@@ -146,6 +218,43 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         cv.put("flagModifiers", scene.flagModifiers);
         cv.put("_id", scene._id);
         getWritableDatabase().insert(SCENES_TABLE_NAME, null, cv);
+    }
+
+    public Models.Scene getScene(String sceneID) {
+        Cursor cursor = getReadableDatabase().query(SCENES_TABLE_NAME, SCENE_COLUMNS, "_id = " + sceneID, null, null, null, null);
+        cursor.moveToFirst();
+
+        Models.Scene scene = new Models.Scene(
+                cursor.getString(cursor.getColumnIndex("title")),
+                cursor.getString(cursor.getColumnIndex("journalText")),
+                cursor.getString(cursor.getColumnIndex("flagModifiers")),
+                cursor.getString(cursor.getColumnIndex("body")),
+                cursor.getString(cursor.getColumnIndex("chapterID"))
+        );
+
+        scene._id = cursor.getString(cursor.getColumnIndex("_id"));
+
+        return scene;
+    }
+
+    public Models.Scene[] getScenesForChapter(String sceneID) {
+        Cursor cursor = getReadableDatabase().query(SCENES_TABLE_NAME, SCENE_COLUMNS, "chapterID = '" + sceneID + "'", null, null, null, null);
+
+        Models.Scene[] scenes = new Models.Scene[cursor.getCount()];
+        while (cursor.moveToNext()) {
+            Models.Scene scene = new Models.Scene(
+                    cursor.getString(cursor.getColumnIndex("title")),
+                    cursor.getString(cursor.getColumnIndex("journalText")),
+                    cursor.getString(cursor.getColumnIndex("flagModifiers")),
+                    cursor.getString(cursor.getColumnIndex("body")),
+                    cursor.getString(cursor.getColumnIndex("chapterID"))
+            );
+
+            scene._id = cursor.getString(cursor.getColumnIndex("_id"));
+            scenes[cursor.getPosition()] = scene;
+        }
+
+        return scenes;
     }
 
     public void addTransition(ContentValues cv) {
@@ -166,22 +275,46 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().insert(TRANSITIONS_TABLE_NAME, null, cv);
     }
 
-    public Models.Story getStory(String storyID) {
-        Cursor cursor = getReadableDatabase().query(STORY_TABLE_NAME, STORY_COLUMNS, "_id = " + storyID, null, null, null, null);
+    public Models.Transition getTransition(String transitionID) {
+        Cursor cursor = getReadableDatabase().query(TRANSITIONS_TABLE_NAME, TRANSITION_COLUMNS, "_id = " + transitionID + "", null, null, null, null);
         cursor.moveToFirst();
 
+        Models.Transition transition = new Models.Transition(
+                cursor.getString(cursor.getColumnIndex("type")),
+                cursor.getString(cursor.getColumnIndex("verb")),
+                cursor.getString(cursor.getColumnIndex("flag")),
+                cursor.getString(cursor.getColumnIndex("attribute")),
+                cursor.getString(cursor.getColumnIndex("comparator")),
+                cursor.getInt(cursor.getColumnIndex("challengeLevel")),
+                cursor.getString(cursor.getColumnIndex("fromSceneID")),
+                cursor.getString(cursor.getColumnIndex("toSceneID"))
+        );
+
+        transition._id = cursor.getString(cursor.getColumnIndex("_id"));
+
+        return transition;
     }
 
-    public Models.Chapter getChapter(String chapterID) {
-        // Do dis
-    }
+    public Models.Transition[] getTransitionsForScene(String fromSceneID) {
+        Cursor cursor = getReadableDatabase().query(TRANSITIONS_TABLE_NAME, TRANSITION_COLUMNS, "fromSceneID = '" + fromSceneID + "'", null, null, null, null);
 
-    public Models.Scene getScene(String sceneID) {
-        // Do dis
-    }
+        Models.Transition[] transitions = new Models.Transition[cursor.getCount()];
+        while (cursor.moveToNext()) {
+            Models.Transition transition = new Models.Transition(
+                    cursor.getString(cursor.getColumnIndex("type")),
+                    cursor.getString(cursor.getColumnIndex("verb")),
+                    cursor.getString(cursor.getColumnIndex("flag")),
+                    cursor.getString(cursor.getColumnIndex("attribute")),
+                    cursor.getString(cursor.getColumnIndex("comparator")),
+                    cursor.getInt(cursor.getColumnIndex("challengeLevel")),
+                    cursor.getString(cursor.getColumnIndex("fromSceneID")),
+                    cursor.getString(cursor.getColumnIndex("toSceneID"))
+            );
 
-    public Models.Transition getTransition(String transitionID) {
-        // Do dis
+            transition._id = cursor.getString(cursor.getColumnIndex("_id"));
+            transitions[cursor.getPosition()] = transition;
+        }
+        return transitions;
     }
 
     public void deleteAll() {

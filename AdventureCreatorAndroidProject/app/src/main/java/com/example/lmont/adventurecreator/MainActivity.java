@@ -52,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         compareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+            Models.Transition[] transitions = GameHelper.getInstance(getApplicationContext()).getTransitionsForScenes("57fdbf659ed97a256090b98b");
+            for (Models.Transition tranny: transitions) {
+                addText(tranny.toString());
+            }
+
             ((ProgressBar)findViewById(R.id.main_progressBar)).setVisibility(View.VISIBLE);
             apiHelper.getWordComparisonValue(
                 editText1.getText().toString().replace(" ", "%20"),
@@ -60,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Object response) {
                         ((ProgressBar) findViewById(R.id.main_progressBar)).setVisibility(View.INVISIBLE);
-                        ((TextView) findViewById(R.id.main_scoreText)).setText((String) response);
+                        addText((String) response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -73,15 +79,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dbHelper.deleteAll();
-
-        GameHelper gameHelper = GameHelper.getInstance(this);
-        Models.Story story = new Models.Story("Title", "Description", "Genre", "", "");
-        gameHelper.addStory(story, new Response.Listener<Models.Story>() {
-            @Override
-            public void onResponse(Models.Story response) {
-                addText(response.toString());
-            }
-        });
     }
 
     public void addText(String text) {
