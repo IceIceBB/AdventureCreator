@@ -164,5 +164,4 @@ public class GameHelper {
 
         return story;
     }
->>>>>>> upstream/master
 }
