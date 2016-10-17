@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setup();
-//        test();
-        testUpdateRoutes();
+        testAddStoryAndReadStory();
+//        testUpdateRoutes();
     }
 
     private void testUpdateRoutes() {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 addText(response.toString());
             }
         });
-        gameHelper.updateScene(sc, new Response.Listener<Models.Scene>() {
+        gameHelper.updateScene( sc, new Response.Listener<Models.Scene>() {
             @Override
             public void onResponse(Models.Scene response) {
                 addText(response.toString());
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void test() {
+    public void testAddStoryAndReadStory() {
         // Code for Spencer +++++++++++++++++++++
         testCreateStory();
         // ++++++++++++++++++++++++++++++++++++++
