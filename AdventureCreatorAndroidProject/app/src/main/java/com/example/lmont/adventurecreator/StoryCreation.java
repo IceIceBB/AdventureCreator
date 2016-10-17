@@ -18,8 +18,7 @@ public class StoryCreation extends AppCompatActivity {
     Models.Story[] allStoriesArray;
     ArrayList<String> allStoryTitles;
     ArrayList<String> allStoryIds;
-
-    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allStoryTitles);
+    ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +27,11 @@ public class StoryCreation extends AppCompatActivity {
 
         newStoryButton = (Button) findViewById(R.id.newStoryButton);
         storyListView = (ListView) findViewById(R.id.storyListView);
+
+        allStoryTitles = new ArrayList<>();
+        allStoryIds = new ArrayList<>();
+
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allStoryTitles);
 
 
 //        TODO: Add new story and pull for ID.

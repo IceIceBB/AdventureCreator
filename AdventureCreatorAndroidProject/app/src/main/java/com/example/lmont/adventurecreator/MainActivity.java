@@ -16,12 +16,14 @@ public class MainActivity extends AppCompatActivity {
 
     public final static String TAG = "MainActivity";
 
+    GameHelper gameHelper;
     APIHelper apiHelper;
     ContentResolverHelper contentObserver;
     EditText editText2;
     EditText editText1;
     AdventureDBHelper dbHelper;
     Button libraryButton;
+    Button storyCreatorButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
+        storyCreatorButton = (Button) findViewById(R.id.storyCreatorButton);
+        storyCreatorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), StoryCreation.class);
                 view.getContext().startActivity(intent);
             }
         });
