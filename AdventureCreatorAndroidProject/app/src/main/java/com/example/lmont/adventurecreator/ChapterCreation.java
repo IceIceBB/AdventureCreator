@@ -44,7 +44,8 @@ public class ChapterCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapter_creation);
 
-        getStoryId();
+        getStoryDetails();
+        setStoryFormFields();
 
 
 //        TODO: Update db with changes to Title, Author, Summary, Genre and Tags when exiting this activity (or with new button?)
@@ -66,8 +67,8 @@ public class ChapterCreation extends AppCompatActivity {
                         "Chapter " + allChaptersArray.length + 1,
                         "Chapter Summary",
                         "Chapter Goal",
-                        storyId
-                );
+                        storyId);
+
 //                TODO: Fix these two so they aren't breaking the code (Something about Listener)
 //                Response.Listener<Models.Chapter> listener = new Response.Listener<>();
 //                GameHelper.getInstance(ChapterCreation.this).addChapter(newChapter, listener);
@@ -92,10 +93,15 @@ public class ChapterCreation extends AppCompatActivity {
 
     }
 
+
 //    TODO: Get data and populate list view with Chapter titles
-    public void getStoryId() {
+    public void getStoryDetails() {
         Intent storyIntent = getIntent();
         storyId = storyIntent.getStringExtra("selectedStoryId");
+        storyTitle = storyIntent.getStringExtra("selectedStoryTitle");
+        storySummary = storyIntent.getStringExtra("selectedStorySummary");
+        storyGenre = storyIntent.getStringExtra("selectedStoryGenre");
+        storyTags = storyIntent.getStringExtra("selectedStoryTags");
     }
 
     public void getAllTitlesAndIds() {
@@ -107,6 +113,8 @@ public class ChapterCreation extends AppCompatActivity {
             allChapterIds.add(chapterAtI._id);
         }
     }
+
+
 //    TODO: Use this to update the database with user edits
     public void readStoryFormFields(){
         storyTitle = storyTitleEditText.getText().toString();
@@ -114,5 +122,12 @@ public class ChapterCreation extends AppCompatActivity {
         storySummary = storySummaryEditText.getText().toString();
         storyGenre = storyGenreEditText.getText().toString();
         storyTags = storyTagsEditText.getText().toString();
+    }
+
+    public void setStoryFormFields(){
+        storyTitleEditText.setText(storyTitle);
+        storySummaryEditText.setText(storySummary);
+        storyGenreEditText.setText(storyGenre);
+        storyTagsEditText.setText(storyTags);
     }
 }
