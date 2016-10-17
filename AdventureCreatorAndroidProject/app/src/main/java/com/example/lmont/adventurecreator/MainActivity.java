@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText1;
     AdventureDBHelper dbHelper;
     Button libraryButton;
+    GameHelper gameHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setup();
-//        test();
-        testUpdateRoutes();
+        testPlay();
+//        testAddStoryAndReadStory();
+//        testUpdateRoutes();
+    }
+
+    private void testPlay() {
+        Button button = (Button) findViewById(R.id.main_sendButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Player.getInstance().loadGame(gameHelper.getFullStory("58054496480ad90011d02315").chapters[0]);
+                Intent intent = new Intent(MainActivity.this, GamePlayActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setup() {
+        apiHelper = APIHelper.getInstance(this);
+        contentObserver = ContentResolverHelper.getInstance(this);
+        dbHelper = AdventureDBHelper.getInstance(this);
+        gameHelper = GameHelper.getInstance(this);
+
+        libraryButton = (Button)findViewById(R.id.libraryButton);
+        libraryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     private void testUpdateRoutes() {
@@ -55,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 addText(response.toString());
             }
         });
-        gameHelper.updateScene(sc, new Response.Listener<Models.Scene>() {
+        gameHelper.updateScene( sc, new Response.Listener<Models.Scene>() {
             @Override
             public void onResponse(Models.Scene response) {
                 addText(response.toString());
@@ -69,23 +99,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setup() {
-        apiHelper = APIHelper.getInstance(this);
-        contentObserver = ContentResolverHelper.getInstance(this);
-        dbHelper = AdventureDBHelper.getInstance(this);
-        gameHelper = GameHelper.getInstance(this);
+    public void testAddStoryAndReadStory() {
+        // Code for Spencer +++++++++++++++++++++
+//        testCreateStory();
+        // ++++++++++++++++++++++++++++++++++++++
 
-        libraryButton = (Button)findViewById(R.id.libraryButton);
-        libraryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
-                view.getContext().startActivity(intent);
-            }
-        });
-    }
-
-    public void test() {
         editText1 = (EditText)findViewById(R.id.main_wordOneEditText);
         editText2 = (EditText)findViewById(R.id.main_wordTwoEditText);
         Button compareButton = (Button)findViewById(R.id.main_sendButton);

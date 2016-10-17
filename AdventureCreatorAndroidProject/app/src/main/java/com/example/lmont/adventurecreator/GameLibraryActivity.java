@@ -8,7 +8,7 @@ public class GameLibraryActivity extends FragmentActivity {
 
     public final static int PAGES = 7;
     // You can choose a bigger number for LOOPS, but you know, nobody will fling
-    // more than 1000 times just in order to test your "infinite" ViewPager :D
+    // more than 1000 times just in order to testAddStoryAndReadStory your "infinite" ViewPager :D
     public final static int LOOPS = 1000;
     public final static int FIRST_PAGE = PAGES * LOOPS / 2;
 
