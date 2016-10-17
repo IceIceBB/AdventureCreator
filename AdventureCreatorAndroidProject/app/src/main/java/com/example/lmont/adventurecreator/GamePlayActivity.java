@@ -30,6 +30,10 @@ public class GamePlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_play);
 
+        setup();
+    }
+
+    private void setup() {
         hintReady = false;
         hintShowing = false;
 
