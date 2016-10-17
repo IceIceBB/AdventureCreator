@@ -12,6 +12,8 @@ public class GameLibraryActivity extends FragmentActivity {
     public final static int LOOPS = 1000;
     public final static int FIRST_PAGE = PAGES * LOOPS / 2;
 
+    public Models.Story[] stories = GameHelper.getInstance(this).getAllStories();
+
     public GameLibraryPagerAdapter fantasyAdapter;
     public ViewPager fantasyPager;
     public GameLibraryPagerAdapter sciFiAdapter;
@@ -19,10 +21,13 @@ public class GameLibraryActivity extends FragmentActivity {
     public GameLibraryPagerAdapter horrorAdapter;
     public ViewPager horrorPager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_library);
+
+
 
         fantasyPager = (ViewPager) findViewById(R.id.fantasyCarousel);
 
