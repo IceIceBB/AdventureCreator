@@ -1,9 +1,7 @@
 package com.example.lmont.adventurecreator;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
