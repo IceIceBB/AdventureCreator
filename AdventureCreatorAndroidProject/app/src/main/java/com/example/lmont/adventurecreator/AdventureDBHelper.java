@@ -112,6 +112,16 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().insert(STORY_TABLE_NAME, null, cv);
     }
 
+    public void updateStory(Models.Story story) {
+        ContentValues cv = new ContentValues();
+        cv.put("title", story.title);
+        cv.put("description", story.description);
+        cv.put("genre", story.genre);
+        cv.put("tags", story.tags);
+        cv.put("type", story.type);
+        getWritableDatabase().update(STORY_TABLE_NAME, cv, "_id = '" + story._id + "'", null);
+    }
+
     public Models.Story getStory(String storyID) {
         Cursor cursor = getReadableDatabase().query(STORY_TABLE_NAME, STORY_COLUMNS, "_id = '" + storyID + "'", null, null, null, null);
         cursor.moveToFirst();
@@ -163,6 +173,15 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().insert(CHAPTER_TABLE_NAME, null, cv);
     }
 
+    public void updateChapter(Models.Chapter chapter) {
+        ContentValues cv = new ContentValues();
+        cv.put("storyID", chapter.storyID);
+        cv.put("title", chapter.title);
+        cv.put("summary", chapter.summary);
+        cv.put("type", chapter.type);
+        getWritableDatabase().update(CHAPTER_TABLE_NAME, cv, "_id = '" + chapter._id +"'", null);
+    }
+
     public Models.Chapter getChapter(String chapterID) {
         Cursor cursor = getReadableDatabase().query(CHAPTER_TABLE_NAME, CHAPTER_COLUMNS, "_id = " + chapterID, null, null, null, null);
         cursor.moveToFirst();
@@ -211,6 +230,16 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         cv.put("flagModifiers", scene.flagModifiers);
         cv.put("_id", scene._id);
         getWritableDatabase().insert(SCENES_TABLE_NAME, null, cv);
+    }
+
+    public void updateScene(Models.Scene scene) {
+        ContentValues cv = new ContentValues();
+        cv.put("chapterID", scene.chapterID);
+        cv.put("title", scene.title);
+        cv.put("body", scene.body);
+        cv.put("journalText", scene.journalText);
+        cv.put("flagModifiers", scene.flagModifiers);
+        getWritableDatabase().update(SCENES_TABLE_NAME, cv, "_id = '" + scene._id + "'", null);
     }
 
     public Models.Scene getScene(String sceneID) {
@@ -266,6 +295,19 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         cv.put("challengeLevel", transition.challengeLevel);
         cv.put("_id", transition._id);
         getWritableDatabase().insert(TRANSITIONS_TABLE_NAME, null, cv);
+    }
+
+    public void updateTransition(Models.Transition transition) {
+        ContentValues cv = new ContentValues();
+        cv.put("fromSceneID", transition.fromSceneID);
+        cv.put("toSceneID", transition.toSceneID);
+        cv.put("type", transition.type);
+        cv.put("verb", transition.verb);
+        cv.put("flag", transition.flag);
+        cv.put("attribute", transition.attribute);
+        cv.put("comparator", transition.comparator);
+        cv.put("challengeLevel", transition.challengeLevel);
+        getWritableDatabase().update(TRANSITIONS_TABLE_NAME, cv, "_id = '" + transition._id + "'", null);
     }
 
     public Models.Transition getTransition(String transitionID) {

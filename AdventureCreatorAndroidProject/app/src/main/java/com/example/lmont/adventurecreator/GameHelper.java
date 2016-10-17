@@ -1,9 +1,7 @@
 package com.example.lmont.adventurecreator;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -144,6 +142,55 @@ public class GameHelper {
                     }
                 });
     }
+
+    public void updateStory(Models.Story story, final Response.Listener<Models.Story> listener) {
+        apiHelper.updateStory(story, new Response.Listener() {
+            @Override
+            public void onResponse(Object response) {
+                Gson gson = new Gson();
+                Models.Story storyUpdated = gson.fromJson(response.toString(), Models.Story.class);
+                dbHelper.updateStory(storyUpdated);
+                listener.onResponse(storyUpdated);
+            }
+        }, null);
+    }
+
+    public void updateChapter(Models.Chapter chapter, final Response.Listener<Models.Chapter> listener) {
+        apiHelper.updateChapter(chapter, new Response.Listener() {
+            @Override
+            public void onResponse(Object response) {
+                Gson gson = new Gson();
+                Models.Chapter chapterUpdated = gson.fromJson(response.toString(), Models.Chapter.class);
+                dbHelper.updateChapter(chapterUpdated);
+                listener.onResponse(chapterUpdated);
+            }
+        }, null);
+    }
+
+    public void updateScene(Models.Scene scene, final Response.Listener<Models.Scene> listener) {
+        apiHelper.updateScene(scene, new Response.Listener() {
+            @Override
+            public void onResponse(Object response) {
+                Gson gson = new Gson();
+                Models.Scene sceneUpdated = gson.fromJson(response.toString(), Models.Scene.class);
+                dbHelper.updateScene(sceneUpdated);
+                listener.onResponse(sceneUpdated);
+            }
+        }, null);
+    }
+
+    public void updateTransition(Models.Transition transition, final Response.Listener<Models.Transition> listener) {
+        apiHelper.updateTransition(transition, new Response.Listener() {
+            @Override
+            public void onResponse(Object response) {
+                Gson gson = new Gson();
+                Models.Transition transitionUpdated = gson.fromJson(response.toString(), Models.Transition.class);
+                dbHelper.updateTransition(transitionUpdated);
+                listener.onResponse(transitionUpdated);
+            }
+        }, null);
+    }
+
     public Models.Story[] getAllStories() {
         return dbHelper.getAllStories();
     }
