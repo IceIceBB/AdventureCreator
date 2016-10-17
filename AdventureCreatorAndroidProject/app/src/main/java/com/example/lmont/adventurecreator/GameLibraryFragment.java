@@ -1,5 +1,6 @@
 package com.example.lmont.adventurecreator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,14 @@ public class GameLibraryFragment extends android.support.v4.app.Fragment {
         GameLibraryLinearLayout root = (GameLibraryLinearLayout) l.findViewById(R.id.root);
         float scale = this.getArguments().getFloat("scale");
         root.setScaleBoth(scale);
+
+        l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), GamePlayActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return l;
     }
