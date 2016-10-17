@@ -23,7 +23,7 @@
             android:text="Title" />
 
         <EditText
-            android:id="@+id/titleEditText"
+            android:id="@+id/storyTitleEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Title" />
@@ -45,7 +45,7 @@
             android:id="@+id/storyAuthorEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Tags" />
+            android:hint="Author" />
     </LinearLayout>
 
     <LinearLayout
@@ -86,7 +86,7 @@
                 android:text="Genre" />
 <!--TODO: Make this a drop down-->
             <EditText
-                android:id="@+id/genreEditText"
+                android:id="@+id/storyGenreEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Genre" />
@@ -104,7 +104,7 @@
                 android:text="Tags" />
 
             <EditText
-                android:id="@+id/tagsEditText"
+                android:id="@+id/storyTagsEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Tags" />
