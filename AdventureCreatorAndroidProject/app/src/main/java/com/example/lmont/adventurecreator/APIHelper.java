@@ -128,6 +128,72 @@ public class APIHelper {
         requestQueue.add(jsonObjectRequest);
     }
 
+    public void updateStory(Models.Story story, Response.Listener listener, Response.ErrorListener errorListener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("title", story.title);
+            jsonBody.put("description", story.description);
+            jsonBody.put("genre", story.genre);
+            jsonBody.put("tags", story.tags);
+            jsonBody.put("type", story.type);
+        } catch (JSONException e) {
+            Log.d(TAG, "updateStory: " + e);
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, STORY_URL + "/" + story._id, jsonBody, listener, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void updateChapter(Models.Chapter chapter, Response.Listener listener, Response.ErrorListener errorListener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("storyID", chapter.storyID);
+            jsonBody.put("title", chapter.title);
+            jsonBody.put("summary", chapter.summary);
+            jsonBody.put("type", chapter.type);
+        } catch (JSONException e) {
+            Log.d(TAG, "updateChapter: " + e);
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, CHAPTER_URL + "/" + chapter._id, jsonBody, listener, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void updateScene(Models.Scene scene, Response.Listener listener, Response.ErrorListener errorListener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("chapterID", scene.chapterID);
+            jsonBody.put("title", scene.title);
+            jsonBody.put("body", scene.body);
+            jsonBody.put("journalText", scene.journalText);
+            jsonBody.put("flagModifiers", scene.flagModifiers);
+        } catch (JSONException e) {
+            Log.d(TAG, "updateScene: " + e);
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, SCENE_URL + "/" + scene._id, jsonBody, listener, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void updateTransition(Models.Transition transition, Response.Listener listener, Response.ErrorListener errorListener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("fromSceneID", transition.fromSceneID);
+            jsonBody.put("toSceneID", transition.toSceneID);
+            jsonBody.put("type", transition.type);
+            jsonBody.put("verb", transition.verb);
+            jsonBody.put("flag", transition.flag);
+            jsonBody.put("attribute", transition.attribute);
+            jsonBody.put("comparator", transition.comparator);
+            jsonBody.put("challengeLevel", transition.challengeLevel);
+        } catch (JSONException e) {
+            Log.d(TAG, "updateTransition: " + e);
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, TRANSITION_URL + "/" + transition._id, jsonBody, listener, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
     public void downloadStory(String storyID, final Response.Listener<Models.Story> listener, Response.ErrorListener errorListener) {
         String getURL = STORY_URL + "/" + storyID;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getURL, null, new Response.Listener<JSONObject>() {
