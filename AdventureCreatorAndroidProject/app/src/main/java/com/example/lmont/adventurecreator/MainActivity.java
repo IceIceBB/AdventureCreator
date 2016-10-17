@@ -30,13 +30,42 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setup();
-        test();
-        libraryButton = (Button)findViewById(R.id.libraryButton);
-        libraryButton.setOnClickListener(new View.OnClickListener() {
+//        test();
+        testUpdateRoutes();
+    }
+
+    private void testUpdateRoutes() {
+        Models.Transition tr = new Models.Transition("a", "a", "a", "a", "a", 0, "a", "a");
+        tr._id = "58052b47b84afb00116dc429";
+        Models.Scene sc = new Models.Scene("a", "a", "a", "a", "a");
+        sc._id = "58052b47b84afb00116dc423";
+        Models.Chapter c = new Models.Chapter("t", "s", "t", "id");
+        c._id = "58052b47b84afb00116dc422";
+        Models.Story s = new Models.Story("The B", "Can You", "Mystery", "Short", "Puzzle");
+        s._id = "58052b46b84afb00116dc421";
+
+        gameHelper.updateStory(s, new Response.Listener<Models.Story>() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
-                view.getContext().startActivity(intent);
+            public void onResponse(Models.Story response) {
+                addText(response.toString());
+            }
+        });
+        gameHelper.updateChapter(c, new Response.Listener<Models.Chapter>() {
+            @Override
+            public void onResponse(Models.Chapter response) {
+                addText(response.toString());
+            }
+        });
+        gameHelper.updateScene(sc, new Response.Listener<Models.Scene>() {
+            @Override
+            public void onResponse(Models.Scene response) {
+                addText(response.toString());
+            }
+        });
+        gameHelper.updateTransition(tr, new Response.Listener<Models.Transition>() {
+            @Override
+            public void onResponse(Models.Transition response) {
+                addText(response.toString());
             }
         });
     }
@@ -46,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
         contentObserver = ContentResolverHelper.getInstance(this);
         dbHelper = AdventureDBHelper.getInstance(this);
         gameHelper = GameHelper.getInstance(this);
+
+        libraryButton = (Button)findViewById(R.id.libraryButton);
+        libraryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     public void test() {
