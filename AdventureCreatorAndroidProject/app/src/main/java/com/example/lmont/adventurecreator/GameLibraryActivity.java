@@ -6,13 +6,11 @@ import android.support.v4.view.ViewPager;
 
 public class GameLibraryActivity extends FragmentActivity {
 
-    public final static int PAGES = 7;
+    public static int PAGES = 5;
     // You can choose a bigger number for LOOPS, but you know, nobody will fling
     // more than 1000 times just in order to testAddStoryAndReadStory your "infinite" ViewPager :D
     public final static int LOOPS = 1000;
     public final static int FIRST_PAGE = PAGES * LOOPS / 2;
-
-    public Models.Story[] stories = GameHelper.getInstance(this).getAllStories();
 
     public GameLibraryPagerAdapter fantasyAdapter;
     public ViewPager fantasyPager;
@@ -26,7 +24,6 @@ public class GameLibraryActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_library);
-
 
 
         fantasyPager = (ViewPager) findViewById(R.id.fantasyCarousel);
@@ -62,5 +59,15 @@ public class GameLibraryActivity extends FragmentActivity {
         horrorPager.setCurrentItem(FIRST_PAGE);
         horrorPager.setOffscreenPageLimit(5);
         horrorPager.setPageMargin(-600);
+    }
+
+    private int getNumBooksPerGenre (String genre){
+        Models.Story[] storyArray = GameHelper.getInstance(this).getAllStories();
+        for (int i = 0; i < storyArray.length; i++) {
+            if (storyArray[i].genre == genre){
+                PAGES++;
+            }
+        }
+        return PAGES;
     }
 }
