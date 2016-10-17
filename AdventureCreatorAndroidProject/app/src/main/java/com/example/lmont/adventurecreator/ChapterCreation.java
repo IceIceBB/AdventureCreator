@@ -61,6 +61,7 @@ public class ChapterCreation extends AppCompatActivity {
         addSceneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getAllTitlesAndIds();
                 Models.Chapter newChapter = new Models.Chapter(
                         "Chapter " + allChaptersArray.length + 1,
                         "Chapter Summary",
@@ -70,11 +71,11 @@ public class ChapterCreation extends AppCompatActivity {
 //                TODO: Fix these two so they aren't breaking the code (Something about Listener)
 //                Response.Listener<Models.Chapter> listener = new Response.Listener<>();
 //                GameHelper.getInstance(ChapterCreation.this).addChapter(newChapter, listener);
+                getAllTitlesAndIds();
             }
         });
 
         getAllTitlesAndIds();
-
         chaptersListView.setAdapter(arrayAdapter);
 
 //        TODO: Transition to Chapter Creation with Story id and Chapter id as Intent Extras
