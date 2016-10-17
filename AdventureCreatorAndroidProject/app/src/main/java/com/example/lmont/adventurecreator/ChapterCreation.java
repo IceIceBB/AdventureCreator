@@ -37,16 +37,12 @@ public class ChapterCreation extends AppCompatActivity {
     ArrayList<String> allChapterTitles;
     ArrayList<String> allChapterIds;
 
-    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allChapterTitles);
+    ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapter_creation);
-
-        getStoryDetails();
-        setStoryFormFields();
-
 
 //        TODO: Update db with changes to Title, Author, Summary, Genre and Tags when exiting this activity (or with new button?)
         storyTitleEditText = (EditText) findViewById(R.id.storyTitleEditText);
@@ -55,26 +51,34 @@ public class ChapterCreation extends AppCompatActivity {
         storyGenreEditText = (EditText) findViewById(R.id.storyGenreEditText);
         storyTagsEditText = (EditText) findViewById(R.id.storyTitleEditText);
 
+        allChapterTitles = new ArrayList<>();
+        allChapterIds = new ArrayList<>();
+
         chaptersListView = (ListView) findViewById(R.id.chaptersListView);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allChapterTitles);
 
         addSceneButton = (Button) findViewById(R.id.addSceneButton);
-//        TODO: Add new scene and pull for id
-        addSceneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getAllTitlesAndIds();
-                Models.Chapter newChapter = new Models.Chapter(
-                        "Chapter " + allChaptersArray.length + 1,
-                        "Chapter Summary",
-                        "Chapter Goal",
-                        storyId);
 
-//                TODO: Fix these two so they aren't breaking the code (Something about Listener)
-//                Response.Listener<Models.Chapter> listener = new Response.Listener<>();
-//                GameHelper.getInstance(ChapterCreation.this).addChapter(newChapter, listener);
-                getAllTitlesAndIds();
-            }
-        });
+//        TODO: Add new scene and pull for id
+//        addSceneButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getAllTitlesAndIds();
+//                Models.Chapter newChapter = new Models.Chapter(
+//                        "Chapter " + allChaptersArray.length + 1,
+//                        "Chapter Summary",
+//                        "Chapter Goal",
+//                        storyId);
+//
+////                TODO: Fix these two so they aren't breaking the code (Something about Listener)
+////                Response.Listener<Models.Chapter> listener = new Response.Listener<>();
+////                GameHelper.getInstance(ChapterCreation.this).addChapter(newChapter, listener);
+//                getAllTitlesAndIds();
+//            }
+//        });
+
+        getStoryDetails();
+        setStoryFormFields();
 
         getAllTitlesAndIds();
         chaptersListView.setAdapter(arrayAdapter);
