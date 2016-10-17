@@ -77,13 +77,15 @@
             android:layout_height="wrap_content"
             android:text="Scene Nodes" />
 
+<!--TODO: Add this button to a custom action bar for this activity-->
         <Button
             android:id="@+id/addSceneButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="New Scene Node" />
-        <!--TODO: this will need to be a custom list view to show node "shape"-->
+
+<!--TODO: this will need to be a custom list view to show node "shape"-->
         <ListView
             android:id="@+id/sceneNodeListView"
             android:layout_width="wrap_content"

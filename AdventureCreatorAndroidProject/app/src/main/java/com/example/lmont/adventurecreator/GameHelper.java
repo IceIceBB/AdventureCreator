@@ -209,32 +209,8 @@ public class GameHelper {
 
     public Models.Story getFullStory(String gameID) {
         Models.Story story = dbHelper.getStory(gameID);
-
-        story.chapters = getChaptersForStory(gameID);
-
-        for(Models.Chapter chapter : story.chapters) {
-            chapter.scenes = getScenesForChapter(chapter._id);
-
-            for(Models.Scene scene : chapter.scenes) {
-                scene.transitions = getTransitionsForScenes(scene._id);
-            }
-        }
+        // Do dis
 
         return story;
-    }
-
-    public void refreshDB(Response.Listener listener) {
-        dbHelper.deleteAll();
-        ContentResolverHelper.instance.requestSync();
-        apiHelper.downloadAll(listener, null);
-    }
-
-    public void wordSimilarityValue(String word1, String word2, final Response.Listener<Float> listener, Response.ErrorListener errorListener) {
-        apiHelper.getWordComparisonValue(word1, word2, new Response.Listener() {
-            @Override
-            public void onResponse(Object response) {
-                listener.onResponse(Float.valueOf(response.toString()));
-            }
-        }, errorListener);
     }
 }
