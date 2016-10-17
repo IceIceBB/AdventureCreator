@@ -1,24 +1,27 @@
 package com.example.lmont.adventurecreator;
 
-import android.content.Intent;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+//import android.support.v4.app.FragmentManager;
+
 /**
  * Created by klaus_000 on 10/15/2016.
  */
 
-public class GameLibraryFragment extends android.support.v4.app.Fragment {
+public class GameLibraryFragment extends Fragment {
 
-    public static android.support.v4.app.Fragment newInstance(GameLibraryActivity context, int pos, float scale) {
+    public static Fragment newInstance(GameLibraryActivity context, int pos, float scale) {
         Bundle b = new Bundle();
         b.putInt("pos", pos);
         b.putFloat("scale", scale);
-        return android.support.v4.app.Fragment.instantiate(context, GameLibraryFragment.class.getName(), b);
+        return Fragment.instantiate(context, GameLibraryFragment.class.getName(), b);
     }
 
     @Override
@@ -42,8 +45,12 @@ public class GameLibraryFragment extends android.support.v4.app.Fragment {
         l.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), GamePlayActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(view.getContext(), GamePlayActivity.class);
+//                startActivity(intent);
+//                FragmentManager fm = getFragmentManager();
+                ChapterSelectFragment chapterDialog = new ChapterSelectFragment();
+                chapterDialog.setStyle(JournalDialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+                chapterDialog.show(getActivity().getFragmentManager(), "Select a Chapter");
             }
         });
 
