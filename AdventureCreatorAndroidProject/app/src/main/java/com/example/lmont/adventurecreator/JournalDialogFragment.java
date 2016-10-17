@@ -26,6 +26,8 @@ public class JournalDialogFragment extends DialogFragment {
 
         journal = (TextView) rootView.findViewById(R.id.journal);
         closeJournal = (Button) rootView.findViewById(R.id.closeJournal);
+
+        journal.setText(Player.getInstance().getJournalText());
         closeJournal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
