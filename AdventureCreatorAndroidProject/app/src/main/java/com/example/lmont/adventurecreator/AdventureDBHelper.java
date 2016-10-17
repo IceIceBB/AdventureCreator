@@ -113,7 +113,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
     }
 
     public Models.Story getStory(String storyID) {
-        Cursor cursor = getReadableDatabase().query(STORY_TABLE_NAME, STORY_COLUMNS, "_id = " + storyID, null, null, null, null);
+        Cursor cursor = getReadableDatabase().query(STORY_TABLE_NAME, STORY_COLUMNS, "_id = '" + storyID + "'", null, null, null, null);
         cursor.moveToFirst();
 
         Models.Story story = new Models.Story(
