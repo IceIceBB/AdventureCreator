@@ -5,13 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.Gson;
-
-import java.util.Random;
 
 /**
  * Created by lmont on 9/25/2016.
