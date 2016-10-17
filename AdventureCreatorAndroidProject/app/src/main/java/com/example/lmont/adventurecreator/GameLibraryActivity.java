@@ -29,36 +29,15 @@ public class GameLibraryActivity extends FragmentActivity {
         fantasyPager = (ViewPager) findViewById(R.id.fantasyCarousel);
 
         fantasyAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager());
-        fantasyPager.setAdapter(fantasyAdapter);
-        fantasyPager.setPageTransformer(false, fantasyAdapter);
-
-        // Set current item to the middle page so we can fling to both
-        // directions left and right
-        fantasyPager.setCurrentItem(FIRST_PAGE);
-
-        // Necessary or the pager will only have one extra page to show
-        // make this at least however many pages you can see
-        fantasyPager.setOffscreenPageLimit(5);
-
-        // Set margin for pages as a negative number, so a part of next and
-        // previous pages will be showed
-        fantasyPager.setPageMargin(-600);
+        setupPager(fantasyPager, fantasyAdapter);
 
         sciFiPager = (ViewPager) findViewById(R.id.sciFiCarousel);
         sciFiAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager());
-        sciFiPager.setAdapter(sciFiAdapter);
-        sciFiPager.setPageTransformer(false, sciFiAdapter);
-        sciFiPager.setCurrentItem(FIRST_PAGE);
-        sciFiPager.setOffscreenPageLimit(5);
-        sciFiPager.setPageMargin(-600);
+        setupPager(sciFiPager, sciFiAdapter);
 
         horrorPager = (ViewPager) findViewById(R.id.horrorCarousel);
         horrorAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager());
-        horrorPager.setAdapter(horrorAdapter);
-        horrorPager.setPageTransformer(false, horrorAdapter);
-        horrorPager.setCurrentItem(FIRST_PAGE);
-        horrorPager.setOffscreenPageLimit(5);
-        horrorPager.setPageMargin(-600);
+        setupPager(horrorPager, horrorAdapter);
     }
 
     private int getNumBooksPerGenre (String genre){
@@ -69,5 +48,19 @@ public class GameLibraryActivity extends FragmentActivity {
             }
         }
         return PAGES;
+    }
+
+    private void setupPager (ViewPager pager, GameLibraryPagerAdapter adapter){
+        pager.setAdapter(adapter);
+        pager.setPageTransformer(false, adapter);
+        // Set current item to the middle page so we can fling to both
+        // directions left and right
+        pager.setCurrentItem(FIRST_PAGE);
+        // Necessary or the pager will only have one extra page to show
+        // make this at least however many pages you can see
+        pager.setOffscreenPageLimit(5);
+        // Set margin for pages as a negative number, so a part of next and
+        // previous pages will be showed
+        pager.setPageMargin(-600);
     }
 }
