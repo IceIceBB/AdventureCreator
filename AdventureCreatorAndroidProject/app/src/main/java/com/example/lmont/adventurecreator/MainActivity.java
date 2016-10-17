@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Player.getInstance().loadGame(gameHelper.getFullStory("58054496480ad90011d02315").chapters[0]);
+                Player.getInstance().loadGame(gameHelper.getFullStory("58054495480ad90011d02314").chapters[0]);
                 Intent intent = new Intent(MainActivity.this, GamePlayActivity.class);
                 startActivity(intent);
             }
