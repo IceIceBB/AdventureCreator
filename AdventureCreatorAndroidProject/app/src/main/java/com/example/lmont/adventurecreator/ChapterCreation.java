@@ -87,6 +87,9 @@ public class ChapterCreation extends AppCompatActivity {
 
                 intent.putExtra("storyId", storyId);
                 intent.putExtra("selectedChapterId", allChapterIds.get(position));
+                intent.putExtra("selectedChapterTitle", allChaptersArray[position].title);
+                intent.putExtra("selectedChapterGoal", allChaptersArray[position].type);
+                intent.putExtra("selectedChapterSummary", allChaptersArray[position].summary);
                 startActivity(intent);
             }
         });

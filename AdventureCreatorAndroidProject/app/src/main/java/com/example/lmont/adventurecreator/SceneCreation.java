@@ -14,10 +14,13 @@ import java.util.ArrayList;
 
 public class SceneCreation extends AppCompatActivity {
 
+    String storyId;
+
     EditText chapterTitleEditText;
     EditText chapterGoalEditText;
     EditText chapterSummaryEditText;
 
+    String chapterId;
     String chapterTitle;
     String chapterGoal;
     String chapterSummary;
@@ -68,8 +71,11 @@ public class SceneCreation extends AppCompatActivity {
 //        TODO: Get data and populate list view with Scene titles
     public void getChapterDetails(){
         Intent chapterIntent = getIntent();
-        storyId = ;
-        chapterId = ;
+        storyId = chapterIntent.getStringExtra("storyId");
+        chapterId = chapterIntent.getStringExtra("selectedChapterId");
+        chapterTitle = chapterIntent.getStringExtra("selectedChapterTitle");
+        chapterGoal = chapterIntent.getStringExtra("selectedChapterGoal");
+        chapterSummary = chapterIntent.getStringExtra("selectedChapterSummary");
     }
 
     public void getAllTitlesAndIds(){
@@ -82,6 +88,10 @@ public class SceneCreation extends AppCompatActivity {
         }
     }
 
-
+public void setChapterFormFields(){
+    chapterTitleEditText.setText(chapterTitle);
+    chapterGoalEditText.setText(chapterGoal);
+    chapterSummaryEditText.setText(chapterSummary);
+}
 
 }
