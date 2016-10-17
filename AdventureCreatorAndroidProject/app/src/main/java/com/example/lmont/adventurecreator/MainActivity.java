@@ -1,10 +1,8 @@
 package com.example.lmont.adventurecreator;
 
-import android.graphics.PointF;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,12 +11,6 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
-
-import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText2;
     EditText editText1;
     AdventureDBHelper dbHelper;
+    Button libraryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
 
         setup();
         test();
+        libraryButton = (Button)findViewById(R.id.libraryButton);
+        libraryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     private void setup() {
@@ -52,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
         compareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+            Models.Transition[] transitions = GameHelper.getInstance(getApplicationContext()).getTransitionsForScenes("57fdbf659ed97a256090b98b");
+            for (Models.Transition tranny: transitions) {
+                addText(tranny.toString());
+            }
+
             ((ProgressBar)findViewById(R.id.main_progressBar)).setVisibility(View.VISIBLE);
             apiHelper.getWordComparisonValue(
                 editText1.getText().toString().replace(" ", "%20"),
@@ -60,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Object response) {
                         ((ProgressBar) findViewById(R.id.main_progressBar)).setVisibility(View.INVISIBLE);
-                        ((TextView) findViewById(R.id.main_scoreText)).setText((String) response);
+                        addText((String) response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -73,15 +80,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dbHelper.deleteAll();
-
-        GameHelper gameHelper = GameHelper.getInstance(this);
-        Models.Story story = new Models.Story("Title", "Description", "Genre", "", "");
-        gameHelper.addStory(story, new Response.Listener<Models.Story>() {
-            @Override
-            public void onResponse(Models.Story response) {
-                addText(response.toString());
-            }
-        });
     }
 
     public void addText(String text) {
