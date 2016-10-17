@@ -119,21 +119,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scene Nodes" />
+            android:text="Chapters" />
 
 <!--TODO: Add this button to a custom action bar for this activity-->
         <Button
-            android:id="@+id/addSceneButton"
+            android:id="@+id/addChapterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="New Scene Node" />
+            android:text="New Chapter" />
 
         <ListView
-            android:id="@+id/sceneNodeListView"
+            android:id="@+id/chaptersListView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/addSceneButton"></ListView>
+            android:layout_below="@+id/addChapterButton"></ListView>
 
     </RelativeLayout>
 
