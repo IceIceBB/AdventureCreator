@@ -50,7 +50,7 @@ public class SceneCreation extends AppCompatActivity {
         addSceneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getAllTitlesAndIds():
+                getAllTitlesAndIds();
                 Models.Scene newScene = new Models.Scene(
                         "Scene " + allScenesArray.length + 1,
                         "Journal Text",
