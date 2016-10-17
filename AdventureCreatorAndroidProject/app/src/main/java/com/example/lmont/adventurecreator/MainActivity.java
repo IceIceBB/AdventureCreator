@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         compareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (trannyCounter<6)
+                    return;
 
                 // Code for Paul --------------------
                 Player player = Player.getInstance();
@@ -235,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public int trannyCounter = 0;
     public void testCreateTransitions(Models.Scene[] scenes) {
         gameHelper.addTransition(new Models.Transition(
                 "action",
@@ -248,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-
+                trannyCounter++;
             }
         });
 
@@ -264,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-
+                trannyCounter++;
             }
         });
 
@@ -280,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-
+                trannyCounter++;
             }
         });
 
@@ -296,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-
+                trannyCounter++;
             }
         });
 
@@ -312,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-
+                trannyCounter++;
             }
         });
 
@@ -328,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-
+                trannyCounter++;
             }
         });
 
@@ -344,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-
+                trannyCounter++;
             }
         });
     }
