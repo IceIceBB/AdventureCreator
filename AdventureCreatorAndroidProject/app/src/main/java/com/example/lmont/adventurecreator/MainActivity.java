@@ -16,12 +16,14 @@ public class MainActivity extends AppCompatActivity {
 
     public final static String TAG = "MainActivity";
 
+    GameHelper gameHelper;
     APIHelper apiHelper;
     ContentResolverHelper contentObserver;
     EditText editText2;
     EditText editText1;
     AdventureDBHelper dbHelper;
     Button libraryButton;
+    Button storyCreatorButton;
     GameHelper gameHelper;
 
     @Override
@@ -99,10 +101,36 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+<<<<<<< HEAD
+    private void setup() {
+        apiHelper = APIHelper.getInstance(this);
+        contentObserver = ContentResolverHelper.getInstance(this);
+        dbHelper = AdventureDBHelper.getInstance(this);
+        gameHelper = GameHelper.getInstance(this);
+
+        libraryButton = (Button)findViewById(R.id.libraryButton);
+        libraryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
+        storyCreatorButton = (Button) findViewById(R.id.storyCreatorButton);
+        storyCreatorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), StoryCreation.class);
+                view.getContext().startActivity(intent);
+            }
+        });
+    }
+=======
     public void testAddStoryAndReadStory() {
         // Code for Spencer +++++++++++++++++++++
 //        testCreateStory();
         // ++++++++++++++++++++++++++++++++++++++
+>>>>>>> IceIceBB/master
 
         editText1 = (EditText)findViewById(R.id.main_wordOneEditText);
         editText2 = (EditText)findViewById(R.id.main_wordTwoEditText);

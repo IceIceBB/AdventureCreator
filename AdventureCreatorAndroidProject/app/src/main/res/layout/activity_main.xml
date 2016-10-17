@@ -11,11 +11,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.lmont.adventurecreator.MainActivity">
 
-    <Button
-        android:id="@+id/libraryButton"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="go to library"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/libraryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="go to library" />
+
+        <Button
+            android:id="@+id/storyCreatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="go to story creator" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/main_wordOneEditText"
