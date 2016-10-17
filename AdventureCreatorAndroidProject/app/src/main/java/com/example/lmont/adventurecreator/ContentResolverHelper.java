@@ -55,6 +55,7 @@ public class ContentResolverHelper {
         settingsBundle.putBoolean(
                 ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
 
+        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
         ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,willAutoRefresh);
         ContentResolver.addPeriodicSync(
                 mAccount,
