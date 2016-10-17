@@ -13,7 +13,7 @@ public class Player {
     private Models.Chapter chapter;
     private Models.Scene currentScene;
     private ArrayList<String> modifiers;
-    private String journalText = "Journal:";
+    private String journalText = "";
 
     public static Player getInstance() {
         if (instance == null)
@@ -59,8 +59,12 @@ public class Player {
         return null;
     }
 
+    public Models.Scene getCurrentScene() {
+        return currentScene;
+    }
+
     public void addJournalText(String newjournalText) {
-        journalText += "\n\n" + newjournalText;
+        journalText += newjournalText + "\n\n";
     }
 
     public String getJournalText() {

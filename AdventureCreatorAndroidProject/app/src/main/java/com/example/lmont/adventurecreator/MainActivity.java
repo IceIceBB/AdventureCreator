@@ -30,8 +30,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setup();
-        testAddStoryAndReadStory();
+//        testAddStoryAndReadStory();
 //        testUpdateRoutes();
+        testPlay();
+    }
+
+    private void testPlay() {
+        Player.getInstance().loadGame(gameHelper.getFullStory("58054495480ad90011d02314").chapters[0]);
+        Intent intent = new Intent(MainActivity.this, GamePlayActivity.class);
+        startActivity(intent);
     }
 
     private void testUpdateRoutes() {
@@ -75,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         contentObserver = ContentResolverHelper.getInstance(this);
         dbHelper = AdventureDBHelper.getInstance(this);
         gameHelper = GameHelper.getInstance(this);
+
+        contentObserver.requestSync();
 
         libraryButton = (Button)findViewById(R.id.libraryButton);
         libraryButton.setOnClickListener(new View.OnClickListener() {

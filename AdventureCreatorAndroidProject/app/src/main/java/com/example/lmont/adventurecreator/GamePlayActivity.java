@@ -15,15 +15,23 @@ import android.widget.ViewSwitcher;
 
 public class GamePlayActivity extends AppCompatActivity {
 
+    enum SceneType {end, action, auto, conditional};
+
+    public static final String SCENEID_KEY = "SCENEID_KEY";
     ViewSwitcher bookmark;
     ImageView bookmarkHollow;
     ImageView bookmarkSolid;
     ImageView journal;
     TextView sceneText;
     Button hintButton;
+    Button nextSceneButton;
     boolean hintReady;
     boolean hintShowing;
     ListView optionsList;
+
+    Models.Transition[] transitions;
+    Player player;
+    SceneType sceneType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +42,9 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void setup() {
+        // Variable Setup
         hintReady = false;
         hintShowing = false;
-
-        String[] options = {"option one", "option two", "option three", "option four"};
-
         bookmark = (ViewSwitcher) findViewById(R.id.bookmark);
         bookmarkHollow = (ImageView) findViewById(R.id.bookmarkHollow);
         bookmarkSolid = (ImageView) findViewById(R.id.bookmarkSolid);
@@ -46,10 +52,57 @@ public class GamePlayActivity extends AppCompatActivity {
         sceneText = (TextView) findViewById(R.id.sceneText);
         hintButton = (Button) findViewById(R.id.hintButton);
         optionsList = (ListView) findViewById(R.id.options);
+        nextSceneButton = (Button) findViewById(R.id.nextScene);
+        String[] options = null;
+
+        // Instantiate Player
+        player = Player.getInstance();
+
+        // Get Scene Type
+        transitions = player.getCurrentScene().transitions;
+
+        if (transitions[0].type == null) {
+            sceneType = SceneType.end;
+        } else {
+            switch (transitions[0].type) {
+                case "check_fail":
+                    sceneType = SceneType.conditional;
+                    break;
+                case "check_pass":
+                    sceneType = SceneType.conditional;
+                    break;
+                case "auto":
+                    sceneType = SceneType.auto;
+                    break;
+                case "action":
+                    sceneType = SceneType.action;
+                    break;
+            }
+        }
+
+        // Setup Scene Text
+        sceneText.setText(player.getCurrentScene().body);
+
+        // Setup options
+        if (sceneType == SceneType.action) {
+            options = new String[player.getCurrentScene().transitions.length];
+            for(int x=0; x<player.getCurrentScene().transitions.length; x++) {
+                options[x] = player.getCurrentScene().transitions[x].verb;
+            }
+        }
         ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);
         optionsList.setAdapter(optionsAdapter);
 
-        baconText(sceneText);
+        setOnClickListeners();
+    }
+
+    private void setOnClickListeners() {
+        nextSceneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,15 +170,5 @@ public class GamePlayActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void baconText(TextView sceneText) {
-        sceneText.setText("Bacon ipsum dolor amet prosciutto chicken hamburger alcatra biltong capicola meatball doner fatback filet mignon shank kevin leberkas." +
-                "\n\nTenderloin brisket corned beef pork belly filet mignon cow." +
-                "\n\nPork short loin ball tip pig hamburger pork loin porchetta biltong andouille alcatra sirloin brisket corned beef rump chuck." +
-                "\n\nCow doner salami porchetta pancetta sausage pork loin rump leberkas." +
-                "\n\nChuck shank corned beef tail doner shoulder strip steak sirloin sausage pork chop filet mignon." +
-                "\n\nShort ribs tail tongue, tri-tip pork belly biltong bacon short loin burgdoggen."
-        );
     }
 }
