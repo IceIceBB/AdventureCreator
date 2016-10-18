@@ -41,9 +41,10 @@ public class StoryCreation extends AppCompatActivity {
                 getAllTitlesAndIds();
                 Models.Story newStory = new Models.Story(
                         "Story " + allStoriesArray.length + 1,
+                        "Story Author",
                         "Story Summary",
                         "Story Genre",
-                        "Story Author",
+                        "Story Type",
                         "Story Tags");
 //                TODO: Fix these two so they aren't breaking the code (Something about Listener)
 //                Response.Listener<Models.Story> listener = new Response.Listener<>();
