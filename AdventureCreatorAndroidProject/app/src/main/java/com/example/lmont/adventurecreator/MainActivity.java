@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         setup();
-//        testPlay();
-        test();
+        testPlay();
+//        test();
 //        testUpdateRoutes();
 
         gameHelper.wordSimilarityValue("grab key", "grab", new Response.Listener<Float>() {

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
@@ -40,6 +41,7 @@ public class GamePlayActivity extends AppCompatActivity {
     boolean hintShowing;
     ListView optionsList;
     EditText userInputEditText;
+    ProgressBar loadingProgressBar;
     Context context;
 
     Models.Transition[] transitions;
@@ -68,6 +70,7 @@ public class GamePlayActivity extends AppCompatActivity {
         optionsList = (ListView) findViewById(R.id.options);
         nextSceneButton = (Button) findViewById(R.id.nextScene);
         userInputEditText = (EditText) findViewById(R.id.editText);
+        loadingProgressBar = (ProgressBar) findViewById(R.id.loading_progressBar);
         options = null;
         context = this;
 
@@ -117,6 +120,21 @@ public class GamePlayActivity extends AppCompatActivity {
         setOnClickListeners();
     }
 
+    int loaders = 0;
+    private void loading() {
+        loaders++;
+        loadingProgressBar.setVisibility(View.VISIBLE);
+        nextSceneButton.setVisibility(View.INVISIBLE);
+    }
+
+    private void doneLoading() {
+        loaders--;
+        if (loaders <= 0) {
+            loadingProgressBar.setVisibility(View.INVISIBLE);
+            nextSceneButton.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void setOnClickListeners() {
 
         optionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -164,9 +182,11 @@ public class GamePlayActivity extends AppCompatActivity {
                 final String userInput = userInputEditText.getText().toString();
                 ArrayList values = new ArrayList();
                 for(final Models.Transition transition : transitions) {
+                    loading();
                     GameHelper.getInstance(context).wordSimilarityValue(userInput, transition.verb, new Response.Listener<Float>() {
                         @Override
                         public void onResponse(Float response) {
+                            doneLoading();
                             if (response > .3) {
                                 if (isFound[0]) return;
                                 isFound[0] = true;
