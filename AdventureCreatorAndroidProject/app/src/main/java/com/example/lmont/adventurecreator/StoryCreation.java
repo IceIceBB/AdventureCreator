@@ -37,7 +37,7 @@ public class StoryCreation extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allStoryTitles);
 
 
-//        TODO: Add new story and pull for ID.
+//        TODOne: Add new story and pull for ID.
         newStoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +79,7 @@ public class StoryCreation extends AppCompatActivity {
     }
 
 
-    //    TODO: Get data and populate list view with Story titles (additional info?)
+    //    TODOne: Get data and populate list view with Story titles (additional info?)
     public void getAllTitlesAndIds() {
         allStoriesArray = GameHelper.getInstance(this).getAllStories();
 
@@ -90,7 +90,7 @@ public class StoryCreation extends AppCompatActivity {
 
             Models.Story storyAtI = allStoriesArray[i];
             allStoryTitles.add(storyAtI.title);
-//            TODO: Use this to pass id for selected activity through on item click
+//            TODOne: Use this to pass id for selected activity through on item click
             allStoryIds.add(storyAtI._id);
         }
     }
@@ -104,6 +104,6 @@ public class StoryCreation extends AppCompatActivity {
             }
         });
     }
-    
+
 
 }

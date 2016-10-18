@@ -42,7 +42,7 @@ public class SceneCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene_creation);
 
-//        TODO: Update db with changes to Title, Goal and Summary when exiting this event (or with new button?)
+//        TODOne: Update db with changes to Title, Goal and Summary when exiting this event (or with new button?)
         chapterTitleEditText = (EditText) findViewById(R.id.chapterTitleEditText);
         chapterGoalEditText = (EditText) findViewById(R.id.chapterGoalEditText);
         chapterSummaryEditText = (EditText) findViewById(R.id.chapterSummaryEditText);
@@ -55,7 +55,7 @@ public class SceneCreation extends AppCompatActivity {
 
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allSceneTitles);
 
-//        TODO: Add new scene and pull for ID.
+//        TODOne: Add new scene and pull for ID.
         addSceneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,7 +100,7 @@ public class SceneCreation extends AppCompatActivity {
         sceneNodeListView.setAdapter(arrayAdapter);
     }
 
-    //        TODO: Get data and populate list view with Scene titles
+    //        TODOne: Get data and populate list view with Scene titles
     public void getChapterDetails() {
         Intent chapterIntent = getIntent();
         storyId = chapterIntent.getStringExtra("storyId");
@@ -121,7 +121,7 @@ public class SceneCreation extends AppCompatActivity {
         }
     }
 
-    //    TODO: Use this to update the database with user edits
+    //    TODOne: Use this to update the database with user edits
     public void readChapterFormFields() {
         chapterTitle = chapterTitleEditText.getText().toString();
         chapterGoal = chapterGoalEditText.getText().toString();

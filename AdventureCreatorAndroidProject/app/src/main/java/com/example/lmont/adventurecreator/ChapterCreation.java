@@ -46,7 +46,7 @@ public class ChapterCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapter_creation);
 
-//        TODO: Update db with changes to Title, Author, Summary, Genre and Tags when exiting this activity (or with new button?)
+//        TODOne: Update db with changes to Title, Author, Summary, Genre and Tags when exiting this activity (or with new button?)
         storyTitleEditText = (EditText) findViewById(R.id.storyTitleEditText);
         storyAuthorEditText = (EditText) findViewById(R.id.storyAuthorEditText);
         storySummaryEditText = (EditText) findViewById(R.id.storySummaryEditText);
@@ -62,7 +62,7 @@ public class ChapterCreation extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allChapterTitles);
 
 
-//        TODO: Add new chapter and pull for id
+//        TODOne: Add new chapter and pull for id
         addChapterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +78,7 @@ public class ChapterCreation extends AppCompatActivity {
 
 
 
-//        TODO: Transition to Chapter Creation with Story id and Chapter id as Intent Extras
+//        TODOne: Transition to Chapter Creation with Story id and Chapter id as Intent Extras
         chaptersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
@@ -106,7 +106,7 @@ public class ChapterCreation extends AppCompatActivity {
     }
 
 
-//    TODO: Get data and populate list view with Chapter titles
+//    TODOne: Get data and populate list view with Chapter titles
     public void getStoryDetails() {
         Intent storyIntent = getIntent();
         storyId = storyIntent.getStringExtra("selectedStoryId");
@@ -131,7 +131,7 @@ public class ChapterCreation extends AppCompatActivity {
     }
 
 
-//    TODO: Use this to update the database with user edits
+//    TODOne: Use this to update the database with user edits
     public void readStoryFormFields(){
         storyTitle = storyTitleEditText.getText().toString();
         storyAuthor = storyAuthorEditText.getText().toString();
