@@ -120,19 +120,14 @@ public class GamePlayActivity extends AppCompatActivity {
         setOnClickListeners();
     }
 
-    int loaders = 0;
-    private void loading() {
-        loaders++;
+    private void showLoading() {
         loadingProgressBar.setVisibility(View.VISIBLE);
         nextSceneButton.setVisibility(View.INVISIBLE);
     }
 
-    private void doneLoading() {
-        loaders--;
-        if (loaders <= 0) {
-            loadingProgressBar.setVisibility(View.INVISIBLE);
-            nextSceneButton.setVisibility(View.VISIBLE);
-        }
+    private void hideLoading() {
+        loadingProgressBar.setVisibility(View.INVISIBLE);
+        nextSceneButton.setVisibility(View.VISIBLE);
     }
 
     private void setOnClickListeners() {
@@ -181,12 +176,16 @@ public class GamePlayActivity extends AppCompatActivity {
                 final boolean[] isFound = {false};
                 final String userInput = userInputEditText.getText().toString();
                 ArrayList values = new ArrayList();
+                final int[] loadCounter = {0};
                 for(final Models.Transition transition : transitions) {
-                    loading();
+                    showLoading();
                     GameHelper.getInstance(context).wordSimilarityValue(userInput, transition.verb, new Response.Listener<Float>() {
                         @Override
                         public void onResponse(Float response) {
-                            doneLoading();
+                            loadCounter[0]++;
+                            if (loadCounter[0] >= transitions.length) {
+                                hideLoading();
+                            }
                             if (response > .3) {
                                 if (isFound[0]) return;
                                 isFound[0] = true;
