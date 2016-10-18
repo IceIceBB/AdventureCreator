@@ -22,10 +22,14 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
     private FragmentManager fm;
     private float scale;
 
-    public GameLibraryPagerAdapter(GameLibraryActivity context, FragmentManager fm) {
+    static final int numBooks = 0;
+    String genre = null;
+
+    public GameLibraryPagerAdapter(GameLibraryActivity context, FragmentManager fm, String genre) {
         super(fm);
         this.fm = fm;
         this.context = context;
+        this.genre = genre;
     }
 
     @Override
@@ -42,7 +46,11 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
 
     @Override
     public int getCount() {
-        return GameLibraryActivity.STORIES * GameLibraryActivity.LOOPS;
+//        return GameLibraryActivity.STORIES * GameLibraryActivity.LOOPS;
+        int numBooks = new GameLibraryActivity().getNumBooksPerGenre(genre);
+
+        notifyDataSetChanged();
+        return numBooks;
     }
 
     @Override
