@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void testPlay() {
         Button button = (Button) findViewById(R.id.main_sendButton);
+        button.setText("DEMO GAME");
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
