@@ -54,7 +54,7 @@ public class APIHelper {
 
     public void getWordComparisonValue(String word1, String word2, Response.Listener listener, Response.ErrorListener errorListener) {
         // Instantiate the RequestQueue.
-        String url = SWOOGLE_URL + "&phrase1=" + word1 + "&phrase2=" + word2;
+        String url = SWOOGLE_URL + "&phrase1=" + word1.replace(" ", "%20") + "&phrase2=" + word2.replace(" ", "%20");
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, listener, errorListener);

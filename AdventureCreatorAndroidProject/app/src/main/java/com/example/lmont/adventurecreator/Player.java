@@ -1,5 +1,7 @@
 package com.example.lmont.adventurecreator;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**

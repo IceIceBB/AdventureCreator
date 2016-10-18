@@ -77,6 +77,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
      */
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
+        Log.d("LEO", "onPerformSync: ");
         AdventureDBHelper.getInstance(getContext()).deleteAll();
         APIHelper.getInstance(getContext()).downloadAll(new Response.Listener<Models.RemoteData>() {
             @Override
