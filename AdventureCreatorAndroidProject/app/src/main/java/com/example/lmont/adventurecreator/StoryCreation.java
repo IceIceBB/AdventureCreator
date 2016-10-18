@@ -56,23 +56,6 @@ public class StoryCreation extends AppCompatActivity {
         });
 
 
-// LEO'S EXAMPLE
-//    public void testCreateStory() {
-//        gameHelper.addStory(new Models.Story(
-//                "The Bottle & The Key",
-//                "Paul",
-//                "Can you escape the room?",
-//                "horror",
-//                "puzzle",
-//                "short, key, mystery"),
-//                new Response.Listener<Models.Story>() {
-//            @Override
-//            public void onResponse(Models.Story response) {
-//                testStory[0] = response._id;
-//                testCreateChapter(response._id);
-//            }
-//        });
-
         getAllTitlesAndIds();
         storyListView.setAdapter(arrayAdapter);
 
@@ -121,6 +104,6 @@ public class StoryCreation extends AppCompatActivity {
             }
         });
     }
-
+    
 
 }

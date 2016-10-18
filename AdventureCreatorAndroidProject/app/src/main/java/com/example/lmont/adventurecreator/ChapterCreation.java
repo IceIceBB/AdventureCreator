@@ -89,6 +89,12 @@ public class ChapterCreation extends AppCompatActivity {
                 intent.putExtra("selectedChapterTitle", allChaptersArray[position].title);
                 intent.putExtra("selectedChapterGoal", allChaptersArray[position].type);
                 intent.putExtra("selectedChapterSummary", allChaptersArray[position].summary);
+
+                readStoryFormFields();
+                Models.Story updatedStory = new Models.Story(storyTitle, storyAuthor, storySummary, storyGenre,"Type", storyTags);
+
+                updateStory(updatedStory);
+
                 startActivity(intent);
             }
         });
@@ -149,5 +155,26 @@ public class ChapterCreation extends AppCompatActivity {
                 arrayAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void updateStory(Models.Story story){
+        GameHelper.getInstance(ChapterCreation.this).updateStory(story, new Response.Listener<Models.Story>(){
+            @Override
+            public void onResponse(Models.Story response) {
+                getAllTitlesAndIds();
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+
+        readStoryFormFields();
+        Models.Story updatedStory = new Models.Story(storyTitle, storyAuthor, storySummary, storyGenre,"Type", storyTags);
+
+        updateStory(updatedStory);
+
     }
 }

@@ -84,6 +84,12 @@ public class SceneCreation extends AppCompatActivity {
                 intent.putExtra("selectedSceneJournalText", allScenesArray[position].journalText);
                 intent.putExtra("selectedSceneModifiers", allScenesArray[position].flagModifiers);
                 intent.putExtra("selectedSceneBodyText", allScenesArray[position].body);
+
+                readChapterFormFields();
+                Models.Chapter updatedChapter = new Models.Chapter(chapterTitle, chapterSummary, chapterGoal, storyId);
+
+                updateChapter(updatedChapter);
+
                 startActivity(intent);
             }
         });
@@ -116,7 +122,7 @@ public class SceneCreation extends AppCompatActivity {
     }
 
     //    TODO: Use this to update the database with user edits
-    public void readStoryFormFields() {
+    public void readChapterFormFields() {
         chapterTitle = chapterTitleEditText.getText().toString();
         chapterGoal = chapterGoalEditText.getText().toString();
         chapterSummary = chapterSummaryEditText.getText().toString();
@@ -136,6 +142,27 @@ public class SceneCreation extends AppCompatActivity {
                 arrayAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void updateChapter(Models.Chapter chapter){
+        GameHelper.getInstance(SceneCreation.this).updateChapter(chapter, new Response.Listener<Models.Chapter>(){
+            @Override
+            public void onResponse(Models.Chapter response) {
+                getAllTitlesAndIds();
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+
+        readChapterFormFields();
+        Models.Chapter updatedChapter = new Models.Chapter(chapterTitle, chapterSummary, chapterGoal, storyId);
+
+        updateChapter(updatedChapter);
+
     }
 
 }
