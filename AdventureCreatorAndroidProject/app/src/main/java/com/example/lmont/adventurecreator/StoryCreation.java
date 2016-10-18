@@ -18,6 +18,7 @@ public class StoryCreation extends AppCompatActivity {
     Models.Story[] allStoriesArray;
     ArrayList<String> allStoryTitles;
     ArrayList<String> allStoryIds;
+
     ArrayAdapter<String> arrayAdapter;
 
     @Override
@@ -57,7 +58,7 @@ public class StoryCreation extends AppCompatActivity {
         storyListView.setAdapter(arrayAdapter);
 
 
-//        TODO: Transition to Chapter Creation with Story id as Intent Extra
+//        TODOne: Transition to Chapter Creation with Story id as Intent Extra
         storyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
