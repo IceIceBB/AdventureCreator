@@ -77,11 +77,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
      */
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        Log.d("LEO", "onPerformSync: ");
         AdventureDBHelper.getInstance(getContext()).deleteAll();
         APIHelper.getInstance(getContext()).downloadAll(new Response.Listener<Models.RemoteData>() {
             @Override
             public void onResponse(Models.RemoteData response) {
+                Log.d("LEO", "onPerformSync: " + response.toString());
                 for (Models.Story story : response.stories) {
                     ContentValues cv = new ContentValues();
                     cv.put("title", story.title);

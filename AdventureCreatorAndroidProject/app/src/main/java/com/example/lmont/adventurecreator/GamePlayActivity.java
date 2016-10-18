@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -117,6 +118,16 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void setOnClickListeners() {
+
+        optionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                player.getNextScene(transitions[position].toSceneID);
+                Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
+                startActivity(intent);
+            }
+        });
+
         nextSceneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,11 +223,13 @@ public class GamePlayActivity extends AppCompatActivity {
                     optionsList.setVisibility(View.GONE);
                 }
                 else if (hintReady&&!hintShowing){
+                    nextSceneButton.setVisibility(View.INVISIBLE);
                     optionsList.setVisibility(View.VISIBLE);
                     hintReady = false;
-//                    hintShowing = true;
+                    hintShowing = true;
                 }
                 else if (!hintReady&&hintShowing){
+                    nextSceneButton.setVisibility(View.VISIBLE);
                     int colorFrom = getResources().getColor(R.color.colorPrimary);
                     int colorTo = getResources().getColor(R.color.colorAccent);
                     ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
