@@ -32,54 +32,30 @@ public class MainActivity extends AppCompatActivity {
 
         setup();
         testPlay();
-//        testAddStoryAndReadStory();
+//        test();
 //        testUpdateRoutes();
+
+        gameHelper.wordSimilarityValue("grab key", "grab", new Response.Listener<Float>() {
+            @Override
+            public void onResponse(Float response) {
+                addText(response.toString());
+            }
+        }, null);
     }
 
     private void testPlay() {
         Button button = (Button) findViewById(R.id.main_sendButton);
+        button.setText("DEMO GAME");
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Player.getInstance().loadGame(gameHelper.getFullStory("58054495480ad90011d02314").chapters[0]);
-                Intent intent = new Intent(MainActivity.this, GamePlayActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void testUpdateRoutes() {
-        Models.Transition tr = new Models.Transition("a", "a", "a", "a", "a", 0, "a", "a");
-        tr._id = "58052b47b84afb00116dc429";
-        Models.Scene sc = new Models.Scene("a", "a", "a", "a", "a");
-        sc._id = "58052b47b84afb00116dc423";
-        Models.Chapter c = new Models.Chapter("t", "s", "t", "id");
-        c._id = "58052b47b84afb00116dc422";
-        Models.Story s = new Models.Story("The B", "Can You", "Mystery", "Short", "Puzzle");
-        s._id = "58052b46b84afb00116dc421";
-
-        gameHelper.updateStory(s, new Response.Listener<Models.Story>() {
-            @Override
-            public void onResponse(Models.Story response) {
-                addText(response.toString());
-            }
-        });
-        gameHelper.updateChapter(c, new Response.Listener<Models.Chapter>() {
-            @Override
-            public void onResponse(Models.Chapter response) {
-                addText(response.toString());
-            }
-        });
-        gameHelper.updateScene( sc, new Response.Listener<Models.Scene>() {
-            @Override
-            public void onResponse(Models.Scene response) {
-                addText(response.toString());
-            }
-        });
-        gameHelper.updateTransition(tr, new Response.Listener<Models.Transition>() {
-            @Override
-            public void onResponse(Models.Transition response) {
-                addText(response.toString());
+                try {
+                    Player.getInstance().loadGame(gameHelper.getFullStory("58054495480ad90011d02314").chapters[0]);
+                    Intent intent = new Intent(MainActivity.this, GamePlayActivity.class);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -106,45 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 view.getContext().startActivity(intent);
             }
         });
-    }
-    public void testAddStoryAndReadStory() {
-        // Code for Spencer +++++++++++++++++++++
-//        testCreateStory();
-        // ++++++++++++++++++++++++++++++++++++++
-
-        editText1 = (EditText)findViewById(R.id.main_wordOneEditText);
-        editText2 = (EditText)findViewById(R.id.main_wordTwoEditText);
-        Button compareButton = (Button)findViewById(R.id.main_sendButton);
-        compareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            Models.Transition[] transitions = GameHelper.getInstance(getApplicationContext()).getTransitionsForScenes("57fdbf659ed97a256090b98b");
-            for (Models.Transition tranny: transitions) {
-                addText(tranny.toString());
-            }
-
-            ((ProgressBar)findViewById(R.id.main_progressBar)).setVisibility(View.VISIBLE);
-            apiHelper.getWordComparisonValue(
-                editText1.getText().toString().replace(" ", "%20"),
-                editText2.getText().toString().replace(" ", "%20"),
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-                        ((ProgressBar) findViewById(R.id.main_progressBar)).setVisibility(View.INVISIBLE);
-                        addText((String) response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                }
-            });
-            }
-        });
-
-        dbHelper.deleteAll();
     }
 
     public void test() {
@@ -208,6 +145,42 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dbHelper.deleteAll();
+    }
+
+    private void testUpdateRoutes() {
+        Models.Transition tr = new Models.Transition("a", "a", "a", "a", "a", 0, "a", "a");
+        tr._id = "58052b47b84afb00116dc429";
+        Models.Scene sc = new Models.Scene("a", "a", "a", "a", "a");
+        sc._id = "58052b47b84afb00116dc423";
+        Models.Chapter c = new Models.Chapter("t", "s", "t", "id");
+        c._id = "58052b47b84afb00116dc422";
+        Models.Story s = new Models.Story("The B", "Can You", "Mystery", "Short", "Puzzle");
+        s._id = "58052b46b84afb00116dc421";
+
+        gameHelper.updateStory(s, new Response.Listener<Models.Story>() {
+            @Override
+            public void onResponse(Models.Story response) {
+                addText(response.toString());
+            }
+        });
+        gameHelper.updateChapter(c, new Response.Listener<Models.Chapter>() {
+            @Override
+            public void onResponse(Models.Chapter response) {
+                addText(response.toString());
+            }
+        });
+        gameHelper.updateScene( sc, new Response.Listener<Models.Scene>() {
+            @Override
+            public void onResponse(Models.Scene response) {
+                addText(response.toString());
+            }
+        });
+        gameHelper.updateTransition(tr, new Response.Listener<Models.Transition>() {
+            @Override
+            public void onResponse(Models.Transition response) {
+                addText(response.toString());
+            }
+        });
     }
 
     final String[] testStory = new String[1];

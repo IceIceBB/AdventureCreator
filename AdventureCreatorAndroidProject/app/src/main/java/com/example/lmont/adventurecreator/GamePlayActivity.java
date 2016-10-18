@@ -3,15 +3,25 @@ package com.example.lmont.adventurecreator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
+
+import com.android.volley.Response;
+
+import java.util.ArrayList;
+
+import static com.example.lmont.adventurecreator.R.id.options;
 
 public class GamePlayActivity extends AppCompatActivity {
 
@@ -28,10 +38,13 @@ public class GamePlayActivity extends AppCompatActivity {
     boolean hintReady;
     boolean hintShowing;
     ListView optionsList;
+    EditText userInputEditText;
+    Context context;
 
     Models.Transition[] transitions;
     Player player;
     SceneType sceneType;
+    String[] options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +66,9 @@ public class GamePlayActivity extends AppCompatActivity {
         hintButton = (Button) findViewById(R.id.hintButton);
         optionsList = (ListView) findViewById(R.id.options);
         nextSceneButton = (Button) findViewById(R.id.nextScene);
-        String[] options = null;
+        userInputEditText = (EditText) findViewById(R.id.editText);
+        options = null;
+        context = this;
 
         // Instantiate Player
         player = Player.getInstance();
@@ -61,7 +76,7 @@ public class GamePlayActivity extends AppCompatActivity {
         // Get Scene Type
         transitions = player.getCurrentScene().transitions;
 
-        if (transitions[0].type == null) {
+        if (transitions.length == 0) {
             sceneType = SceneType.end;
         } else {
             switch (transitions[0].type) {
@@ -89,7 +104,12 @@ public class GamePlayActivity extends AppCompatActivity {
             for(int x=0; x<player.getCurrentScene().transitions.length; x++) {
                 options[x] = player.getCurrentScene().transitions[x].verb;
             }
+        } else {
+            options = new String[0];
+            userInputEditText.setVisibility(View.GONE);
+            hintButton.setVisibility(View.GONE);
         }
+
         ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);
         optionsList.setAdapter(optionsAdapter);
 
@@ -100,7 +120,52 @@ public class GamePlayActivity extends AppCompatActivity {
         nextSceneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (sceneType != SceneType.action) {
+                    if (sceneType == SceneType.end) {
+                        Intent intent = new Intent(GamePlayActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                    if (sceneType == SceneType.auto) {
+                        player.getNextScene(transitions[0].toSceneID);
+                        Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
+                        startActivity(intent);
+                    }
+                    if (sceneType == SceneType.conditional) {
+                        if (player.checkIfPlayerHasModifier(transitions[0].flag)) {
+                            if (transitions[0].type.equals("check_pass")) {
+                                player.getNextScene(transitions[0].toSceneID);
+                            } else {
+                                player.getNextScene(transitions[1].toSceneID);
+                            }
+                        } else {
+                            if (transitions[0].type.equals("check_fail")) {
+                                player.getNextScene(transitions[0].toSceneID);
+                            } else {
+                                player.getNextScene(transitions[1].toSceneID);
+                            }
+                        }
+                        Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
+                        startActivity(intent);
+                    }
+                    return;
+                }
+                final boolean[] isFound = {false};
+                final String userInput = userInputEditText.getText().toString();
+                ArrayList values = new ArrayList();
+                for(final Models.Transition transition : transitions) {
+                    GameHelper.getInstance(context).wordSimilarityValue(userInput, transition.verb, new Response.Listener<Float>() {
+                        @Override
+                        public void onResponse(Float response) {
+                            if (response > .3) {
+                                if (isFound[0]) return;
+                                isFound[0] = true;
+                                player.getNextScene(transition.toSceneID);
+                                Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    }, null);
+                }
             }
         });
 
