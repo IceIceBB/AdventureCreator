@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.volley.Response;
+
 import java.util.ArrayList;
 
 public class ChapterCreation extends AppCompatActivity {
@@ -29,7 +31,7 @@ public class ChapterCreation extends AppCompatActivity {
     String storyTags;
 
 
-    Button addSceneButton;
+    Button addChapterButton;
     ListView chaptersListView;
 
 
@@ -51,7 +53,7 @@ public class ChapterCreation extends AppCompatActivity {
         storyGenreEditText = (EditText) findViewById(R.id.storyGenreEditText);
         storyTagsEditText = (EditText) findViewById(R.id.storyTagsEditText);
 
-        addSceneButton = (Button) findViewById(R.id.addSceneButton);
+        addChapterButton = (Button) findViewById(R.id.addChapterButton);
         chaptersListView = (ListView) findViewById(R.id.chaptersListView);
 
         allChapterTitles = new ArrayList<>();
@@ -60,29 +62,21 @@ public class ChapterCreation extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allChapterTitles);
 
 
-//        TODO: Add new scene and pull for id
-//        addSceneButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getAllTitlesAndIds();
-//                Models.Chapter newChapter = new Models.Chapter(
-//                        "Chapter " + allChaptersArray.length + 1,
-//                        "Chapter Summary",
-//                        "Chapter Goal",
-//                        storyId);
-//
-////                TODO: Fix these two so they aren't breaking the code (Something about Listener)
-////                Response.Listener<Models.Chapter> listener = new Response.Listener<>();
-////                GameHelper.getInstance(ChapterCreation.this).addChapter(newChapter, listener);
-//                getAllTitlesAndIds();
-//            }
-//        });
+//        TODO: Add new chapter and pull for id
+        addChapterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllTitlesAndIds();
+                Models.Chapter newChapter = new Models.Chapter(
+                        "Chapter " + (allChaptersArray.length+1),
+                        "Chapter Summary",
+                        "Chapter Goal",
+                        storyId);
+                    addChapter(newChapter);
+            }
+        });
 
-        getStoryDetails();
-        setStoryFormFields();
 
-        getAllTitlesAndIds();
-        chaptersListView.setAdapter(arrayAdapter);
 
 //        TODO: Transition to Chapter Creation with Story id and Chapter id as Intent Extras
         chaptersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -99,6 +93,10 @@ public class ChapterCreation extends AppCompatActivity {
             }
         });
 
+        getStoryDetails();
+
+        getAllTitlesAndIds();
+        chaptersListView.setAdapter(arrayAdapter);
     }
 
 
@@ -110,10 +108,14 @@ public class ChapterCreation extends AppCompatActivity {
         storySummary = storyIntent.getStringExtra("selectedStorySummary");
         storyGenre = storyIntent.getStringExtra("selectedStoryGenre");
         storyTags = storyIntent.getStringExtra("selectedStoryTags");
+        setStoryFormFields();
     }
 
     public void getAllTitlesAndIds() {
         allChaptersArray = GameHelper.getInstance(this).getChaptersForStory(storyId);
+
+        allChapterIds.removeAll(allChapterIds);
+        allChapterTitles.removeAll(allChapterTitles);
 
         for (int i = 0; i < allChaptersArray.length; i++) {
             Models.Chapter chapterAtI = allChaptersArray[i];
@@ -137,5 +139,15 @@ public class ChapterCreation extends AppCompatActivity {
         storySummaryEditText.setText(storySummary);
         storyGenreEditText.setText(storyGenre);
         storyTagsEditText.setText(storyTags);
+    }
+
+    public void addChapter(Models.Chapter chapter) {
+        GameHelper.getInstance(ChapterCreation.this).addChapter(chapter, new Response.Listener<Models.Chapter>() {
+            @Override
+            public void onResponse(Models.Chapter response) {
+                getAllTitlesAndIds();
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

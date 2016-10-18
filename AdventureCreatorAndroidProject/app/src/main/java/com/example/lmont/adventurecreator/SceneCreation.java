@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.volley.Response;
+
 import java.util.ArrayList;
 
 
@@ -51,63 +53,89 @@ public class SceneCreation extends AppCompatActivity {
         allSceneTitles = new ArrayList<>();
         allSceneIds = new ArrayList<>();
 
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allSceneTitles);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allSceneTitles);
 
 //        TODO: Add new scene and pull for ID.
-//        addSceneButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getAllTitlesAndIds();
-//                Models.Scene newScene = new Models.Scene(
-//                        "Scene " + allScenesArray.length + 1,
-//                        "Journal Text",
-//                        "Flag Modifiers",
-//                        "Scene Body Text",
-//                        chapterId);
-//
-////                TODO: Fix these two so they aren't breaking the code (Something about Listener)
-////                Response.Listener<Models.Chapter> listener = new Response.Listener<>();
-////                GameHelper.getInstance(ChapterCreation.this).addChapter(newChapter, listener);
-//            }
-//        });
-        getChapterDetails();
-        setChapterFormFields();
-
-        getAllTitlesAndIds();
-        sceneNodeListView.setAdapter(arrayAdapter);
+        addSceneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllTitlesAndIds();
+                Models.Scene newScene = new Models.Scene(
+                        "Scene " + (allScenesArray.length+1),
+                        "Journal Text",
+                        "Flag Modifiers",
+                        "Scene Body Text",
+                        chapterId);
+                    addScene(newScene);
+            }
+        });
 
         sceneNodeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-                
+                Intent intent = new Intent(SceneCreation.this, SceneEditor.class);
+
+                intent.putExtra("storyId", storyId);
+                intent.putExtra("chapterId", chapterId);
+                intent.putExtra("sceneId", allSceneIds.get(position));
+//                TODO: Pass scene node type
+//                intent.putExtra("sceneNodeType", ???);
+                intent.putExtra("selectedSceneTitle", allScenesArray[position].title);
+                intent.putExtra("selectedSceneJournalText", allScenesArray[position].journalText);
+                intent.putExtra("selectedSceneModifiers", allScenesArray[position].flagModifiers);
+                intent.putExtra("selectedSceneBodyText", allScenesArray[position].body);
+                startActivity(intent);
             }
         });
+
+        getChapterDetails();
+
+        getAllTitlesAndIds();
+        sceneNodeListView.setAdapter(arrayAdapter);
     }
 
-//        TODO: Get data and populate list view with Scene titles
-    public void getChapterDetails(){
+    //        TODO: Get data and populate list view with Scene titles
+    public void getChapterDetails() {
         Intent chapterIntent = getIntent();
         storyId = chapterIntent.getStringExtra("storyId");
         chapterId = chapterIntent.getStringExtra("selectedChapterId");
         chapterTitle = chapterIntent.getStringExtra("selectedChapterTitle");
         chapterGoal = chapterIntent.getStringExtra("selectedChapterGoal");
         chapterSummary = chapterIntent.getStringExtra("selectedChapterSummary");
+        setChapterFormFields();
     }
 
-    public void getAllTitlesAndIds(){
+    public void getAllTitlesAndIds() {
         allScenesArray = GameHelper.getInstance(this).getScenesForChapter(chapterId);
 
-        for (int i = 0; i <allScenesArray.length ; i++) {
+        for (int i = 0; i < allScenesArray.length; i++) {
             Models.Scene sceneAtI = allScenesArray[i];
             allSceneTitles.add(sceneAtI.title);
             allSceneIds.add(sceneAtI._id);
         }
     }
 
-public void setChapterFormFields(){
-    chapterTitleEditText.setText(chapterTitle);
-    chapterGoalEditText.setText(chapterGoal);
-    chapterSummaryEditText.setText(chapterSummary);
-}
+    //    TODO: Use this to update the database with user edits
+    public void readStoryFormFields() {
+        chapterTitle = chapterTitleEditText.getText().toString();
+        chapterGoal = chapterGoalEditText.getText().toString();
+        chapterSummary = chapterSummaryEditText.getText().toString();
+    }
+
+    public void setChapterFormFields() {
+        chapterTitleEditText.setText(chapterTitle);
+        chapterGoalEditText.setText(chapterGoal);
+        chapterSummaryEditText.setText(chapterSummary);
+    }
+
+    public void addScene(Models.Scene scene) {
+        GameHelper.getInstance(SceneCreation.this).addScene(scene, new Response.Listener<Models.Scene>() {
+            @Override
+            public void onResponse(Models.Scene response) {
+                getAllTitlesAndIds();
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 
 }

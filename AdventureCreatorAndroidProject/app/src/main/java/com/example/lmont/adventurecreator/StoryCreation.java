@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.android.volley.Response;
+
 import java.util.ArrayList;
 
 public class StoryCreation extends AppCompatActivity {
@@ -41,19 +43,35 @@ public class StoryCreation extends AppCompatActivity {
             public void onClick(View view) {
                 getAllTitlesAndIds();
                 Models.Story newStory = new Models.Story(
-                        "Story " + allStoriesArray.length + 1,
+                        "Story " + (allStoriesArray.length+1),
                         "Story Author",
                         "Story Summary",
                         "Story Genre",
                         "Story Type",
                         "Story Tags");
-//                TODO: Fix these two so they aren't breaking the code (Something about Listener)
-//                Response.Listener<Models.Story> listener = new Response.Listener<>();
-//                GameHelper.getInstance(StoryCreation.this).addStory(newStory, listener);
-                getAllTitlesAndIds();
+
+                addStory(newStory);
+//                getAllTitlesAndIds();
             }
         });
 
+
+// LEO'S EXAMPLE
+//    public void testCreateStory() {
+//        gameHelper.addStory(new Models.Story(
+//                "The Bottle & The Key",
+//                "Paul",
+//                "Can you escape the room?",
+//                "horror",
+//                "puzzle",
+//                "short, key, mystery"),
+//                new Response.Listener<Models.Story>() {
+//            @Override
+//            public void onResponse(Models.Story response) {
+//                testStory[0] = response._id;
+//                testCreateChapter(response._id);
+//            }
+//        });
 
         getAllTitlesAndIds();
         storyListView.setAdapter(arrayAdapter);
@@ -78,9 +96,12 @@ public class StoryCreation extends AppCompatActivity {
     }
 
 
-//    TODO: Get data and populate list view with Story titles (additional info?)
+    //    TODO: Get data and populate list view with Story titles (additional info?)
     public void getAllTitlesAndIds() {
         allStoriesArray = GameHelper.getInstance(this).getAllStories();
+
+        allStoryIds.removeAll(allStoryIds);
+        allStoryTitles.removeAll(allStoryTitles);
 
         for (int i = 0; i < allStoriesArray.length; i++) {
 
@@ -89,6 +110,16 @@ public class StoryCreation extends AppCompatActivity {
 //            TODO: Use this to pass id for selected activity through on item click
             allStoryIds.add(storyAtI._id);
         }
+    }
+
+    public void addStory(Models.Story story) {
+        GameHelper.getInstance(StoryCreation.this).addStory(story, new Response.Listener<Models.Story>() {
+            @Override
+            public void onResponse(Models.Story response) {
+                getAllTitlesAndIds();
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 
