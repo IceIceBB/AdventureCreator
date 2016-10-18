@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     Models.Story story = gameHelper.getFullStory("58065526288a6a00114c2802");
                     Player.getInstance().loadGame(story.chapters[0], story.genre);
                     Intent intent = new Intent(MainActivity.this, GamePlayActivity.class);
+                    intent.putExtra("genre", story.genre);
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -143,6 +144,9 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
+//                if (Objects.equals(player.genre, "horror")){
+//                    getApplicationContext().setTheme(R.style.HorrorTheme);
+//                }
             }
         });
 

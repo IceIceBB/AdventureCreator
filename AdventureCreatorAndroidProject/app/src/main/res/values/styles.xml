@@ -8,6 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="HorrorTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/horrorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="colorBackground">@color/horrorPrimary</item>-->
+
+    </style>
+
     <!--<item name="android:dialogTheme">@style/CustomDialog</item>-->
 
     <style name="CustomDialog" parent="@style/Theme.AppCompat.Light.Dialog">

@@ -43,7 +43,7 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
         position = position % GameLibraryActivity.STORIES;
         return GameLibraryFragment.newInstance(context, position, scale);
     }
-
+//      get number of books for each row
     @Override
     public int getCount() {
 //        return GameLibraryActivity.STORIES * GameLibraryActivity.LOOPS;
