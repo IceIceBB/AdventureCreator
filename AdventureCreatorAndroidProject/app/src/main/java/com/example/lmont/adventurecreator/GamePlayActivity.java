@@ -76,7 +76,7 @@ public class GamePlayActivity extends AppCompatActivity {
         // Get Scene Type
         transitions = player.getCurrentScene().transitions;
 
-        if (transitions[0].type == null) {
+        if (transitions.length == 0) {
             sceneType = SceneType.end;
         } else {
             switch (transitions[0].type) {
@@ -121,20 +121,29 @@ public class GamePlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (sceneType != SceneType.action) {
+                    if (sceneType == SceneType.end) {
+                        Intent intent = new Intent(GamePlayActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
                     if (sceneType == SceneType.auto) {
                         player.getNextScene(transitions[0].toSceneID);
                         Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
                         startActivity(intent);
                     }
                     if (sceneType == SceneType.conditional) {
-                        // FIX DIS
-                        String whereTo;
-                        if (player.checkIfPlayerHasModifier(transitions[0].attribute)) {
+                        if (player.checkIfPlayerHasModifier(transitions[0].flag)) {
                             if (transitions[0].type.equals("check_pass")) {
-
+                                player.getNextScene(transitions[0].toSceneID);
+                            } else {
+                                player.getNextScene(transitions[1].toSceneID);
+                            }
+                        } else {
+                            if (transitions[0].type.equals("check_fail")) {
+                                player.getNextScene(transitions[0].toSceneID);
+                            } else {
+                                player.getNextScene(transitions[1].toSceneID);
                             }
                         }
-                        player.getNextScene(transitions[0].toSceneID);
                         Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
                         startActivity(intent);
                     }

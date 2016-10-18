@@ -24,12 +24,12 @@ public class Player {
         return instance;
     }
 
-    private Player() {
-        modifiers = new ArrayList<>();
-    }
+    private Player() {}
 
     public Models.Scene loadGame(Models.Chapter chapter) {
         this.chapter = chapter;
+        journalText = "";
+        modifiers = new ArrayList<>();
         for (Models.Scene scene : chapter.scenes) {
             if (scene.title.equals("intro")) {
 
