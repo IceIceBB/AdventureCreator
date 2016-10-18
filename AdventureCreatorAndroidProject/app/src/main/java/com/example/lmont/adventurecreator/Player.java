@@ -17,6 +17,8 @@ public class Player {
     private ArrayList<String> modifiers;
     private String journalText = "";
 
+    public String genre = "";
+
     public static Player getInstance() {
         if (instance == null)
             instance = new Player();
@@ -26,7 +28,8 @@ public class Player {
 
     private Player() {}
 
-    public Models.Scene loadGame(Models.Chapter chapter) {
+    public Models.Scene loadGame(Models.Chapter chapter, String genre) {
+        this.genre = genre;
         this.chapter = chapter;
         journalText = "";
         modifiers = new ArrayList<>();

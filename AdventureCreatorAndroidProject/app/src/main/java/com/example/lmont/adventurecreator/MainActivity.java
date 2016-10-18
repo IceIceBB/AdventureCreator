@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Player.getInstance().loadGame(gameHelper.getFullStory("58065526288a6a00114c2802").chapters[0]);
+                    Models.Story story = gameHelper.getFullStory("58065526288a6a00114c2802");
+                    Player.getInstance().loadGame(story.chapters[0], story.genre);
                     Intent intent = new Intent(MainActivity.this, GamePlayActivity.class);
                     startActivity(intent);
                 } catch (Exception e) {
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 // Code for Paul --------------------
                 Player player = Player.getInstance();
                 Models.Story story = GameHelper.getInstance(getApplicationContext()).getFullStory(testStory[0]);
-                Models.Scene currentScene = player.loadGame(story.chapters[0]);
+                Models.Scene currentScene = player.loadGame(story.chapters[0], story.genre);
                 addText(currentScene.toString());
 
                 addText("playerHasKey: " + player.checkIfPlayerHasModifier("key"));
