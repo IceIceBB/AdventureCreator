@@ -30,7 +30,7 @@ public class GameLibraryFragment extends Fragment {
         }
 
         LinearLayout l = (LinearLayout) inflater.inflate(R.layout.fragment_game_library, container, false);
-//        Button storyButton = (Button) getView().findViewById(R.id.)
+
 
         int pos = this.getArguments().getInt("pos");
         TextView tv = (TextView) l.findViewById(R.id.pageLabel);
