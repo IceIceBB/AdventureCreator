@@ -49,15 +49,16 @@ public class ChapterCreation extends AppCompatActivity {
         storyAuthorEditText = (EditText) findViewById(R.id.storyAuthorEditText);
         storySummaryEditText = (EditText) findViewById(R.id.storySummaryEditText);
         storyGenreEditText = (EditText) findViewById(R.id.storyGenreEditText);
-        storyTagsEditText = (EditText) findViewById(R.id.storyTitleEditText);
+        storyTagsEditText = (EditText) findViewById(R.id.storyTagsEditText);
+
+        addSceneButton = (Button) findViewById(R.id.addSceneButton);
+        chaptersListView = (ListView) findViewById(R.id.chaptersListView);
 
         allChapterTitles = new ArrayList<>();
         allChapterIds = new ArrayList<>();
 
-        chaptersListView = (ListView) findViewById(R.id.chaptersListView);
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allChapterTitles);
 
-        addSceneButton = (Button) findViewById(R.id.addSceneButton);
 
 //        TODO: Add new scene and pull for id
 //        addSceneButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +88,7 @@ public class ChapterCreation extends AppCompatActivity {
         chaptersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-                Intent intent = new Intent(ChapterCreation.this, ChapterCreation.class);
+                Intent intent = new Intent(ChapterCreation.this, SceneCreation.class);
 
                 intent.putExtra("storyId", storyId);
                 intent.putExtra("selectedChapterId", allChapterIds.get(position));
