@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     AdventureDBHelper dbHelper;
     Button libraryButton;
     Button storyCreatorButton;
+    Button deleteDbButton;
     GameHelper gameHelper;
 
     @Override
@@ -82,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), StoryCreation.class);
                 view.getContext().startActivity(intent);
+            }
+        });
+
+        deleteDbButton = (Button) findViewById(R.id.deleteDbButton);
+        deleteDbButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AdventureDBHelper.getInstance(MainActivity.this).deleteAll();
             }
         });
     }
