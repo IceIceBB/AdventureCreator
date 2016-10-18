@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorBG">#ffe0b2</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#870505</color>
     <color name="horrorPrimary">#a90a0a</color>
     <color name="horrorPrimaryDark">#740707</color>
+    <color name="horrorAccent">#1e041a</color>
+    <color name="sciFiPrimary">#818181</color>
+    <color name="sciFiPrimaryDark">#4d4d4d</color>
+    <color name="sciFiAccent">#3bf109</color>
+    <color name="fantasyPrimary">#7c4d24</color>
+    <color name="fantasyPrimaryDark">#613d1b</color>
+    <color name="fantasyAccent">#561405</color>
 </resources>
