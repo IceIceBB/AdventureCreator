@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         setup();
         testPlay();
 //        test();
@@ -50,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Player.getInstance().loadGame(gameHelper.getFullStory("58054495480ad90011d02314").chapters[0]);
+                    Models.Story story = gameHelper.getFullStory("58065526288a6a00114c2802");
+                    Player.getInstance().loadGame(story.chapters[0], story.genre);
                     Intent intent = new Intent(MainActivity.this, GamePlayActivity.class);
                     startActivity(intent);
                 } catch (Exception e) {
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 // Code for Paul --------------------
                 Player player = Player.getInstance();
                 Models.Story story = GameHelper.getInstance(getApplicationContext()).getFullStory(testStory[0]);
-                Models.Scene currentScene = player.loadGame(story.chapters[0]);
+                Models.Scene currentScene = player.loadGame(story.chapters[0], story.genre);
                 addText(currentScene.toString());
 
                 addText("playerHasKey: " + player.checkIfPlayerHasModifier("key"));
@@ -154,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         sc._id = "58052b47b84afb00116dc423";
         Models.Chapter c = new Models.Chapter("t", "s", "t", "id");
         c._id = "58052b47b84afb00116dc422";
-        Models.Story s = new Models.Story("The B", "Can You", "Mystery", "Short", "Puzzle");
+        Models.Story s = new Models.Story("The B", "Creator", "Can You", "Mystery", "Short", "Puzzle");
         s._id = "58052b46b84afb00116dc421";
 
         gameHelper.updateStory(s, new Response.Listener<Models.Story>() {
@@ -187,8 +189,9 @@ public class MainActivity extends AppCompatActivity {
     public void testCreateStory() {
         gameHelper.addStory(new Models.Story(
                 "The Bottle & The Key",
+                "Paul",
                 "Can you escape the room?",
-                "mystery",
+                "horror",
                 "puzzle",
                 "short, key, mystery"
         ), new Response.Listener<Models.Story>() {

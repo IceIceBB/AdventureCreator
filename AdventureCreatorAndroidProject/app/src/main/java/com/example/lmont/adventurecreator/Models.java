@@ -19,14 +19,16 @@ public class Models {
     public static class Story {
         public String _id;
         public String title;
+        public String creator;
         public String description;
         public String genre;
         public String type;
         public String tags;
         public Chapter[] chapters;
 
-        public Story(String title, String description, String genre, String type, String tags) {
+        public Story(String title, String creator, String description, String genre, String type, String tags) {
             this.title = title;
+            this.creator = creator;
             this.description = description;
             this.genre = genre;
             this.type = type;

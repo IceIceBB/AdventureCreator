@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
@@ -39,6 +41,7 @@ public class GamePlayActivity extends AppCompatActivity {
     boolean hintShowing;
     ListView optionsList;
     EditText userInputEditText;
+    ProgressBar loadingProgressBar;
     Context context;
 
     Models.Transition[] transitions;
@@ -67,6 +70,7 @@ public class GamePlayActivity extends AppCompatActivity {
         optionsList = (ListView) findViewById(R.id.options);
         nextSceneButton = (Button) findViewById(R.id.nextScene);
         userInputEditText = (EditText) findViewById(R.id.editText);
+        loadingProgressBar = (ProgressBar) findViewById(R.id.loading_progressBar);
         options = null;
         context = this;
 
@@ -116,7 +120,27 @@ public class GamePlayActivity extends AppCompatActivity {
         setOnClickListeners();
     }
 
+    private void showLoading() {
+        loadingProgressBar.setVisibility(View.VISIBLE);
+        nextSceneButton.setVisibility(View.INVISIBLE);
+    }
+
+    private void hideLoading() {
+        loadingProgressBar.setVisibility(View.INVISIBLE);
+        nextSceneButton.setVisibility(View.VISIBLE);
+    }
+
     private void setOnClickListeners() {
+
+        optionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                player.getNextScene(transitions[position].toSceneID);
+                Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
+                startActivity(intent);
+            }
+        });
+
         nextSceneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,10 +176,16 @@ public class GamePlayActivity extends AppCompatActivity {
                 final boolean[] isFound = {false};
                 final String userInput = userInputEditText.getText().toString();
                 ArrayList values = new ArrayList();
+                final int[] loadCounter = {0};
                 for(final Models.Transition transition : transitions) {
+                    showLoading();
                     GameHelper.getInstance(context).wordSimilarityValue(userInput, transition.verb, new Response.Listener<Float>() {
                         @Override
                         public void onResponse(Float response) {
+                            loadCounter[0]++;
+                            if (loadCounter[0] >= transitions.length) {
+                                hideLoading();
+                            }
                             if (response > .3) {
                                 if (isFound[0]) return;
                                 isFound[0] = true;
@@ -212,11 +242,13 @@ public class GamePlayActivity extends AppCompatActivity {
                     optionsList.setVisibility(View.GONE);
                 }
                 else if (hintReady&&!hintShowing){
+                    nextSceneButton.setVisibility(View.INVISIBLE);
                     optionsList.setVisibility(View.VISIBLE);
                     hintReady = false;
-//                    hintShowing = true;
+                    hintShowing = true;
                 }
                 else if (!hintReady&&hintShowing){
+                    nextSceneButton.setVisibility(View.VISIBLE);
                     int colorFrom = getResources().getColor(R.color.colorPrimary);
                     int colorTo = getResources().getColor(R.color.colorAccent);
                     ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);

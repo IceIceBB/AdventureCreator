@@ -66,6 +66,7 @@ public class APIHelper {
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("title", story.title);
+            jsonBody.put("creator", story.creator);
             jsonBody.put("description", story.description);
             jsonBody.put("genre", story.genre);
             jsonBody.put("tags", story.tags);
@@ -132,6 +133,7 @@ public class APIHelper {
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("title", story.title);
+            jsonBody.put("creator", story.creator);
             jsonBody.put("description", story.description);
             jsonBody.put("genre", story.genre);
             jsonBody.put("tags", story.tags);

@@ -36,13 +36,13 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
         else
             scale = SMALL_SCALE;
 
-        position = position % GameLibraryActivity.PAGES;
+        position = position % GameLibraryActivity.STORIES;
         return GameLibraryFragment.newInstance(context, position, scale);
     }
 
     @Override
     public int getCount() {
-        return GameLibraryActivity.PAGES * GameLibraryActivity.LOOPS;
+        return GameLibraryActivity.STORIES * GameLibraryActivity.LOOPS;
     }
 
     @Override
