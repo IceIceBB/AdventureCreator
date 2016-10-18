@@ -85,6 +85,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 for (Models.Story story : response.stories) {
                     ContentValues cv = new ContentValues();
                     cv.put("title", story.title);
+                    cv.put("creator", story.creator);
                     cv.put("description", story.description);
                     cv.put("genre", story.genre);
                     cv.put("tags", story.tags);

@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class AdventureDBHelper extends SQLiteOpenHelper {
 
-    public final static int VERSION = 4;
+    public final static int VERSION = 6;
     public final static String
         TAG = "AdventureDBHelper",
         DB_NAME = "adventureDB",
@@ -21,7 +21,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         TRANSITIONS_TABLE_NAME = "transitions";
 
     public final static String[]
-        STORY_COLUMNS = new String[]{"_id", "title", "description", "genre", "type", "tags"},
+        STORY_COLUMNS = new String[]{"_id", "title", "creator", "description", "genre", "type", "tags"},
         CHAPTER_COLUMNS = new String[]{"_id", "title", "summary", "type", "storyID"},
         SCENE_COLUMNS = new String[]{"_id", "title", "journalText", "flagModifiers", "body", "chapterID"},
         TRANSITION_COLUMNS = new String[]{"_id", "type", "verb", "flag", "attribute", "comparator", "challengeLevel", "fromSceneID", "toSceneID"};
@@ -30,6 +30,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         "CREATE TABLE IF NOT EXISTS " + STORY_TABLE_NAME + " (" +
         "_id TEXT," +
         "title TEXT," +
+        "creator TEXT," +
         "description TEXT," +
         "genre TEXT," +
         "type TEXT," +
@@ -104,6 +105,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
     public void addStory(Models.Story story) {
         ContentValues cv = new ContentValues();
         cv.put("title", story.title);
+        cv.put("creator", story.creator);
         cv.put("description", story.description);
         cv.put("genre", story.genre);
         cv.put("tags", story.tags);
@@ -115,6 +117,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
     public void updateStory(Models.Story story) {
         ContentValues cv = new ContentValues();
         cv.put("title", story.title);
+        cv.put("creator", story.creator);
         cv.put("description", story.description);
         cv.put("genre", story.genre);
         cv.put("tags", story.tags);
@@ -128,6 +131,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
 
         Models.Story story = new Models.Story(
                 cursor.getString(cursor.getColumnIndex("title")),
+                cursor.getString(cursor.getColumnIndex("creator")),
                 cursor.getString(cursor.getColumnIndex("description")),
                 cursor.getString(cursor.getColumnIndex("genre")),
                 cursor.getString(cursor.getColumnIndex("type")),
@@ -146,6 +150,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             Models.Story story = new Models.Story(
                     cursor.getString(cursor.getColumnIndex("title")),
+                    cursor.getString(cursor.getColumnIndex("creator")),
                     cursor.getString(cursor.getColumnIndex("description")),
                     cursor.getString(cursor.getColumnIndex("genre")),
                     cursor.getString(cursor.getColumnIndex("type")),

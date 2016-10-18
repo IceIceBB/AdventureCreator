@@ -43,6 +43,7 @@ public class GameHelper {
                         Models.StoryResponse storyResponse = gson.fromJson(response.toString(), Models.StoryResponse.class);
                         ContentValues cv = new ContentValues();
                         cv.put("title", story.title);
+                        cv.put("creator", story.creator);
                         cv.put("description", story.description);
                         cv.put("genre", story.genre);
                         cv.put("tags", story.tags);
