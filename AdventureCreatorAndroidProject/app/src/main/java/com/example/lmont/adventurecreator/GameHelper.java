@@ -237,4 +237,12 @@ public class GameHelper {
             }
         }, errorListener);
     }
+
+    public void saveGame(String storyID, int chapterNum, String serializedSavedInstance) {
+        dbHelper.addSavedGame(storyID, chapterNum, serializedSavedInstance);
+    }
+
+    public String loadGame(String storyID, int chapterNum) {
+        return dbHelper.getSavedGame(storyID, chapterNum);
+    }
 }

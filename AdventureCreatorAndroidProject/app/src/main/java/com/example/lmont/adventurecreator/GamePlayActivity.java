@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.android.volley.Response;
@@ -247,9 +248,11 @@ public class GamePlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (bookmark.getCurrentView() != bookmarkHollow){
-                    bookmark.showPrevious();
+                    return;
                 }else if(bookmark.getCurrentView() != bookmarkSolid){
                     bookmark.showNext();
+                    player.saveGame();
+                    Toast.makeText(context, "Progress Saved", Toast.LENGTH_SHORT).show();
                 }
             }
         });
