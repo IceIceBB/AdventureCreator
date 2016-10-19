@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         setup();
-        testPlay();
-//        test();
+//        test(2);
 //        testUpdateRoutes();
     }
 
@@ -52,21 +51,6 @@ public class MainActivity extends AppCompatActivity {
         storyCreatorButton.setVisibility(View.VISIBLE);
         deleteDbButton.setVisibility(View.VISIBLE);
         playButton.setVisibility(View.VISIBLE);
-    }
-
-    private void testPlay() {
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startLoading();
-                contentObserverHelper.requestSync(new Response.Listener() {
-                @Override
-                public void onResponse(Object response) {
-                    doneLoading();
-                }
-            });
-            }
-        });
     }
 
     private void setup() {
@@ -101,31 +85,24 @@ public class MainActivity extends AppCompatActivity {
                 AdventureDBHelper.getInstance(MainActivity.this).deleteAll();
             }
         });
-    }
-
-    public void test() {
-        // Code for Spencer +++++++++++++++++++++
-        testCreateStory();
-        // ++++++++++++++++++++++++++++++++++++++
-        Button compareButton = (Button)findViewById(R.id.main_sendButton);
-        compareButton.setOnClickListener(new View.OnClickListener() {
+        playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (trannyCounter<6)
-                    return;
-                // Code for Paul --------------------
-                Player player = Player.getInstance();
-                Models.Story story = GameHelper.getInstance(getApplicationContext()).getFullStory(testStory[0]);
-                Models.Scene currentScene = player.loadGame(story.chapters[0], story.genre);
-                currentScene = player.getNextScene(currentScene.transitions[0].toSceneID);
-                currentScene = player.getNextScene(currentScene.transitions[0].toSceneID);
-                currentScene = player.getNextScene(currentScene.transitions[0].toSceneID);
-                currentScene = player.getNextScene(currentScene.transitions[0].toSceneID);
-                ((ProgressBar)findViewById(R.id.main_progressBar)).setVisibility(View.VISIBLE);
+                startLoading();
+                contentObserverHelper.requestSync(new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        doneLoading();
+                    }
+                });
             }
         });
+    }
 
-        dbHelper.deleteAll();
+    public void test(int genre) {
+        startLoading();
+        // Code for Spencer +++++++++++++++++++++
+        testCreateStory(genre);
     }
 
     private void testUpdateRoutes() {
@@ -164,29 +141,76 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    final String[] testStory = new String[1];
-    public void testCreateStory() {
-        gameHelper.addStory(new Models.Story(
-                "The Bottle & The Key",
+    public void testCreateStory(int genre) {
+        switch (genre) {
+            case 0:
+                gameHelper.addStory(new Models.Story(
+                "Scary Version: The Bottle & The Key",
                 "Paul",
                 "Can you escape the room?",
                 "horror",
                 "puzzle",
                 "short, key, mystery"
-        ), new Response.Listener<Models.Story>() {
-            @Override
-            public void onResponse(Models.Story response) {
-                testStory[0] = response._id;
-                testCreateChapter(response._id);
-            }
-        });
+                ), new Response.Listener<Models.Story>() {
+                    @Override
+                    public void onResponse(Models.Story response) {
+                        testCreateChapter(response._id);
+                    }
+                });
+                break;
+            case 1:
+                gameHelper.addStory(new Models.Story(
+                        "Futuristic Version: The Bottle & The Key",
+                        "Paul",
+                        "Can you escape the room?",
+                        "scifi",
+                        "puzzle",
+                        "short, key, mystery"
+                ), new Response.Listener<Models.Story>() {
+                    @Override
+                    public void onResponse(Models.Story response) {
+                        testCreateChapter(response._id);
+                    }
+                });
+                break;
+            case 2:
+                gameHelper.addStory(new Models.Story(
+                        "Fantastical Version: The Bottle & The Key",
+                        "Paul",
+                        "Can you escape the room?",
+                        "fantasy",
+                        "puzzle",
+                        "short, key, mystery"
+                ), new Response.Listener<Models.Story>() {
+                    @Override
+                    public void onResponse(Models.Story response) {
+                        testCreateChapter(response._id);
+                    }
+                });
+                break;
+            default:
+                gameHelper.addStory(new Models.Story(
+                        "Mysterious Version: The Bottle & The Key",
+                        "Paul",
+                        "Can you escape the room?",
+                        "mystery",
+                        "puzzle",
+                        "short, key, mystery"
+                ), new Response.Listener<Models.Story>() {
+                    @Override
+                    public void onResponse(Models.Story response) {
+                        testCreateChapter(response._id);
+                    }
+                });
+                break;
+        }
     }
 
     public void testCreateChapter(String storyID) {
         gameHelper.addChapter(new Models.Chapter(
                 "Chapter 1",
-                "The only chapter",
-                "single chapter story",
+                "The first chapter",
+                "Part 1",
                 storyID
         ), new Response.Listener<Models.Chapter>() {
             @Override
@@ -194,12 +218,21 @@ public class MainActivity extends AppCompatActivity {
                 testCreateScene(response._id);
             }
         });
+//        gameHelper.addChapter(new Models.Chapter(
+//                "Chapter 2",
+//                "The second chapter",
+//                "Part 2!! It's like part 1, but part 2!",
+//                storyID
+//        ), new Response.Listener<Models.Chapter>() {
+//            @Override
+//            public void onResponse(Models.Chapter response) {
+//                testCreateScene(response._id);
+//            }
+//        });
     }
 
     final Models.Scene[] scenes = new Models.Scene[6];
     public void testCreateScene(String chapterID) {
-        final boolean[] checks = new boolean[6];
-
         gameHelper.addScene(new Models.Scene(
                 "intro",
                 "you entered the room",
@@ -285,15 +318,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    int counter = 0;
-    public void counter() {
-        if (++counter >= 6) {
-            testCreateTransitions(scenes);
-        }
-    }
-
-    public int trannyCounter = 0;
     public void testCreateTransitions(Models.Scene[] scenes) {
+        startDownloadCounter();
         gameHelper.addTransition(new Models.Transition(
                 "action",
                 "grab key",
@@ -306,10 +332,11 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-                trannyCounter++;
+                doneDownloadCounter();
             }
         });
 
+        startDownloadCounter();
         gameHelper.addTransition(new Models.Transition(
                 "action",
                 "open door",
@@ -322,10 +349,11 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-                trannyCounter++;
+                doneDownloadCounter();
             }
         });
 
+        startDownloadCounter();
         gameHelper.addTransition(new Models.Transition(
                 "action",
                 "drink bottle",
@@ -338,10 +366,11 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-                trannyCounter++;
+                doneDownloadCounter();
             }
         });
 
+        startDownloadCounter();
         gameHelper.addTransition(new Models.Transition(
                 "auto",
                 null,
@@ -354,10 +383,11 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-                trannyCounter++;
+                doneDownloadCounter();
             }
         });
 
+        startDownloadCounter();
         gameHelper.addTransition(new Models.Transition(
                 "check_fail",
                 null,
@@ -370,10 +400,11 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-                trannyCounter++;
+                doneDownloadCounter();
             }
         });
 
+        startDownloadCounter();
         gameHelper.addTransition(new Models.Transition(
                 "check_pass",
                 null,
@@ -386,10 +417,11 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-                trannyCounter++;
+                doneDownloadCounter();
             }
         });
 
+        startDownloadCounter();
         gameHelper.addTransition(new Models.Transition(
                 "auto",
                 null,
@@ -402,8 +434,28 @@ public class MainActivity extends AppCompatActivity {
         ), new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-                trannyCounter++;
+                doneDownloadCounter();
             }
         });
     }
+
+    int downloadCounter = 0;
+    public void startDownloadCounter() {
+        downloadCounter++;
+    }
+
+    public void doneDownloadCounter() {
+        downloadCounter--;
+        if (downloadCounter <= 0){
+            doneLoading();
+        }
+    }
+
+    int counter = 0;
+    public void counter() {
+        if (++counter >= 6) {
+            testCreateTransitions(scenes);
+        }
+    }
+
 }
