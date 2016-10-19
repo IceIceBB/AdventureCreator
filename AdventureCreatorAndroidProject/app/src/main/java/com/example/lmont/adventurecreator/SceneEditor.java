@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.android.volley.Response;
 
@@ -20,6 +21,8 @@ public class SceneEditor extends AppCompatActivity {
     String chapterId;
     String sceneId;
 
+
+    RadioGroup nodeTypeRadioGroup;
     RadioButton actionNodeRadioButton;
     RadioButton autoNodeRadioButton;
     RadioButton modifierNodeRadioButton;
@@ -47,7 +50,9 @@ public class SceneEditor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene_editor);
+        
 //        TODO: Set number of transitions corespondingly, show/hide new transition button
+        nodeTypeRadioGroup = (RadioGroup) findViewById(R.id.nodeTypeRadioGroup);
         actionNodeRadioButton = (RadioButton) findViewById(R.id.actionNodeRadioButton);
         autoNodeRadioButton = (RadioButton) findViewById(R.id.autoNodeRadioButton);
         modifierNodeRadioButton = (RadioButton) findViewById(R.id.modifierNodeRadioButton);
