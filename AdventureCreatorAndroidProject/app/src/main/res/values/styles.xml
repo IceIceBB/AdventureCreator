@@ -7,27 +7,38 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/colorBG</item>
+        <item name="colorAccentCustom">@color/colorPrimary</item>
+        <item name="colorPrimaryCustom">@color/colorPrimary</item>
     </style>
 
     <style name="HorrorTheme" parent="AppTheme">
         <!-- Customize your theme here. -->
+        <item name="android:colorBackground">@color/horrorBG</item>
         <item name="colorPrimary">@color/horrorPrimary</item>
         <item name="colorPrimaryDark">@color/horrorPrimaryDark</item>
         <item name="colorAccent">@color/horrorAccent</item>
+        <item name="colorAccentCustom">@color/horrorPrimary</item>
+        <item name="colorPrimaryCustom">@color/horrorPrimary</item>
     </style>
 
     <style name="SciFiTheme" parent="AppTheme">
         <!-- Customize your theme here. -->
+        <item name="android:colorBackground">@color/scifiBG</item>
         <item name="colorPrimary">@color/sciFiPrimary</item>
         <item name="colorPrimaryDark">@color/sciFiPrimaryDark</item>
         <item name="colorAccent">@color/sciFiAccent</item>
+        <item name="colorAccentCustom">@color/sciFiPrimary</item>
+        <item name="colorPrimaryCustom">@color/sciFiPrimary</item>
     </style>
 
     <style name="FantasyTheme" parent="AppTheme">
         <!-- Customize your theme here. -->
+        <item name="android:colorBackground">@color/fantasyBG</item>
         <item name="colorPrimary">@color/fantasyPrimary</item>
         <item name="colorPrimaryDark">@color/fantasyPrimaryDark</item>
         <item name="colorAccent">@color/fantasyAccent</item>
+        <item name="colorAccentCustom">@color/fantasyPrimary</item>
+        <item name="colorPrimaryCustom">@color/sciFiPrimary</item>
     </style>
 
     <style name="CustomDialog" parent="@style/Theme.AppCompat.Light.Dialog">

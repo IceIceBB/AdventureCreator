@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorBG">#ffe0b2</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#f57f17</color>
+    <color name="colorPrimaryDark">#c4640f</color>
     <color name="colorAccent">#870505</color>
+    <color name="colorTextView">#bdbdbd</color>
+    <color name="horrorBG">#1e0000</color>
     <color name="horrorPrimary">#a90a0a</color>
     <color name="horrorPrimaryDark">#740707</color>
-    <color name="horrorAccent">#1e041a</color>
+    <color name="horrorAccent">#d50000</color>
+    <color name="scifiBG">#616161</color>
     <color name="sciFiPrimary">#818181</color>
-    <color name="sciFiPrimaryDark">#4d4d4d</color>
-    <color name="sciFiAccent">#3bf109</color>
+    <color name="sciFiPrimaryDark">#64dd17</color>
+    <color name="sciFiAccent">#64dd17</color>
+    <color name="fantasyBG">#795548</color>
     <color name="fantasyPrimary">#7c4d24</color>
     <color name="fantasyPrimaryDark">#613d1b</color>
-    <color name="fantasyAccent">#561405</color>
+    <color name="fantasyAccent">#ffa000</color>
 </resources>

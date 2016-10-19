@@ -36,7 +36,7 @@ public class GameLibraryFragment extends Fragment {
         int pos = this.getArguments().getInt("pos");
         Button tv = (Button) l.findViewById(R.id.storyCover);
         //tv.setText("Position = " + pos);
-        tv.setText(story.title + "\nby\n" + story.creator);
+        tv.setText(story.title);
 
         GameLibraryLinearLayout root = (GameLibraryLinearLayout) l.findViewById(R.id.root);
         float scale = this.getArguments().getFloat("scale");
