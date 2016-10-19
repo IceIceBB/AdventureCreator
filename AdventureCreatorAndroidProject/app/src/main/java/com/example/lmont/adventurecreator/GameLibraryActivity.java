@@ -15,8 +15,6 @@ public class GameLibraryActivity extends FragmentActivity {
     public final static int LOOPS = 1000;
     public final static int FIRST_PAGE = STORIES * LOOPS / 2;
 
-    public String pagerGenre;
-
     public GameLibraryPagerAdapter fantasyAdapter;
     public ViewPager fantasyPager;
     public GameLibraryPagerAdapter sciFiAdapter;
@@ -87,6 +85,6 @@ public class GameLibraryActivity extends FragmentActivity {
 
         // Set margin for pages as a negative number, so a part of next and
         // previous pages will be showed
-        pager.setPageMargin(-600);
+        pager.setPageMargin(-500);
     }
 }
