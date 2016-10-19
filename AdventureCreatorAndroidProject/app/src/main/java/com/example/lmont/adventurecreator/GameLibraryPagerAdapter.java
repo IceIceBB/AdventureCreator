@@ -43,7 +43,7 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
         gameLibraryFragment.story = stories[position];
         return gameLibraryFragment;
     }
-
+//      get number of books for each row
     @Override
     public int getCount() {
         return stories.length;

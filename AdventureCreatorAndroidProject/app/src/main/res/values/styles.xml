@@ -6,9 +6,29 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorBG</item>
     </style>
 
-    <!--<item name="android:dialogTheme">@style/CustomDialog</item>-->
+    <style name="HorrorTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/horrorPrimary</item>
+        <item name="colorPrimaryDark">@color/horrorPrimaryDark</item>
+        <item name="colorAccent">@color/horrorAccent</item>
+    </style>
+
+    <style name="SciFiTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/sciFiPrimary</item>
+        <item name="colorPrimaryDark">@color/sciFiPrimaryDark</item>
+        <item name="colorAccent">@color/sciFiAccent</item>
+    </style>
+
+    <style name="FantasyTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/fantasyPrimary</item>
+        <item name="colorPrimaryDark">@color/fantasyPrimaryDark</item>
+        <item name="colorAccent">@color/fantasyAccent</item>
+    </style>
 
     <style name="CustomDialog" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="android:windowNoTitle">false</item>
