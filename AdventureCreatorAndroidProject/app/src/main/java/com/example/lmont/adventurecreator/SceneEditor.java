@@ -70,8 +70,18 @@ public class SceneEditor extends AppCompatActivity {
         addTransitionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+            getAllTitlesAndIds();
+                Models.Transition newTransition = new Models.Transition(
+                        "", //Type (Action, Condition, Auto)
+                        "", //Verb
+                        "", //Flag
+                        "", //No Attribute (Icebox)
+                        "", //No Comparator (Icebox)
+                        0, //No Challange Level (Icebox)
+                        sceneId, //From Scene ID
+                        "" // To Scene ID
+                        );
+                addTransition(newTransition);
             }
         });
 
