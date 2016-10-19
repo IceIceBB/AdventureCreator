@@ -1,7 +1,15 @@
 package com.example.lmont.adventurecreator;
 
+import android.content.Context;
+import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +20,9 @@ public class Player {
 
     private static Player instance;
 
+    private Context context;
+    private Models.Story story;
+    private int chapterNum;
     private Models.Chapter chapter;
     private Models.Scene currentScene;
     private ArrayList<String> modifiers;
@@ -29,22 +40,30 @@ public class Player {
 
     private Player() {}
 
-    public Models.Scene loadGame(Models.Chapter chapter, String genre) {
+    public Models.Scene loadGame(Models.Story story, int chapterNum, String genre, Context context) {
+
+        String savedInstanceSerialized = GameHelper.getInstance(context).loadGame(story._id, chapterNum);
+        this.context = context;
+        this.story = story;
         this.genre = genre;
-        this.chapter = chapter;
-        journalText = "----------------------\n";
-        journalCounter = 0;
-        modifiers = new ArrayList<>();
-        for (Models.Scene scene : chapter.scenes) {
-            if (scene.title.equals("intro")) {
+        this.chapter = story.chapters[chapterNum];
 
-                if (scene.flagModifiers != null)
-                    addModifier(scene.flagModifiers);
+        if (savedInstanceSerialized != null) {
+            loadGame(savedInstanceSerialized);
+            return currentScene;
+        } else {
+            journalText = "----------------------\n";
+            journalCounter = 0;
+            modifiers = new ArrayList<>();
+            for (Models.Scene scene : chapter.scenes) {
+                if (scene.title.equals("intro")) {
+                    if (scene.flagModifiers != null)
+                        addModifier(scene.flagModifiers);
 
-                addJournalText(scene.journalText);
-
-                currentScene = scene;
-                return scene;
+                    addJournalText(scene.journalText);
+                    currentScene = scene;
+                    return currentScene;
+                }
             }
         }
         return null;
@@ -95,6 +114,56 @@ public class Player {
             }
         }
         return true;
+    }
+
+    public void saveGame() {
+        SavedInstance savedInstance = new SavedInstance(
+                story._id,
+                chapterNum,
+                currentScene._id,
+                modifiers,
+                journalText,
+                journalCounter
+        );
+
+        String serializedObject = "";
+        try {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            ObjectOutputStream so = new ObjectOutputStream(bo);
+            so.writeObject(savedInstance);
+            so.flush();
+            serializedObject = new String(Base64.encode(bo.toByteArray(), 1));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHelper.getInstance(context).saveGame(story._id, chapterNum, serializedObject);
+    }
+
+    public void loadGame(String serializedObject) {
+        SavedInstance obj = null;
+        try {
+            byte b[] = Base64.decode(serializedObject.getBytes(), 1);
+            ByteArrayInputStream bi = new ByteArrayInputStream(b);
+            ObjectInputStream si = new ObjectInputStream(bi);
+            obj = (SavedInstance) si.readObject();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        journalText = obj.journalText;
+        journalCounter = obj.journalNum;
+        modifiers = obj.modifiers;
+        for (Models.Scene scene : chapter.scenes) {
+            if (scene._id.equals(obj.sceneID)) {
+
+                if (scene.flagModifiers != null)
+                    addModifier(scene.flagModifiers);
+
+                currentScene = scene;
+            }
+        }
     }
 
     @Override
