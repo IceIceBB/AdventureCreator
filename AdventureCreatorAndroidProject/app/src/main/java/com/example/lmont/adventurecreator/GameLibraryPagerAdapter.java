@@ -21,11 +21,13 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
     private GameLibraryActivity context;
     private FragmentManager fm;
     private float scale;
+    Models.Story[] stories;
 
-    public GameLibraryPagerAdapter(GameLibraryActivity context, FragmentManager fm) {
+    public GameLibraryPagerAdapter(GameLibraryActivity context, FragmentManager fm, Models.Story[] stories) {
         super(fm);
         this.fm = fm;
         this.context = context;
+        this.stories = stories;
     }
 
     @Override
@@ -37,12 +39,15 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
             scale = SMALL_SCALE;
 
         position = position % GameLibraryActivity.STORIES;
-        return GameLibraryFragment.newInstance(context, position, scale);
+        GameLibraryFragment gameLibraryFragment = (GameLibraryFragment) GameLibraryFragment.newInstance(context, position, scale);
+        gameLibraryFragment.story = stories[position];
+        return gameLibraryFragment;
     }
 
     @Override
     public int getCount() {
-        return GameLibraryActivity.STORIES * GameLibraryActivity.LOOPS;
+        return stories.length;
+        //return GameLibraryActivity.STORIES * GameLibraryActivity.LOOPS;
     }
 
     @Override

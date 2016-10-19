@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.android.volley.Response;
@@ -24,6 +26,7 @@ import com.android.volley.Response;
 import java.util.ArrayList;
 
 import static com.example.lmont.adventurecreator.R.id.options;
+import static com.example.lmont.adventurecreator.R.id.value;
 
 public class GamePlayActivity extends AppCompatActivity {
 
@@ -108,14 +111,16 @@ public class GamePlayActivity extends AppCompatActivity {
             for(int x=0; x<player.getCurrentScene().transitions.length; x++) {
                 options[x] = player.getCurrentScene().transitions[x].verb;
             }
+            ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);
+            optionsList.setAdapter(optionsAdapter);
         } else {
             options = new String[0];
             userInputEditText.setVisibility(View.GONE);
             hintButton.setVisibility(View.GONE);
+            if (sceneType == SceneType.end) {
+                nextSceneButton.setText("THE END");
+            }
         }
-
-        ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);
-        optionsList.setAdapter(optionsAdapter);
 
         setOnClickListeners();
     }
@@ -128,6 +133,93 @@ public class GamePlayActivity extends AppCompatActivity {
     private void hideLoading() {
         loadingProgressBar.setVisibility(View.INVISIBLE);
         nextSceneButton.setVisibility(View.VISIBLE);
+    }
+
+    private void playActionScene() {
+        final boolean[] isFound = {false};
+        final String userInput = userInputEditText.getText().toString();
+        final ArrayList<Models.Transition> values = new ArrayList();
+        final int[] loadCounter = {0};
+        showLoading();
+        for(final Models.Transition transition : transitions) {
+            GameHelper.getInstance(context).wordSimilarityValue(userInput, transition.verb, new Response.Listener<Float>() {
+                @Override
+                public void onResponse(Float response) {
+                loadCounter[0]++;
+                if (response > .3) {
+                    values.add(transition);
+                }
+                if (loadCounter[0] >= transitions.length) {
+                    hideLoading();
+                    switch (values.size()) {
+                        case 0:
+                            // No Match
+                            return;
+
+                        case 1:
+                            // One Match
+                            player.getNextScene(values.get(0).toSceneID);
+                            Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
+                            startActivity(intent);
+                            break;
+
+                        default:
+                            // Multiple Matches
+                            // Hide Hint button
+                            hintButton.setVisibility(View.INVISIBLE);
+                            // Set up valid options list
+                            String[] validVerbs = new String[values.size()];
+                            for(int x=0; x<values.size(); x++) {
+                                validVerbs[x] = values.get(x).verb;
+                            }
+                            ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, validVerbs);
+                            optionsList.setAdapter(optionsAdapter);
+
+                            optionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    player.getNextScene(values.get(position).toSceneID);
+                                    Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                            // Show Valid Options
+                            showHint();
+                            break;
+                    }
+                }
+                }
+            }, null);
+        }
+    }
+
+    private void playNonActionScene() {
+        // case end
+        Intent intent = new Intent(GamePlayActivity.this, MainActivity.class);
+        switch (sceneType) {
+            case auto:
+                player.getNextScene(transitions[0].toSceneID);
+                intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
+            break;
+
+            case conditional:
+                if (player.checkIfPlayerHasModifier(transitions[0].flag)) {
+                    if (transitions[0].type.equals("check_pass")) {
+                        player.getNextScene(transitions[0].toSceneID);
+                    } else {
+                        player.getNextScene(transitions[1].toSceneID);
+                    }
+                } else {
+                    if (transitions[0].type.equals("check_fail")) {
+                        player.getNextScene(transitions[0].toSceneID);
+                    } else {
+                        player.getNextScene(transitions[1].toSceneID);
+                    }
+                }
+                intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
+            break;
+        }
+        startActivity(intent);
     }
 
     private void setOnClickListeners() {
@@ -145,56 +237,9 @@ public class GamePlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (sceneType != SceneType.action) {
-                    if (sceneType == SceneType.end) {
-                        Intent intent = new Intent(GamePlayActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                    if (sceneType == SceneType.auto) {
-                        player.getNextScene(transitions[0].toSceneID);
-                        Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
-                        startActivity(intent);
-                    }
-                    if (sceneType == SceneType.conditional) {
-                        if (player.checkIfPlayerHasModifier(transitions[0].flag)) {
-                            if (transitions[0].type.equals("check_pass")) {
-                                player.getNextScene(transitions[0].toSceneID);
-                            } else {
-                                player.getNextScene(transitions[1].toSceneID);
-                            }
-                        } else {
-                            if (transitions[0].type.equals("check_fail")) {
-                                player.getNextScene(transitions[0].toSceneID);
-                            } else {
-                                player.getNextScene(transitions[1].toSceneID);
-                            }
-                        }
-                        Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
-                        startActivity(intent);
-                    }
-                    return;
-                }
-                final boolean[] isFound = {false};
-                final String userInput = userInputEditText.getText().toString();
-                ArrayList values = new ArrayList();
-                final int[] loadCounter = {0};
-                for(final Models.Transition transition : transitions) {
-                    showLoading();
-                    GameHelper.getInstance(context).wordSimilarityValue(userInput, transition.verb, new Response.Listener<Float>() {
-                        @Override
-                        public void onResponse(Float response) {
-                            loadCounter[0]++;
-                            if (loadCounter[0] >= transitions.length) {
-                                hideLoading();
-                            }
-                            if (response > .3) {
-                                if (isFound[0]) return;
-                                isFound[0] = true;
-                                player.getNextScene(transition.toSceneID);
-                                Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
-                                startActivity(intent);
-                            }
-                        }
-                    }, null);
+                    playNonActionScene();
+                } else {
+                    playActionScene();
                 }
             }
         });
@@ -203,9 +248,11 @@ public class GamePlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (bookmark.getCurrentView() != bookmarkHollow){
-                    bookmark.showPrevious();
+                    return;
                 }else if(bookmark.getCurrentView() != bookmarkSolid){
                     bookmark.showNext();
+                    player.saveGame();
+                    Toast.makeText(context, "Progress Saved", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -242,30 +289,38 @@ public class GamePlayActivity extends AppCompatActivity {
                     optionsList.setVisibility(View.GONE);
                 }
                 else if (hintReady&&!hintShowing){
-                    nextSceneButton.setVisibility(View.INVISIBLE);
-                    optionsList.setVisibility(View.VISIBLE);
-                    hintReady = false;
-                    hintShowing = true;
+                    showHint();
                 }
                 else if (!hintReady&&hintShowing){
-                    nextSceneButton.setVisibility(View.VISIBLE);
-                    int colorFrom = getResources().getColor(R.color.colorPrimary);
-                    int colorTo = getResources().getColor(R.color.colorAccent);
-                    ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-                    colorAnimation.setDuration(250); // milliseconds
-                    colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animator) {
-                            hintButton.setBackgroundColor((int) animator.getAnimatedValue());
-                        }
-                    });
-                    colorAnimation.start();
-
-                    optionsList.setVisibility(View.GONE);
-                    hintShowing = false;
+                    hideHint();
                 }
             }
         });
+    }
+
+    private void hideHint() {
+        int colorFrom = getResources().getColor(R.color.colorPrimary);
+        int colorTo = getResources().getColor(R.color.colorAccent);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(250); // milliseconds
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                hintButton.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+        });
+
+        colorAnimation.start();
+        hintShowing = false;
+        nextSceneButton.setVisibility(View.VISIBLE);
+        optionsList.setVisibility(View.GONE);
+    }
+
+    private void showHint() {
+        hintReady = false;
+        hintShowing = true;
+        nextSceneButton.setVisibility(View.INVISIBLE);
+        optionsList.setVisibility(View.VISIBLE);
     }
 }

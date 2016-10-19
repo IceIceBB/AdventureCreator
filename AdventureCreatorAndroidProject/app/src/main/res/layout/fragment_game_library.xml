@@ -11,18 +11,29 @@
         android:orientation="vertical"
         android:gravity="center"
         android:background="@android:color/transparent">
-        <TextView
-            android:id="@+id/pageLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="AAAAAAAAA" />
-        <Button
-            android:text=""
-            android:id="@+id/storyCover"
-            android:layout_width="80dp"
-            android:layout_height="120dp"
-            android:background="@android:color/darker_gray">
-        </Button>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--<TextView-->
+                <!--android:id="@+id/pageLabel"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="20dp"-->
+                <!--android:text="AAAAAAAAA"-->
+                <!--android:layout_alignBaseline="@+id/storyCover"-->
+                <!--android:layout_alignBottom="@+id/storyCover"-->
+                <!--android:layout_centerHorizontal="true" />-->
+
+            <Button
+                android:text=""
+                android:id="@+id/storyCover"
+                android:layout_width="80dp"
+                android:layout_height="120dp"
+                android:background="@android:color/darker_gray"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
     </com.example.lmont.adventurecreator.GameLibraryLinearLayout>
 </LinearLayout>

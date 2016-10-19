@@ -9,6 +9,9 @@ import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+
+import com.android.volley.Response;
 
 /**
  * Created by lmont on 10/10/2016.
@@ -35,13 +38,27 @@ public class ContentResolverHelper {
         return instance;
     }
 
+    public static ContentResolverHelper getInstance() {
+        return instance;
+    }
+
     private ContentResolverHelper(Activity activity) {
         setupActivity = activity;
         setupContentResolver();
     }
 
-    public void requestSync() {
+    Response.Listener listener;
+    public void requestSync(Response.Listener listener) {
         ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
+        this.listener = listener;
+    }
+
+    public void onFinishDownloadRequest(Models.RemoteData data) {
+        if (listener == null)
+            return;
+
+        Log.d("LEO", "onFinishDownloadRequest: ");
+        listener.onResponse(data);
     }
 
     private void setupContentResolver()  {
@@ -55,7 +72,7 @@ public class ContentResolverHelper {
         settingsBundle.putBoolean(
                 ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
 
-        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
+        //ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
         ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,willAutoRefresh);
         ContentResolver.addPeriodicSync(
                 mAccount,
