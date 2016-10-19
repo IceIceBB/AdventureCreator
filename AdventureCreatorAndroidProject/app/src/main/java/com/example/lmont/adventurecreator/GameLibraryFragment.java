@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 public class GameLibraryFragment extends Fragment {
 
+    public Models.Story story;
+
     public static Fragment newInstance(GameLibraryActivity context, int pos, float scale) {
         Bundle b = new Bundle();
         b.putInt("pos", pos);
@@ -23,27 +26,29 @@ public class GameLibraryFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null) {
             return null;
         }
 
         LinearLayout l = (LinearLayout) inflater.inflate(R.layout.fragment_game_library, container, false);
 
-
         int pos = this.getArguments().getInt("pos");
-        TextView tv = (TextView) l.findViewById(R.id.pageLabel);
-        tv.setText("Position = " + pos);
+        Button tv = (Button) l.findViewById(R.id.storyCover);
+        //tv.setText("Position = " + pos);
+        tv.setText(story.title + "\nby\n" + story.creator);
 
         GameLibraryLinearLayout root = (GameLibraryLinearLayout) l.findViewById(R.id.root);
         float scale = this.getArguments().getFloat("scale");
         root.setScaleBoth(scale);
 
-        l.setOnClickListener(new View.OnClickListener() {
+        tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ChapterSelectFragment chapterDialog = new ChapterSelectFragment();
+                chapterDialog.story = GameHelper.getInstance(getContext()).getFullStory(story._id);
+                chapterDialog.context = getContext();
+
                 chapterDialog.setStyle(JournalDialogFragment.STYLE_NORMAL, R.style.CustomDialog);
                 chapterDialog.show(getActivity().getFragmentManager(), "Select a Chapter");
             }

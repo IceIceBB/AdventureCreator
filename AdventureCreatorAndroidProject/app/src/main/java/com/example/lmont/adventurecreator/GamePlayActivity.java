@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -112,6 +113,9 @@ public class GamePlayActivity extends AppCompatActivity {
             options = new String[0];
             userInputEditText.setVisibility(View.GONE);
             hintButton.setVisibility(View.GONE);
+            if (sceneType == SceneType.end) {
+                nextSceneButton.setText("THE END");
+            }
         }
 
         ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);

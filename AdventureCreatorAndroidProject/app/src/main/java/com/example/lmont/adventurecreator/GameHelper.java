@@ -225,7 +225,7 @@ public class GameHelper {
     }
     public void refreshDB(Response.Listener listener) {
         dbHelper.deleteAll();
-        ContentResolverHelper.instance.requestSync();
+        ContentResolverHelper.instance.requestSync(null);
         apiHelper.downloadAll(listener, null);
     }
 
