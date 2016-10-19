@@ -245,4 +245,20 @@ public class GameHelper {
     public String loadGame(String storyID, int chapterNum) {
         return dbHelper.getSavedGame(storyID, chapterNum);
     }
+
+    public Models.Story getStory(String storyID) {
+        return dbHelper.getStory(storyID);
+    }
+
+    public Models.Chapter getChapter(String chapterID) {
+        return dbHelper.getChapter(chapterID);
+    }
+
+    public Models.Scene getScene(String sceneID) {
+        return dbHelper.getScene(sceneID);
+    }
+
+    public Models.Transition getTransitions(String transitionID) {
+        return dbHelper.getTransition(transitionID);
+    }
 }
