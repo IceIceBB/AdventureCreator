@@ -25,6 +25,7 @@ public class ChapterCreation extends AppCompatActivity {
     EditText storyTagsEditText;
 
     String storyTitle;
+    //TODO: get author name from user somehow?
     String storyAuthor;
     String storySummary;
     String storyGenre;
@@ -86,9 +87,9 @@ public class ChapterCreation extends AppCompatActivity {
 
                 intent.putExtra("storyId", storyId);
                 intent.putExtra("selectedChapterId", allChapterIds.get(position));
-                intent.putExtra("selectedChapterTitle", allChaptersArray[position].title);
-                intent.putExtra("selectedChapterGoal", allChaptersArray[position].type);
-                intent.putExtra("selectedChapterSummary", allChaptersArray[position].summary);
+//                intent.putExtra("selectedChapterTitle", allChaptersArray[position].title);
+//                intent.putExtra("selectedChapterGoal", allChaptersArray[position].type);
+//                intent.putExtra("selectedChapterSummary", allChaptersArray[position].summary);
 
                 readStoryFormFields();
                 Models.Story updatedStory = new Models.Story(storyTitle, storyAuthor, storySummary, storyGenre,"Type", storyTags);
@@ -100,6 +101,7 @@ public class ChapterCreation extends AppCompatActivity {
         });
 
         getStoryDetails();
+        getAllFormFields();
 
         getAllTitlesAndIds();
         chaptersListView.setAdapter(arrayAdapter);
@@ -110,10 +112,10 @@ public class ChapterCreation extends AppCompatActivity {
     public void getStoryDetails() {
         Intent storyIntent = getIntent();
         storyId = storyIntent.getStringExtra("selectedStoryId");
-        storyTitle = storyIntent.getStringExtra("selectedStoryTitle");
-        storySummary = storyIntent.getStringExtra("selectedStorySummary");
-        storyGenre = storyIntent.getStringExtra("selectedStoryGenre");
-        storyTags = storyIntent.getStringExtra("selectedStoryTags");
+//        storyTitle = storyIntent.getStringExtra("selectedStoryTitle");
+//        storySummary = storyIntent.getStringExtra("selectedStorySummary");
+//        storyGenre = storyIntent.getStringExtra("selectedStoryGenre");
+//        storyTags = storyIntent.getStringExtra("selectedStoryTags");
         setStoryFormFields();
     }
 
@@ -161,10 +163,19 @@ public class ChapterCreation extends AppCompatActivity {
         GameHelper.getInstance(ChapterCreation.this).updateStory(story, new Response.Listener<Models.Story>(){
             @Override
             public void onResponse(Models.Story response) {
-                getAllTitlesAndIds();
-                arrayAdapter.notifyDataSetChanged();
+//            TODO: Add call back functionality
             }
         });
+    }
+
+    public void getAllFormFields(){
+        Models.Story selectedStory = GameHelper.getInstance(this).getFullStory(storyId);
+        storyTitle = selectedStory.title;
+        storyAuthor = selectedStory.creator;
+        storySummary = selectedStory.description;
+        storyGenre = selectedStory.genre;
+        storyTags = selectedStory.tags;
+        setStoryFormFields();
     }
 
     @Override

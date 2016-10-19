@@ -67,12 +67,11 @@ public class StoryCreation extends AppCompatActivity {
                 Intent intent = new Intent(StoryCreation.this, ChapterCreation.class);
 
                 intent.putExtra("selectedStoryId", allStoryIds.get(position));
-                intent.putExtra("selectedStoryTitle", allStoriesArray[position].title);
-//                TODO: get author name from user somehow?
-//                intent.putExtra("selectedStoryAuthor", allStoriesArray[position].author);
-                intent.putExtra("selectedStorySummary", allStoriesArray[position].description);
-                intent.putExtra("selectedStoryGene", allStoriesArray[position].genre);
-                intent.putExtra("selectedStoryTags", allStoriesArray[position].tags);
+//                intent.putExtra("selectedStoryTitle", allStoriesArray[position].title);
+////                intent.putExtra("selectedStoryAuthor", allStoriesArray[position].author);
+//                intent.putExtra("selectedStorySummary", allStoriesArray[position].description);
+//                intent.putExtra("selectedStoryGene", allStoriesArray[position].genre);
+//                intent.putExtra("selectedStoryTags", allStoriesArray[position].tags);
                 startActivity(intent);
             }
         });
