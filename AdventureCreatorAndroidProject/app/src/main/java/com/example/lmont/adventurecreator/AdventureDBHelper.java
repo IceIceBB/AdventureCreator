@@ -200,7 +200,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
     }
 
     public Models.Chapter getChapter(String chapterID) {
-        Cursor cursor = getReadableDatabase().query(CHAPTER_TABLE_NAME, CHAPTER_COLUMNS, "_id = " + chapterID, null, null, null, null);
+        Cursor cursor = getReadableDatabase().query(CHAPTER_TABLE_NAME, CHAPTER_COLUMNS, "_id = '" + chapterID + "'", null, null, null, null);
         cursor.moveToFirst();
 
         Models.Chapter chapter = new Models.Chapter(
@@ -260,7 +260,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
     }
 
     public Models.Scene getScene(String sceneID) {
-        Cursor cursor = getReadableDatabase().query(SCENES_TABLE_NAME, SCENE_COLUMNS, "_id = " + sceneID, null, null, null, null);
+        Cursor cursor = getReadableDatabase().query(SCENES_TABLE_NAME, SCENE_COLUMNS, "_id = '" + sceneID + "'", null, null, null, null);
         cursor.moveToFirst();
 
         Models.Scene scene = new Models.Scene(
@@ -328,7 +328,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
     }
 
     public Models.Transition getTransition(String transitionID) {
-        Cursor cursor = getReadableDatabase().query(TRANSITIONS_TABLE_NAME, TRANSITION_COLUMNS, "_id = " + transitionID + "", null, null, null, null);
+        Cursor cursor = getReadableDatabase().query(TRANSITIONS_TABLE_NAME, TRANSITION_COLUMNS, "_id = '" + transitionID + "'", null, null, null, null);
         cursor.moveToFirst();
 
         Models.Transition transition = new Models.Transition(

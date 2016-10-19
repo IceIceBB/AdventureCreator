@@ -153,23 +153,25 @@ public class SceneEditor extends AppCompatActivity {
 
     public void getAllFormFields(){
 //        TODO: Get a single scene as a Models.Scene object
-//        Models.Scene[] allScenesArray = GameHelper.getInstance(this).getScenesForChapter(chapterId);
+        Models.Scene selectedScene = GameHelper.getInstance(this).getScene(sceneId);
 //        Models.Scene selectedScene = allScenesArray[???];
-//        sceneTitle = selectedScene.title;
-//        journalText = selectedScene.journalText;
-//        modifiers = selectedScene.flagModifiers;
-//        bodyText = selectedScene.body;
-//        setSceneFormFields();
+        sceneTitle = selectedScene.title;
+        journalText = selectedScene.journalText;
+        modifiers = selectedScene.flagModifiers;
+        bodyText = selectedScene.body;
+        setSceneFormFields();
     }
 
     @Override
     public void onBackPressed(){
-        super.onBackPressed();
 
         readSceneFormFields();
         Models.Scene updatedScene = new Models.Scene(sceneTitle, journalText, modifiers, bodyText, chapterId);
+        updatedScene._id = sceneId;
 
         updateScene(updatedScene);
+        super.onBackPressed();
+
     }
 
 }
