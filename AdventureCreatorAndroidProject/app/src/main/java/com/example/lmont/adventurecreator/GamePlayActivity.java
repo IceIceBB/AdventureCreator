@@ -5,10 +5,8 @@ import android.animation.ValueAnimator;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,9 +22,8 @@ import android.widget.ViewSwitcher;
 import com.android.volley.Response;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-import static com.example.lmont.adventurecreator.R.id.options;
-import static com.example.lmont.adventurecreator.R.id.value;
 
 public class GamePlayActivity extends AppCompatActivity {
 
@@ -55,7 +52,14 @@ public class GamePlayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String genre = getIntent().getStringExtra("genre");
+        if (Objects.equals(genre, "mystery")){
+            setTheme(R.style.SciFiTheme);
+        }
         setContentView(R.layout.activity_game_play);
+
+
 
         setup();
     }

@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         deleteDbButton.setVisibility(View.GONE);
         playButton.setVisibility(View.GONE);
     }
+
 
     private void doneLoading() {
         progressBar.setVisibility(View.GONE);
