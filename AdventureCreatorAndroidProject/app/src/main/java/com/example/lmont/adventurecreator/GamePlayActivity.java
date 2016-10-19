@@ -53,7 +53,7 @@ public class GamePlayActivity extends AppCompatActivity {
 
         String genre = getIntent().getStringExtra("genre");
         if (Objects.equals(genre, "mystery")){
-            setTheme(R.style.HorrorTheme);
+            setTheme(R.style.SciFiTheme);
         }
         setContentView(R.layout.activity_game_play);
 
