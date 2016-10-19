@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
+<<<<<<< HEAD
+import java.util.Objects;
+=======
 import java.util.ArrayList;
-
+>>>>>>> upstream/master
 
 public class GameLibraryActivity extends FragmentActivity {
 
@@ -32,6 +35,21 @@ public class GameLibraryActivity extends FragmentActivity {
         setContentView(R.layout.activity_game_library);
 
         fantasyPager = (ViewPager) findViewById(R.id.fantasyCarousel);
+<<<<<<< HEAD
+        fantasyAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), "fantasy");
+        setupPager(fantasyPager, fantasyAdapter, "fantasy");
+
+        sciFiPager = (ViewPager) findViewById(R.id.sciFiCarousel);
+        sciFiAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), "scifi");
+        setupPager(sciFiPager, sciFiAdapter, "scifi");
+
+        horrorPager = (ViewPager) findViewById(R.id.horrorCarousel);
+        horrorAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), "horror");
+        setupPager(horrorPager, horrorAdapter, "horror");
+    }
+
+    public int getNumBooksPerGenre (String genre){
+=======
         fantasyAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("fantasy"));
         setupPager(fantasyPager, fantasyAdapter);
 
@@ -49,6 +67,7 @@ public class GameLibraryActivity extends FragmentActivity {
     }
 
     private Models.Story[] findStoriesOfType(String genre){
+>>>>>>> upstream/master
         Models.Story[] storyArray = GameHelper.getInstance(this).getAllStories();
         ArrayList<Models.Story> stories = new ArrayList<>();
 
@@ -58,6 +77,14 @@ public class GameLibraryActivity extends FragmentActivity {
         preset.add("horror");
 
         for (int i = 0; i < storyArray.length; i++) {
+<<<<<<< HEAD
+            if (Objects.equals(storyArray[i].genre, genre)){
+                STORIES++;
+            }
+        }
+        return STORIES;
+
+=======
             if (storyArray[i].genre.equals(genre)){
                 stories.add(storyArray[i]);
             } else if (genre.equals("other") && !preset.contains(storyArray[i].genre)) {
@@ -71,9 +98,10 @@ public class GameLibraryActivity extends FragmentActivity {
         }
 
         return newStoryArray;
+>>>>>>> upstream/master
     }
 
-    private void setupPager (ViewPager pager, GameLibraryPagerAdapter adapter){
+    private int setupPager (ViewPager pager, GameLibraryPagerAdapter adapter, String genre){
         pager.setAdapter(adapter);
         pager.setPageTransformer(false, adapter);
 
@@ -88,5 +116,13 @@ public class GameLibraryActivity extends FragmentActivity {
         // Set margin for pages as a negative number, so a part of next and
         // previous pages will be showed
         pager.setPageMargin(-600);
+
+        Models.Story[] storyArray = GameHelper.getInstance(this).getAllStories();
+        for (int i = 0; i < storyArray.length; i++) {
+            if (storyArray[i].genre == genre){
+                STORIES++;
+            }
+        }
+        return STORIES;
     }
 }

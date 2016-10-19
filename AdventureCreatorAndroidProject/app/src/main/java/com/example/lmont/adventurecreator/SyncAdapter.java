@@ -8,6 +8,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SyncResult;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -75,12 +76,15 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
      * @param provider
      * @param syncResult
      */
+
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        AdventureDBHelper.getInstance(getContext()).deleteAll();
+        //if (true) return;
         APIHelper.getInstance(getContext()).downloadAll(new Response.Listener<Models.RemoteData>() {
             @Override
             public void onResponse(Models.RemoteData response) {
+                AdventureDBHelper.getInstance(getContext()).deleteAll();
+
                 Log.d("LEO", "onPerformSync: " + response.toString());
                 for (Models.Story story : response.stories) {
                     ContentValues cv = new ContentValues();
@@ -125,6 +129,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                     cv.put("_id", transition._id);
                     mContentResolver.insert(AdventureContentProvider.CONTENT_URI_TRANSITIONS, cv);
                 }
+                ContentResolverHelper.getInstance().onFinishDownloadRequest(response);
             }
         }, null);
     }
@@ -148,5 +153,13 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         reader.close();
 
         return builder.toString();
+    }
+
+    private class DownloadAsyncTask extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            return null;
+        }
     }
 }

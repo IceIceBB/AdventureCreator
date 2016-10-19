@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
-import java.util.ArrayList;
-
+import java.util.Objects;
 
 public class GameLibraryActivity extends FragmentActivity {
 
@@ -23,8 +22,6 @@ public class GameLibraryActivity extends FragmentActivity {
     public ViewPager sciFiPager;
     public GameLibraryPagerAdapter horrorAdapter;
     public ViewPager horrorPager;
-    public GameLibraryPagerAdapter otherAdapter;
-    public ViewPager otherPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,48 +29,30 @@ public class GameLibraryActivity extends FragmentActivity {
         setContentView(R.layout.activity_game_library);
 
         fantasyPager = (ViewPager) findViewById(R.id.fantasyCarousel);
-        fantasyAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("fantasy"));
-        setupPager(fantasyPager, fantasyAdapter);
+        fantasyAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), "fantasy");
+        setupPager(fantasyPager, fantasyAdapter, "fantasy");
 
         sciFiPager = (ViewPager) findViewById(R.id.sciFiCarousel);
-        sciFiAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("scifi"));
-        setupPager(sciFiPager, sciFiAdapter);
+        sciFiAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), "scifi");
+        setupPager(sciFiPager, sciFiAdapter, "scifi");
 
         horrorPager = (ViewPager) findViewById(R.id.horrorCarousel);
-        horrorAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("horror"));
-        setupPager(horrorPager, horrorAdapter);
-
-        otherPager = (ViewPager) findViewById(R.id.otherCarousel);
-        otherAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("other"));
-        setupPager(otherPager, otherAdapter);
+        horrorAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), "horror");
+        setupPager(horrorPager, horrorAdapter, "horror");
     }
 
-    private Models.Story[] findStoriesOfType(String genre){
+    public int getNumBooksPerGenre (String genre){
         Models.Story[] storyArray = GameHelper.getInstance(this).getAllStories();
-        ArrayList<Models.Story> stories = new ArrayList<>();
-
-        ArrayList<String> preset = new ArrayList<>();
-        preset.add("fantasy");
-        preset.add("scifi");
-        preset.add("horror");
-
         for (int i = 0; i < storyArray.length; i++) {
-            if (storyArray[i].genre.equals(genre)){
-                stories.add(storyArray[i]);
-            } else if (genre.equals("other") && !preset.contains(storyArray[i].genre)) {
-                stories.add(storyArray[i]);
+            if (Objects.equals(storyArray[i].genre, genre)){
+                STORIES++;
             }
         }
+        return STORIES;
 
-        Models.Story[] newStoryArray = new Models.Story[stories.size()];
-        for(int x=0; x<stories.size(); x++) {
-            newStoryArray[x] = stories.get(x);
-        }
-
-        return newStoryArray;
     }
 
-    private void setupPager (ViewPager pager, GameLibraryPagerAdapter adapter){
+    private int setupPager (ViewPager pager, GameLibraryPagerAdapter adapter, String genre){
         pager.setAdapter(adapter);
         pager.setPageTransformer(false, adapter);
 
@@ -88,5 +67,13 @@ public class GameLibraryActivity extends FragmentActivity {
         // Set margin for pages as a negative number, so a part of next and
         // previous pages will be showed
         pager.setPageMargin(-600);
+
+        Models.Story[] storyArray = GameHelper.getInstance(this).getAllStories();
+        for (int i = 0; i < storyArray.length; i++) {
+            if (storyArray[i].genre == genre){
+                STORIES++;
+            }
+        }
+        return STORIES;
     }
 }

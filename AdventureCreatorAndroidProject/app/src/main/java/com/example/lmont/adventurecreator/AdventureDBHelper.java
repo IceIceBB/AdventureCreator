@@ -11,20 +11,24 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class AdventureDBHelper extends SQLiteOpenHelper {
 
-    public final static int VERSION = 6;
+    public final static int VERSION = 7;
     public final static String
         TAG = "AdventureDBHelper",
         DB_NAME = "adventureDB",
         STORY_TABLE_NAME = "stories",
         CHAPTER_TABLE_NAME = "chapters",
         SCENES_TABLE_NAME = "scenes",
-        TRANSITIONS_TABLE_NAME = "transitions";
+        TRANSITIONS_TABLE_NAME = "transitions",
+        SAVED_INSTANCES_TABLE_NAME = "gameSaves"
+    ;
 
     public final static String[]
         STORY_COLUMNS = new String[]{"_id", "title", "creator", "description", "genre", "type", "tags"},
         CHAPTER_COLUMNS = new String[]{"_id", "title", "summary", "type", "storyID"},
         SCENE_COLUMNS = new String[]{"_id", "title", "journalText", "flagModifiers", "body", "chapterID"},
-        TRANSITION_COLUMNS = new String[]{"_id", "type", "verb", "flag", "attribute", "comparator", "challengeLevel", "fromSceneID", "toSceneID"};
+        TRANSITION_COLUMNS = new String[]{"_id", "type", "verb", "flag", "attribute", "comparator", "challengeLevel", "fromSceneID", "toSceneID"},
+        SAVED_INSTANCES_COLUMNS = new String[]{"storyID, chapterNum, serializedSavedInstance"}
+    ;
 
     public final static String CREATE_STORY_TABLE =
         "CREATE TABLE IF NOT EXISTS " + STORY_TABLE_NAME + " (" +
@@ -65,6 +69,13 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         "fromSceneID TEXT," +
         "toSceneID TEXT)";
 
+    //String storyID, int chapterNum, String serializedSavedInstance
+    public final static String CREATE_SAVED_INSTANCES_TABLE =
+        "CREATE TABLE IF NOT EXISTS " + SAVED_INSTANCES_TABLE_NAME + " (" +
+        "storyID TEXT," +
+        "chapterNum INTEGER," +
+        "serializedSavedInstance TEXT)";
+
     private static AdventureDBHelper instance;
 
     private APIHelper apiHelper;
@@ -87,6 +98,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_CHAPTER_TABLE);
         db.execSQL(CREATE_SCENES_TABLE);
         db.execSQL(CREATE_TRANSITIONS_TABLE);
+        db.execSQL(CREATE_SAVED_INSTANCES_TABLE);
     }
 
     @Override
@@ -357,10 +369,56 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         return transitions;
     }
 
+    public void addSavedGame(String storyID, int chapterNum, String serializedSavedInstance) {
+        Cursor cursor = getReadableDatabase().query(
+                SAVED_INSTANCES_TABLE_NAME,
+                SAVED_INSTANCES_COLUMNS,
+                "storyID = '" + storyID + "' AND chapterNum = '" + chapterNum + "'",
+                null,
+                null, null, null);
+
+        ContentValues cv = new ContentValues();
+        cv.put("storyID", storyID);
+        cv.put("chapterNum", chapterNum);
+        cv.put("serializedSavedInstance", serializedSavedInstance);
+
+        if (cursor.getCount() > 0) {
+            getWritableDatabase().update(
+                    SAVED_INSTANCES_TABLE_NAME,
+                    cv,
+                    "storyID = '" + storyID + "' AND chapterNum = '" + chapterNum + "'",
+                    null);
+        } else {
+            getWritableDatabase().insert(
+                    SAVED_INSTANCES_TABLE_NAME,
+                    null,
+                    cv);
+        }
+    }
+
+    public String getSavedGame(String storyID, int chapterNum) {
+        String savedInstance = null;
+
+        Cursor cursor = getReadableDatabase().query(
+                SAVED_INSTANCES_TABLE_NAME,
+                SAVED_INSTANCES_COLUMNS,
+                "storyID = '" + storyID + "' AND chapterNum = '" + chapterNum + "'",
+                null,
+                null, null, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            savedInstance = cursor.getString(cursor.getColumnIndex("serializedSavedInstance"));
+        }
+
+        return savedInstance;
+    }
+
     public void deleteAll() {
         getWritableDatabase().delete(STORY_TABLE_NAME,null,null);
         getWritableDatabase().delete(CHAPTER_TABLE_NAME,null,null);
         getWritableDatabase().delete(SCENES_TABLE_NAME,null,null);
         getWritableDatabase().delete(TRANSITIONS_TABLE_NAME,null,null);
+        getWritableDatabase().delete(SAVED_INSTANCES_TABLE_NAME,null,null);
     }
 }

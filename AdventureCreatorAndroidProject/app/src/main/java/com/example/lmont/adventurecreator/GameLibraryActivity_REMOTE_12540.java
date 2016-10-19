@@ -6,16 +6,13 @@ import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
 
-
 public class GameLibraryActivity extends FragmentActivity {
 
-    public static int STORIES = 0;
+    public static int STORIES = 5;
     // You can choose a bigger number for LOOPS, but you know, nobody will fling
     // more than 1000 times just in order to testAddStoryAndReadStory your "infinite" ViewPager :D
     public final static int LOOPS = 1000;
     public final static int FIRST_PAGE = STORIES * LOOPS / 2;
-
-    public String pagerGenre;
 
     public GameLibraryPagerAdapter fantasyAdapter;
     public ViewPager fantasyPager;
@@ -76,15 +73,12 @@ public class GameLibraryActivity extends FragmentActivity {
     private void setupPager (ViewPager pager, GameLibraryPagerAdapter adapter){
         pager.setAdapter(adapter);
         pager.setPageTransformer(false, adapter);
-
         // Set current item to the middle page so we can fling to both
         // directions left and right
         pager.setCurrentItem(FIRST_PAGE);
-
         // Necessary or the pager will only have one extra page to show
         // make this at least however many pages you can see
         pager.setOffscreenPageLimit(5);
-
         // Set margin for pages as a negative number, so a part of next and
         // previous pages will be showed
         pager.setPageMargin(-600);

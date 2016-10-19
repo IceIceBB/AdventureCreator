@@ -21,15 +21,13 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
     private GameLibraryActivity context;
     private FragmentManager fm;
     private float scale;
+    Models.Story[] stories;
 
-    static final int numBooks = 0;
-    String genre = null;
-
-    public GameLibraryPagerAdapter(GameLibraryActivity context, FragmentManager fm, String genre) {
+    public GameLibraryPagerAdapter(GameLibraryActivity context, FragmentManager fm, Models.Story[] stories) {
         super(fm);
         this.fm = fm;
         this.context = context;
-        this.genre = genre;
+        this.stories = stories;
     }
 
     @Override
@@ -41,16 +39,15 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
             scale = SMALL_SCALE;
 
         position = position % GameLibraryActivity.STORIES;
-        return GameLibraryFragment.newInstance(context, position, scale);
+        GameLibraryFragment gameLibraryFragment = (GameLibraryFragment) GameLibraryFragment.newInstance(context, position, scale);
+        gameLibraryFragment.story = stories[position];
+        return gameLibraryFragment;
     }
 //      get number of books for each row
     @Override
     public int getCount() {
-//        return GameLibraryActivity.STORIES * GameLibraryActivity.LOOPS;
-        int numBooks = new GameLibraryActivity().getNumBooksPerGenre(genre);
-
-        notifyDataSetChanged();
-        return numBooks;
+        return stories.length;
+        //return GameLibraryActivity.STORIES * GameLibraryActivity.LOOPS;
     }
 
     @Override

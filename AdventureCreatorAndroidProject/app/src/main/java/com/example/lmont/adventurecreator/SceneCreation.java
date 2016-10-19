@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.android.volley.Response;
 
 import java.util.ArrayList;
 
@@ -15,12 +18,12 @@ import java.util.ArrayList;
 public class SceneCreation extends AppCompatActivity {
 
     String storyId;
+    String chapterId;
 
     EditText chapterTitleEditText;
     EditText chapterGoalEditText;
     EditText chapterSummaryEditText;
 
-    String chapterId;
     String chapterTitle;
     String chapterGoal;
     String chapterSummary;
@@ -32,66 +35,147 @@ public class SceneCreation extends AppCompatActivity {
     ArrayList<String> allSceneTitles;
     ArrayList<String> allSceneIds;
 
-    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allSceneTitles);
+    ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene_creation);
 
-        getChapterDetails();
-        setChapterFormFields();
-
-//        TODO: Update db with changes to Title, Goal and Summary when exiting this event (or with new button?)
+//        TODOne: Update db with changes to Title, Goal and Summary when exiting this event (or with new button?)
         chapterTitleEditText = (EditText) findViewById(R.id.chapterTitleEditText);
         chapterGoalEditText = (EditText) findViewById(R.id.chapterGoalEditText);
         chapterSummaryEditText = (EditText) findViewById(R.id.chapterSummaryEditText);
 
         addSceneButton = (Button) findViewById(R.id.addSceneButton);
         sceneNodeListView = (ListView) findViewById(R.id.sceneNodeListView);
-//        TODO: Add new scene and pull for ID.
+
+        allSceneTitles = new ArrayList<>();
+        allSceneIds = new ArrayList<>();
+
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allSceneTitles);
+
+//        TODOne: Add new scene and pull for ID.
         addSceneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getAllTitlesAndIds();
                 Models.Scene newScene = new Models.Scene(
-                        "Scene " + allScenesArray.length + 1,
+                        "Scene " + (allScenesArray.length+1),
                         "Journal Text",
                         "Flag Modifiers",
                         "Scene Body Text",
                         chapterId);
-
-//                TODO: Fix these two so they aren't breaking the code (Something about Listener)
-//                Response.Listener<Models.Chapter> listener = new Response.Listener<>();
-//                GameHelper.getInstance(ChapterCreation.this).addChapter(newChapter, listener);
+                    addScene(newScene);
             }
         });
+
+        sceneNodeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
+                Intent intent = new Intent(SceneCreation.this, SceneEditor.class);
+
+                intent.putExtra("storyId", storyId);
+                intent.putExtra("chapterId", chapterId);
+                intent.putExtra("selectedSceneId", allSceneIds.get(position));
+////                TODO: Pass scene node type
+////                intent.putExtra("sceneNodeType", ???);
+//                intent.putExtra("selectedSceneTitle", allScenesArray[position].title);
+//                intent.putExtra("selectedSceneJournalText", allScenesArray[position].journalText);
+//                intent.putExtra("selectedSceneModifiers", allScenesArray[position].flagModifiers);
+//                intent.putExtra("selectedSceneBodyText", allScenesArray[position].body);
+
+                readChapterFormFields();
+                Models.Chapter updatedChapter = new Models.Chapter(chapterTitle, chapterSummary, chapterGoal, storyId);
+
+                updateChapter(updatedChapter);
+
+                startActivity(intent);
+            }
+        });
+
+        getChapterDetails();
+        getAllFormFields();
+
+        getAllTitlesAndIds();
+        sceneNodeListView.setAdapter(arrayAdapter);
     }
 
-//        TODO: Get data and populate list view with Scene titles
-    public void getChapterDetails(){
+    //        TODOne: Get data and populate list view with Scene titles
+    public void getChapterDetails() {
         Intent chapterIntent = getIntent();
         storyId = chapterIntent.getStringExtra("storyId");
         chapterId = chapterIntent.getStringExtra("selectedChapterId");
-        chapterTitle = chapterIntent.getStringExtra("selectedChapterTitle");
-        chapterGoal = chapterIntent.getStringExtra("selectedChapterGoal");
-        chapterSummary = chapterIntent.getStringExtra("selectedChapterSummary");
+//        chapterTitle = chapterIntent.getStringExtra("selectedChapterTitle");
+//        chapterGoal = chapterIntent.getStringExtra("selectedChapterGoal");
+//        chapterSummary = chapterIntent.getStringExtra("selectedChapterSummary");
+        setChapterFormFields();
     }
 
-    public void getAllTitlesAndIds(){
+    public void getAllTitlesAndIds() {
         allScenesArray = GameHelper.getInstance(this).getScenesForChapter(chapterId);
 
-        for (int i = 0; i <allScenesArray.length ; i++) {
+        allSceneIds.removeAll(allSceneIds);
+        allSceneTitles.removeAll(allSceneTitles);
+
+        for (int i = 0; i < allScenesArray.length; i++) {
             Models.Scene sceneAtI = allScenesArray[i];
             allSceneTitles.add(sceneAtI.title);
             allSceneIds.add(sceneAtI._id);
         }
     }
 
-public void setChapterFormFields(){
-    chapterTitleEditText.setText(chapterTitle);
-    chapterGoalEditText.setText(chapterGoal);
-    chapterSummaryEditText.setText(chapterSummary);
-}
+    //    TODOne: Use this to update the database with user edits
+    public void readChapterFormFields() {
+        chapterTitle = chapterTitleEditText.getText().toString();
+        chapterGoal = chapterGoalEditText.getText().toString();
+        chapterSummary = chapterSummaryEditText.getText().toString();
+    }
+
+    public void setChapterFormFields() {
+        chapterTitleEditText.setText(chapterTitle);
+        chapterGoalEditText.setText(chapterGoal);
+        chapterSummaryEditText.setText(chapterSummary);
+    }
+
+    public void addScene(Models.Scene scene) {
+        GameHelper.getInstance(SceneCreation.this).addScene(scene, new Response.Listener<Models.Scene>() {
+            @Override
+            public void onResponse(Models.Scene response) {
+                getAllTitlesAndIds();
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    public void updateChapter(Models.Chapter chapter){
+        GameHelper.getInstance(SceneCreation.this).updateChapter(chapter, new Response.Listener<Models.Chapter>(){
+            @Override
+            public void onResponse(Models.Chapter response) {
+//            TODO: Add call back functionality
+            }
+        });
+    }
+
+    public void getAllFormFields(){
+//        TODO: Get a single chapter as a Models.Chapter object
+//        Models.Chapter[] allChaptersArray = GameHelper.getInstance(this).getChaptersForStory(storyId);
+//        Models.Chapter selectedChapter = allChaptersArray[???];
+//        chapterTitle = selectedChapter.title;
+//        chapterGoal = selectedChapter.type;
+//        chapterSummary = selectedChapter.summary;
+//        setChapterFormFields();
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+
+        readChapterFormFields();
+        Models.Chapter updatedChapter = new Models.Chapter(chapterTitle, chapterSummary, chapterGoal, storyId);
+
+        updateChapter(updatedChapter);
+
+    }
 
 }

@@ -225,7 +225,7 @@ public class GameHelper {
     }
     public void refreshDB(Response.Listener listener) {
         dbHelper.deleteAll();
-        ContentResolverHelper.instance.requestSync();
+        ContentResolverHelper.instance.requestSync(null);
         apiHelper.downloadAll(listener, null);
     }
 
@@ -236,5 +236,13 @@ public class GameHelper {
                 listener.onResponse(Float.valueOf(response.toString()));
             }
         }, errorListener);
+    }
+
+    public void saveGame(String storyID, int chapterNum, String serializedSavedInstance) {
+        dbHelper.addSavedGame(storyID, chapterNum, serializedSavedInstance);
+    }
+
+    public String loadGame(String storyID, int chapterNum) {
+        return dbHelper.getSavedGame(storyID, chapterNum);
     }
 }

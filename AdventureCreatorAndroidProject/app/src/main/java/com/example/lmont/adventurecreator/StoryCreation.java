@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.android.volley.Response;
+
 import java.util.ArrayList;
 
 public class StoryCreation extends AppCompatActivity {
@@ -18,6 +20,7 @@ public class StoryCreation extends AppCompatActivity {
     Models.Story[] allStoriesArray;
     ArrayList<String> allStoryTitles;
     ArrayList<String> allStoryIds;
+
     ArrayAdapter<String> arrayAdapter;
 
     @Override
@@ -34,22 +37,21 @@ public class StoryCreation extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allStoryTitles);
 
 
-//        TODO: Add new story and pull for ID.
+//        TODOne: Add new story and pull for ID.
         newStoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getAllTitlesAndIds();
                 Models.Story newStory = new Models.Story(
-                        "Story " + allStoriesArray.length + 1,
+                        "Story " + (allStoriesArray.length+1),
                         "Story Author",
                         "Story Summary",
                         "Story Genre",
                         "Story Type",
                         "Story Tags");
-//                TODO: Fix these two so they aren't breaking the code (Something about Listener)
-//                Response.Listener<Models.Story> listener = new Response.Listener<>();
-//                GameHelper.getInstance(StoryCreation.this).addStory(newStory, listener);
-                getAllTitlesAndIds();
+
+                addStory(newStory);
+//                getAllTitlesAndIds();
             }
         });
 
@@ -58,36 +60,48 @@ public class StoryCreation extends AppCompatActivity {
         storyListView.setAdapter(arrayAdapter);
 
 
-//        TODO: Transition to Chapter Creation with Story id as Intent Extra
+//        TODOne: Transition to Chapter Creation with Story id as Intent Extra
         storyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
                 Intent intent = new Intent(StoryCreation.this, ChapterCreation.class);
 
                 intent.putExtra("selectedStoryId", allStoryIds.get(position));
-                intent.putExtra("selectedStoryTitle", allStoriesArray[position].title);
-//                TODO: get author name from user somehow?
-//                intent.putExtra("selectedStoryAuthor", allStoriesArray[position].author);
-                intent.putExtra("selectedStorySummary", allStoriesArray[position].description);
-                intent.putExtra("selectedStoryGene", allStoriesArray[position].genre);
-                intent.putExtra("selectedStoryTags", allStoriesArray[position].tags);
+//                intent.putExtra("selectedStoryTitle", allStoriesArray[position].title);
+////                intent.putExtra("selectedStoryAuthor", allStoriesArray[position].author);
+//                intent.putExtra("selectedStorySummary", allStoriesArray[position].description);
+//                intent.putExtra("selectedStoryGene", allStoriesArray[position].genre);
+//                intent.putExtra("selectedStoryTags", allStoriesArray[position].tags);
                 startActivity(intent);
             }
         });
     }
 
 
-//    TODO: Get data and populate list view with Story titles (additional info?)
+    //    TODOne: Get data and populate list view with Story titles (additional info?)
     public void getAllTitlesAndIds() {
         allStoriesArray = GameHelper.getInstance(this).getAllStories();
+
+        allStoryIds.removeAll(allStoryIds);
+        allStoryTitles.removeAll(allStoryTitles);
 
         for (int i = 0; i < allStoriesArray.length; i++) {
 
             Models.Story storyAtI = allStoriesArray[i];
             allStoryTitles.add(storyAtI.title);
-//            TODO: Use this to pass id for selected activity through on item click
+//            TODOne: Use this to pass id for selected activity through on item click
             allStoryIds.add(storyAtI._id);
         }
+    }
+
+    public void addStory(Models.Story story) {
+        GameHelper.getInstance(StoryCreation.this).addStory(story, new Response.Listener<Models.Story>() {
+            @Override
+            public void onResponse(Models.Story response) {
+                getAllTitlesAndIds();
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 
