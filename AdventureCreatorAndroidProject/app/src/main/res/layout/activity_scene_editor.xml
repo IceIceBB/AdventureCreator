@@ -235,7 +235,7 @@
 
     <!--Set Visibility to show when Modifier Node Radio Button selected-->
     <LinearLayout
-        android:id="@+id/autoNodeViews"
+        android:id="@+id/modifierNodeViews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bodyText"
