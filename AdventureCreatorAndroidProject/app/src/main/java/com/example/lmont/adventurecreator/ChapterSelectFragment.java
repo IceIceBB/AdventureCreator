@@ -44,6 +44,7 @@ public class ChapterSelectFragment extends DialogFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Player.getInstance().loadGame(story, i, story.genre, context);
                 Intent intent = new Intent(view.getContext(), GamePlayActivity.class);
+                intent.putExtra("genre", story.genre);
                 startActivity(intent);
             }
         });
