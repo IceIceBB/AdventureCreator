@@ -17,14 +17,14 @@ public class MainActivity extends AppCompatActivity {
     public final static String TAG = "MainActivity";
 
     APIHelper apiHelper;
-    ContentResolverHelper contentObserver;
-    EditText editText2;
-    EditText editText1;
+    ContentResolverHelper contentObserverHelper;
     AdventureDBHelper dbHelper;
     Button libraryButton;
     Button storyCreatorButton;
     Button deleteDbButton;
+    Button playButton;
     GameHelper gameHelper;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,38 +36,46 @@ public class MainActivity extends AppCompatActivity {
         testPlay();
 //        test();
 //        testUpdateRoutes();
+    }
 
-        gameHelper.wordSimilarityValue("grab key", "grab", new Response.Listener<Float>() {
-            @Override
-            public void onResponse(Float response) {
-                addText(response.toString());
-            }
-        }, null);
+    private void startLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+        libraryButton.setVisibility(View.GONE);
+        storyCreatorButton.setVisibility(View.GONE);
+        deleteDbButton.setVisibility(View.GONE);
+        playButton.setVisibility(View.GONE);
+    }
+
+    private void doneLoading() {
+        progressBar.setVisibility(View.GONE);
+        libraryButton.setVisibility(View.VISIBLE);
+        storyCreatorButton.setVisibility(View.VISIBLE);
+        deleteDbButton.setVisibility(View.VISIBLE);
+        playButton.setVisibility(View.VISIBLE);
     }
 
     private void testPlay() {
-        Button button = (Button) findViewById(R.id.main_sendButton);
-        button.setText("DEMO GAME");
-        button.setOnClickListener(new View.OnClickListener() {
+        playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Models.Story story = gameHelper.getFullStory("58065526288a6a00114c2802");
-                    Player.getInstance().loadGame(story.chapters[0], story.genre);
-                    Intent intent = new Intent(MainActivity.this, GamePlayActivity.class);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                startLoading();
+                contentObserverHelper.requestSync(new Response.Listener() {
+                @Override
+                public void onResponse(Object response) {
+                    doneLoading();
                 }
+            });
             }
         });
     }
 
     private void setup() {
+        playButton = (Button) findViewById(R.id.main_sendButton);
         apiHelper = APIHelper.getInstance(this);
-        contentObserver = ContentResolverHelper.getInstance(this);
+        contentObserverHelper = ContentResolverHelper.getInstance(this);
         dbHelper = AdventureDBHelper.getInstance(this);
         gameHelper = GameHelper.getInstance(this);
+        progressBar = (ProgressBar) findViewById(R.id.main_progressBar);
 
         libraryButton = (Button)findViewById(R.id.libraryButton);
         libraryButton.setOnClickListener(new View.OnClickListener() {
@@ -99,59 +107,21 @@ public class MainActivity extends AppCompatActivity {
         // Code for Spencer +++++++++++++++++++++
         testCreateStory();
         // ++++++++++++++++++++++++++++++++++++++
-
-        editText1 = (EditText)findViewById(R.id.main_wordOneEditText);
-        editText2 = (EditText)findViewById(R.id.main_wordTwoEditText);
         Button compareButton = (Button)findViewById(R.id.main_sendButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (trannyCounter<6)
                     return;
-
                 // Code for Paul --------------------
                 Player player = Player.getInstance();
                 Models.Story story = GameHelper.getInstance(getApplicationContext()).getFullStory(testStory[0]);
                 Models.Scene currentScene = player.loadGame(story.chapters[0], story.genre);
-                addText(currentScene.toString());
-
-                addText("playerHasKey: " + player.checkIfPlayerHasModifier("key"));
-
                 currentScene = player.getNextScene(currentScene.transitions[0].toSceneID);
-                addText(currentScene.toString());
-
                 currentScene = player.getNextScene(currentScene.transitions[0].toSceneID);
-                addText(currentScene.toString());
-
                 currentScene = player.getNextScene(currentScene.transitions[0].toSceneID);
-                addText(currentScene.toString());
-
                 currentScene = player.getNextScene(currentScene.transitions[0].toSceneID);
-                addText(currentScene.toString());
-
-                addText("playerHasKey: " + player.checkIfPlayerHasModifier("key"));
-
-                addText(player.toString());
-
-                //-----------------------------------
-
                 ((ProgressBar)findViewById(R.id.main_progressBar)).setVisibility(View.VISIBLE);
-                gameHelper.wordSimilarityValue(
-                        editText1.getText().toString().replace(" ", "%20"),
-                        editText2.getText().toString().replace(" ", "%20"),
-                        new Response.Listener<Float>() {
-                            @Override
-                            public void onResponse(Float response) {
-                                ((ProgressBar) findViewById(R.id.main_progressBar)).setVisibility(View.INVISIBLE);
-                                addText(response.toString());
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        });
             }
         });
 
@@ -171,25 +141,25 @@ public class MainActivity extends AppCompatActivity {
         gameHelper.updateStory(s, new Response.Listener<Models.Story>() {
             @Override
             public void onResponse(Models.Story response) {
-                addText(response.toString());
+
             }
         });
         gameHelper.updateChapter(c, new Response.Listener<Models.Chapter>() {
             @Override
             public void onResponse(Models.Chapter response) {
-                addText(response.toString());
+
             }
         });
         gameHelper.updateScene( sc, new Response.Listener<Models.Scene>() {
             @Override
             public void onResponse(Models.Scene response) {
-                addText(response.toString());
+
             }
         });
         gameHelper.updateTransition(tr, new Response.Listener<Models.Transition>() {
             @Override
             public void onResponse(Models.Transition response) {
-                addText(response.toString());
+
             }
         });
     }
@@ -435,10 +405,5 @@ public class MainActivity extends AppCompatActivity {
                 trannyCounter++;
             }
         });
-    }
-
-    public void addText(String text) {
-        TextView textView = (TextView) findViewById(R.id.main_scoreText);
-        textView.setText(textView.getText() + text + "\n\n");
     }
 }

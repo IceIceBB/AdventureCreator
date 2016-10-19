@@ -15,7 +15,8 @@ public class Player {
     private Models.Chapter chapter;
     private Models.Scene currentScene;
     private ArrayList<String> modifiers;
-    private String journalText = "";
+    private String journalText;
+    private int journalCounter;
 
     public String genre = "";
 
@@ -31,7 +32,8 @@ public class Player {
     public Models.Scene loadGame(Models.Chapter chapter, String genre) {
         this.genre = genre;
         this.chapter = chapter;
-        journalText = "";
+        journalText = "----------------------\n";
+        journalCounter = 0;
         modifiers = new ArrayList<>();
         for (Models.Scene scene : chapter.scenes) {
             if (scene.title.equals("intro")) {
@@ -69,7 +71,8 @@ public class Player {
     }
 
     public void addJournalText(String newjournalText) {
-        journalText += newjournalText + "\n\n";
+        journalCounter++;
+        journalText += journalCounter + ". " + newjournalText + "\n" + "----------------------\n";
     }
 
     public String getJournalText() {

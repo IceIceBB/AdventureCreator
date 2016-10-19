@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
+import java.util.ArrayList;
+
 public class GameLibraryActivity extends FragmentActivity {
 
     public static int STORIES = 5;
@@ -18,6 +20,8 @@ public class GameLibraryActivity extends FragmentActivity {
     public ViewPager sciFiPager;
     public GameLibraryPagerAdapter horrorAdapter;
     public ViewPager horrorPager;
+    public GameLibraryPagerAdapter otherAdapter;
+    public ViewPager otherPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,26 +29,45 @@ public class GameLibraryActivity extends FragmentActivity {
         setContentView(R.layout.activity_game_library);
 
         fantasyPager = (ViewPager) findViewById(R.id.fantasyCarousel);
-        fantasyAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager());
+        fantasyAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("fantasy"));
         setupPager(fantasyPager, fantasyAdapter);
 
         sciFiPager = (ViewPager) findViewById(R.id.sciFiCarousel);
-        sciFiAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager());
+        sciFiAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("scifi"));
         setupPager(sciFiPager, sciFiAdapter);
 
         horrorPager = (ViewPager) findViewById(R.id.horrorCarousel);
-        horrorAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager());
+        horrorAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("horror"));
         setupPager(horrorPager, horrorAdapter);
+
+        otherPager = (ViewPager) findViewById(R.id.otherCarousel);
+        otherAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("other"));
+        setupPager(otherPager, otherAdapter);
     }
 
-    private int getNumBooksPerGenre (String genre){
+    private Models.Story[] findStoriesOfType(String genre){
         Models.Story[] storyArray = GameHelper.getInstance(this).getAllStories();
+        ArrayList<Models.Story> stories = new ArrayList<>();
+
+        ArrayList<String> preset = new ArrayList<>();
+        preset.add("fantasy");
+        preset.add("scifi");
+        preset.add("horror");
+
         for (int i = 0; i < storyArray.length; i++) {
-            if (storyArray[i].genre == genre){
-                STORIES++;
+            if (storyArray[i].genre.equals(genre)){
+                stories.add(storyArray[i]);
+            } else if (genre.equals("other") && !preset.contains(storyArray[i].genre)) {
+                stories.add(storyArray[i]);
             }
         }
-        return STORIES;
+
+        Models.Story[] newStoryArray = new Models.Story[stories.size()];
+        for(int x=0; x<stories.size(); x++) {
+            newStoryArray[x] = stories.get(x);
+        }
+
+        return newStoryArray;
     }
 
     private void setupPager (ViewPager pager, GameLibraryPagerAdapter adapter){

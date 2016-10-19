@@ -11,61 +11,67 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.lmont.adventurecreator.MainActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_weight="3"
+        android:src="@drawable/game_logo" />
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/libraryButton"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="go to library" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <Button
-            android:id="@+id/storyCreatorButton"
+            <Button
+                android:id="@+id/main_sendButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Download DB" />
+
+            <Button
+                android:id="@+id/deleteDbButton"
+                android:text="Delete DB"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/libraryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="go to library" />
+
+            <Button
+                android:id="@+id/storyCreatorButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="go to story creator" />
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/main_progressBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="go to story creator" />
+            android:visibility="gone" />
+
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/main_wordOneEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Word 1" />
-
-    <EditText
-        android:id="@+id/main_wordTwoEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Word 2" />
-
-    <Button
-        android:id="@+id/main_sendButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="COMPARE" />
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/main_scoreText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </ScrollView>
-
-    <Button
-        android:id="@+id/deleteDbButton"
-        android:text="Delete DB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <ProgressBar
-        android:id="@+id/main_progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible" />
 </LinearLayout>
