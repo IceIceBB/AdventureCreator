@@ -37,7 +37,7 @@ public class StoryCreation extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allStoryTitles);
 
 
-//        TODO: Add new story and pull for ID.
+//        TODOne: Add new story and pull for ID.
         newStoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,19 +67,18 @@ public class StoryCreation extends AppCompatActivity {
                 Intent intent = new Intent(StoryCreation.this, ChapterCreation.class);
 
                 intent.putExtra("selectedStoryId", allStoryIds.get(position));
-                intent.putExtra("selectedStoryTitle", allStoriesArray[position].title);
-//                TODO: get author name from user somehow?
-//                intent.putExtra("selectedStoryAuthor", allStoriesArray[position].author);
-                intent.putExtra("selectedStorySummary", allStoriesArray[position].description);
-                intent.putExtra("selectedStoryGene", allStoriesArray[position].genre);
-                intent.putExtra("selectedStoryTags", allStoriesArray[position].tags);
+//                intent.putExtra("selectedStoryTitle", allStoriesArray[position].title);
+////                intent.putExtra("selectedStoryAuthor", allStoriesArray[position].author);
+//                intent.putExtra("selectedStorySummary", allStoriesArray[position].description);
+//                intent.putExtra("selectedStoryGene", allStoriesArray[position].genre);
+//                intent.putExtra("selectedStoryTags", allStoriesArray[position].tags);
                 startActivity(intent);
             }
         });
     }
 
 
-    //    TODO: Get data and populate list view with Story titles (additional info?)
+    //    TODOne: Get data and populate list view with Story titles (additional info?)
     public void getAllTitlesAndIds() {
         allStoriesArray = GameHelper.getInstance(this).getAllStories();
 
@@ -90,7 +89,7 @@ public class StoryCreation extends AppCompatActivity {
 
             Models.Story storyAtI = allStoriesArray[i];
             allStoryTitles.add(storyAtI.title);
-//            TODO: Use this to pass id for selected activity through on item click
+//            TODOne: Use this to pass id for selected activity through on item click
             allStoryIds.add(storyAtI._id);
         }
     }
@@ -104,6 +103,6 @@ public class StoryCreation extends AppCompatActivity {
             }
         });
     }
-    
+
 
 }

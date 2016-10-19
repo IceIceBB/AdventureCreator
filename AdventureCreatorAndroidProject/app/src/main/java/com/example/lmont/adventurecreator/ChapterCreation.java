@@ -25,6 +25,7 @@ public class ChapterCreation extends AppCompatActivity {
     EditText storyTagsEditText;
 
     String storyTitle;
+    //TODO: get author name from user somehow?
     String storyAuthor;
     String storySummary;
     String storyGenre;
@@ -46,7 +47,7 @@ public class ChapterCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapter_creation);
 
-//        TODO: Update db with changes to Title, Author, Summary, Genre and Tags when exiting this activity (or with new button?)
+//        TODOne: Update db with changes to Title, Author, Summary, Genre and Tags when exiting this activity (or with new button?)
         storyTitleEditText = (EditText) findViewById(R.id.storyTitleEditText);
         storyAuthorEditText = (EditText) findViewById(R.id.storyAuthorEditText);
         storySummaryEditText = (EditText) findViewById(R.id.storySummaryEditText);
@@ -62,7 +63,7 @@ public class ChapterCreation extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allChapterTitles);
 
 
-//        TODO: Add new chapter and pull for id
+//        TODOne: Add new chapter and pull for id
         addChapterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +79,7 @@ public class ChapterCreation extends AppCompatActivity {
 
 
 
-//        TODO: Transition to Chapter Creation with Story id and Chapter id as Intent Extras
+//        TODOne: Transition to Chapter Creation with Story id and Chapter id as Intent Extras
         chaptersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
@@ -86,9 +87,9 @@ public class ChapterCreation extends AppCompatActivity {
 
                 intent.putExtra("storyId", storyId);
                 intent.putExtra("selectedChapterId", allChapterIds.get(position));
-                intent.putExtra("selectedChapterTitle", allChaptersArray[position].title);
-                intent.putExtra("selectedChapterGoal", allChaptersArray[position].type);
-                intent.putExtra("selectedChapterSummary", allChaptersArray[position].summary);
+//                intent.putExtra("selectedChapterTitle", allChaptersArray[position].title);
+//                intent.putExtra("selectedChapterGoal", allChaptersArray[position].type);
+//                intent.putExtra("selectedChapterSummary", allChaptersArray[position].summary);
 
                 readStoryFormFields();
                 Models.Story updatedStory = new Models.Story(storyTitle, storyAuthor, storySummary, storyGenre,"Type", storyTags);
@@ -100,20 +101,21 @@ public class ChapterCreation extends AppCompatActivity {
         });
 
         getStoryDetails();
+        getAllFormFields();
 
         getAllTitlesAndIds();
         chaptersListView.setAdapter(arrayAdapter);
     }
 
 
-//    TODO: Get data and populate list view with Chapter titles
+//    TODOne: Get data and populate list view with Chapter titles
     public void getStoryDetails() {
         Intent storyIntent = getIntent();
         storyId = storyIntent.getStringExtra("selectedStoryId");
-        storyTitle = storyIntent.getStringExtra("selectedStoryTitle");
-        storySummary = storyIntent.getStringExtra("selectedStorySummary");
-        storyGenre = storyIntent.getStringExtra("selectedStoryGenre");
-        storyTags = storyIntent.getStringExtra("selectedStoryTags");
+//        storyTitle = storyIntent.getStringExtra("selectedStoryTitle");
+//        storySummary = storyIntent.getStringExtra("selectedStorySummary");
+//        storyGenre = storyIntent.getStringExtra("selectedStoryGenre");
+//        storyTags = storyIntent.getStringExtra("selectedStoryTags");
         setStoryFormFields();
     }
 
@@ -131,7 +133,7 @@ public class ChapterCreation extends AppCompatActivity {
     }
 
 
-//    TODO: Use this to update the database with user edits
+//    TODOne: Use this to update the database with user edits
     public void readStoryFormFields(){
         storyTitle = storyTitleEditText.getText().toString();
         storyAuthor = storyAuthorEditText.getText().toString();
@@ -161,10 +163,19 @@ public class ChapterCreation extends AppCompatActivity {
         GameHelper.getInstance(ChapterCreation.this).updateStory(story, new Response.Listener<Models.Story>(){
             @Override
             public void onResponse(Models.Story response) {
-                getAllTitlesAndIds();
-                arrayAdapter.notifyDataSetChanged();
+//            TODO: Add call back functionality
             }
         });
+    }
+
+    public void getAllFormFields(){
+        Models.Story selectedStory = GameHelper.getInstance(this).getFullStory(storyId);
+        storyTitle = selectedStory.title;
+        storyAuthor = selectedStory.creator;
+        storySummary = selectedStory.description;
+        storyGenre = selectedStory.genre;
+        storyTags = selectedStory.tags;
+        setStoryFormFields();
     }
 
     @Override
