@@ -57,7 +57,6 @@ public class ContentResolverHelper {
         if (listener == null)
             return;
 
-        Log.d("LEO", "onFinishDownloadRequest: ");
         listener.onResponse(data);
     }
 
