@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.android.volley.Response;
 
@@ -20,6 +21,8 @@ public class SceneEditor extends AppCompatActivity {
     String chapterId;
     String sceneId;
 
+
+    RadioGroup nodeTypeRadioGroup;
     RadioButton actionNodeRadioButton;
     RadioButton autoNodeRadioButton;
     RadioButton modifierNodeRadioButton;
@@ -47,7 +50,9 @@ public class SceneEditor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene_editor);
+        
 //        TODO: Set number of transitions corespondingly, show/hide new transition button
+        nodeTypeRadioGroup = (RadioGroup) findViewById(R.id.nodeTypeRadioGroup);
         actionNodeRadioButton = (RadioButton) findViewById(R.id.actionNodeRadioButton);
         autoNodeRadioButton = (RadioButton) findViewById(R.id.autoNodeRadioButton);
         modifierNodeRadioButton = (RadioButton) findViewById(R.id.modifierNodeRadioButton);
@@ -70,8 +75,18 @@ public class SceneEditor extends AppCompatActivity {
         addTransitionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+            getAllTitlesAndIds();
+                Models.Transition newTransition = new Models.Transition(
+                        "", //Type (Action, Condition, Auto)
+                        "", //Verb
+                        "", //Flag
+                        "", //No Attribute (Icebox)
+                        "", //No Comparator (Icebox)
+                        0, //No Challange Level (Icebox)
+                        sceneId, //From Scene ID
+                        "" // To Scene ID
+                        );
+                addTransition(newTransition);
             }
         });
 
@@ -153,23 +168,25 @@ public class SceneEditor extends AppCompatActivity {
 
     public void getAllFormFields(){
 //        TODO: Get a single scene as a Models.Scene object
-//        Models.Scene[] allScenesArray = GameHelper.getInstance(this).getScenesForChapter(chapterId);
+        Models.Scene selectedScene = GameHelper.getInstance(this).getScene(sceneId);
 //        Models.Scene selectedScene = allScenesArray[???];
-//        sceneTitle = selectedScene.title;
-//        journalText = selectedScene.journalText;
-//        modifiers = selectedScene.flagModifiers;
-//        bodyText = selectedScene.body;
-//        setSceneFormFields();
+        sceneTitle = selectedScene.title;
+        journalText = selectedScene.journalText;
+        modifiers = selectedScene.flagModifiers;
+        bodyText = selectedScene.body;
+        setSceneFormFields();
     }
 
     @Override
     public void onBackPressed(){
-        super.onBackPressed();
 
         readSceneFormFields();
         Models.Scene updatedScene = new Models.Scene(sceneTitle, journalText, modifiers, bodyText, chapterId);
+        updatedScene._id = sceneId;
 
         updateScene(updatedScene);
+        super.onBackPressed();
+
     }
 
 }

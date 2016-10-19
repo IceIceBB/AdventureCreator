@@ -93,6 +93,7 @@ public class ChapterCreation extends AppCompatActivity {
 
                 readStoryFormFields();
                 Models.Story updatedStory = new Models.Story(storyTitle, storyAuthor, storySummary, storyGenre,"Type", storyTags);
+                updatedStory._id = storyId;
 
                 updateStory(updatedStory);
 
@@ -180,12 +181,19 @@ public class ChapterCreation extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        super.onBackPressed();
 
         readStoryFormFields();
         Models.Story updatedStory = new Models.Story(storyTitle, storyAuthor, storySummary, storyGenre,"Type", storyTags);
+        updatedStory._id = storyId;
 
         updateStory(updatedStory);
+        super.onBackPressed();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAllTitlesAndIds();
+        arrayAdapter.notifyDataSetChanged();
     }
 }
