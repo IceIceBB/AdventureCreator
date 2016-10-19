@@ -22,92 +22,84 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:orientation="horizontal"
-                android:background="@android:color/holo_orange_dark">
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/fantasyCarouselTextView"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:background="@color/colorPrimaryDark"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20dp"
-                    android:text="F\nA\nN\nT\nA\nS\nY"/>
+                    android:background="@drawable/fantasy_bookmark"
+                    android:textSize="20dp"/>
                 <android.support.v4.view.ViewPager
                     android:id="@+id/fantasyCarousel"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:overScrollMode="never" />
+                    android:overScrollMode="never"
+                    android:background="@drawable/bookshelf_background_compressed"/>
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:orientation="horizontal"
-                android:background="@android:color/holo_green_dark">
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/scifiCarouselTextView"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:background="@color/colorPrimaryDark"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20dp"
-                    android:text="S\nC\nI\n-\nF\nI"/>
+                    android:background="@drawable/scifi_bookmark"
+                    android:textSize="20dp"/>
                 <android.support.v4.view.ViewPager
                     android:id="@+id/sciFiCarousel"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:overScrollMode="never" />
+                    android:overScrollMode="never"
+                    android:background="@drawable/bookshelf_background_compressed"/>
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:orientation="horizontal"
-                android:background="@android:color/holo_red_dark">
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/horrorCarouselTextView"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:background="@color/colorPrimaryDark"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20dp"
-                    android:text="H\nO\nR\nR\nO\nR"/>
+                    android:background="@drawable/horror_bookmard"
+                    android:textSize="20dp"/>
                 <android.support.v4.view.ViewPager
                     android:id="@+id/horrorCarousel"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:overScrollMode="never" />
+                    android:overScrollMode="never"
+                    android:background="@drawable/bookshelf_background_compressed" />
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:orientation="horizontal"
-                android:background="@android:color/holo_blue_dark">
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/otherCarouselTextView"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:background="@color/colorPrimaryDark"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20dp"
-                    android:text="O\nT\nH\nE\nR"/>
+                    android:background="@drawable/other_bookmark"
+                    android:textSize="20dp"/>
                 <android.support.v4.view.ViewPager
                     android:id="@+id/otherCarousel"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:overScrollMode="never" />
+                    android:overScrollMode="never"
+                    android:background="@drawable/bookshelf_background_compressed" />
             </LinearLayout>
 
         </LinearLayout>

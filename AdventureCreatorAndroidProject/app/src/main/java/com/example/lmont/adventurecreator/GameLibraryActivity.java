@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class GameLibraryActivity extends FragmentActivity {
 
-    public static int STORIES = 0;
+    public static int STORIES = 5;
     // You can choose a bigger number for LOOPS, but you know, nobody will fling
     // more than 1000 times just in order to testAddStoryAndReadStory your "infinite" ViewPager :D
     public final static int LOOPS = 1000;
