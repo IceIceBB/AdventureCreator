@@ -79,7 +79,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        //if (true) return;
+        Log.d("LEO", "onPerformSync: ");
         APIHelper.getInstance(getContext()).downloadAll(new Response.Listener<Models.RemoteData>() {
             @Override
             public void onResponse(Models.RemoteData response) {

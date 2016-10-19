@@ -54,8 +54,12 @@ public class GamePlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         String genre = getIntent().getStringExtra("genre");
-        if (Objects.equals(genre, "mystery")){
+        if (Objects.equals(genre, "scifi")){
             setTheme(R.style.SciFiTheme);
+        }else if (Objects.equals(genre, "fantasy")){
+            setTheme(R.style.FantasyTheme);
+        }else if (Objects.equals(genre, "horror")) {
+            setTheme(R.style.HorrorTheme);
         }
         setContentView(R.layout.activity_game_play);
 
@@ -276,8 +280,8 @@ public class GamePlayActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (!hintReady&&!hintShowing){
-                    int colorFrom = getResources().getColor(R.color.colorAccent);
-                    int colorTo = getResources().getColor(R.color.colorPrimary);
+                    int colorFrom = getResources().getColor(R.color.colorPrimary);
+                    int colorTo = getResources().getColor(R.color.colorAccent);
                     ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
                     colorAnimation.setDuration(250); // milliseconds
                     colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -303,8 +307,8 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void hideHint() {
-        int colorFrom = getResources().getColor(R.color.colorPrimary);
-        int colorTo = getResources().getColor(R.color.colorAccent);
+        int colorFrom = getResources().getColor(R.color.colorAccent);
+        int colorTo = getResources().getColor(R.color.colorPrimary);
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(250); // milliseconds
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -324,7 +328,9 @@ public class GamePlayActivity extends AppCompatActivity {
     private void showHint() {
         hintReady = false;
         hintShowing = true;
+        userInputEditText.setVisibility(View.INVISIBLE);
         nextSceneButton.setVisibility(View.INVISIBLE);
         optionsList.setVisibility(View.VISIBLE);
+        optionsList.bringToFront();
     }
 }

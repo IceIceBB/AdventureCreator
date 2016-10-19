@@ -28,7 +28,7 @@ public class ChapterSelectFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_chapters, container, false);
-        getDialog().setTitle("Select a Chapter:");
+        getDialog().setTitle(story.title);
 
         chapterList = (ListView) rootView.findViewById(R.id.chapterList);
 
@@ -44,6 +44,7 @@ public class ChapterSelectFragment extends DialogFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Player.getInstance().loadGame(story, i, story.genre, context);
                 Intent intent = new Intent(view.getContext(), GamePlayActivity.class);
+                intent.putExtra("genre", story.genre);
                 startActivity(intent);
             }
         });
