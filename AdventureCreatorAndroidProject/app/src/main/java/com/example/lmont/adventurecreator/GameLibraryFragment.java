@@ -1,6 +1,7 @@
 package com.example.lmont.adventurecreator;
 
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 public class GameLibraryFragment extends Fragment {
 
     public Models.Story story;
+    public Typeface myTypeFace;
 
     public static Fragment newInstance(GameLibraryActivity context, int pos, float scale) {
         Bundle b = new Bundle();
@@ -25,6 +27,14 @@ public class GameLibraryFragment extends Fragment {
         return Fragment.instantiate(context, GameLibraryFragment.class.getName(), b);
     }
 
+    /*
+    myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/fantasy.ttf");
+                sceneText.setTypeface(myTypeFace);
+                sceneText.setTextSize(20);
+                break;
+        }
+        sceneText.setTypeface(myTypeFace);
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null) {
@@ -37,6 +47,7 @@ public class GameLibraryFragment extends Fragment {
         Button tv = (Button) l.findViewById(R.id.storyCover);
         //tv.setText("Position = " + pos);
         tv.setText(story.title);
+        tv.setTypeface(myTypeFace);
 
         GameLibraryLinearLayout root = (GameLibraryLinearLayout) l.findViewById(R.id.root);
         float scale = this.getArguments().getFloat("scale");
