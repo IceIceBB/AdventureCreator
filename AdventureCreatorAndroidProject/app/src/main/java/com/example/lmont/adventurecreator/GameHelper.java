@@ -224,7 +224,7 @@ public class GameHelper {
         return story;
     }
     public void refreshDB(Response.Listener listener) {
-        dbHelper.deleteAll();
+        dbHelper.deleteAll(false);
         ContentResolverHelper.instance.requestSync(null);
         apiHelper.downloadAll(listener, null);
     }
