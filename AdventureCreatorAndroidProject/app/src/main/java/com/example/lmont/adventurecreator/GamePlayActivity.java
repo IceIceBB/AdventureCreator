@@ -5,8 +5,11 @@ import android.animation.ValueAnimator;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -48,6 +51,8 @@ public class GamePlayActivity extends AppCompatActivity {
     Player player;
     SceneType sceneType;
     String[] options;
+
+    int color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -280,8 +285,10 @@ public class GamePlayActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (!hintReady&&!hintShowing){
-                    int colorFrom = getResources().getColor(R.color.colorPrimary);
-                    int colorTo = getResources().getColor(R.color.colorAccent);
+//                    int colorFrom = getResources().getColor(R.color.colorPrimary);
+//                    int colorTo = getResources().getColor(R.color.colorAccent);
+                    int colorFrom = getHintColor("primary");
+                    int colorTo = getHintColor("accent");
                     ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
                     colorAnimation.setDuration(250); // milliseconds
                     colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -307,8 +314,10 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void hideHint() {
-        int colorFrom = getResources().getColor(R.color.colorAccent);
-        int colorTo = getResources().getColor(R.color.colorPrimary);
+//        int colorFrom = getResources().getColor(R.color.colorAccent);
+//        int colorTo = getResources().getColor(R.color.colorPrimary);
+        int colorFrom = getHintColor("accent");
+        int colorTo = getHintColor("primary");
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(250); // milliseconds
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -332,5 +341,20 @@ public class GamePlayActivity extends AppCompatActivity {
         nextSceneButton.setVisibility(View.INVISIBLE);
         optionsList.setVisibility(View.VISIBLE);
         optionsList.bringToFront();
+    }
+
+    private int getHintColor(String item){
+        if (Objects.equals(item, "primary")) {
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = context.getTheme();
+            theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+            int color = typedValue.data;
+        }else if (Objects.equals(item, "accent")){
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = context.getTheme();
+            theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
+            int color = typedValue.data;
+        }
+        return color;
     }
 }
