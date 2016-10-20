@@ -364,6 +364,7 @@ public class GamePlayActivity extends AppCompatActivity {
 
         colorAnimation.start();
         hintShowing = false;
+        userInputEditText.setVisibility(View.VISIBLE);
         nextSceneButton.setVisibility(View.VISIBLE);
         optionsList.setVisibility(View.GONE);
     }
