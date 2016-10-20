@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 
@@ -275,6 +276,7 @@ public class SceneEditor extends AppCompatActivity {
             @Override
             public void onResponse(Models.Transition response) {
                 //TODO: Add call back functionality?
+                Toast.makeText(SceneEditor.this, "Transition Created", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -285,6 +287,7 @@ public class SceneEditor extends AppCompatActivity {
             @Override
             public void onResponse(Models.Scene response) {
                 //TODO: Add call back functionality?
+                Toast.makeText(getBaseContext(), "Scene Updated", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -294,6 +297,7 @@ public class SceneEditor extends AppCompatActivity {
             @Override
             public void onResponse(Models.Transition response) {
                 //TODO: Add call back functionality?
+                Toast.makeText(getBaseContext(), "Transition Updated", Toast.LENGTH_SHORT).show();
             }
         });
     }

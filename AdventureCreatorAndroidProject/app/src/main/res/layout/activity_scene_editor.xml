@@ -1,305 +1,310 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_scene_editor"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.lmont.adventurecreator.SceneEditor">
+    android:layout_height="match_parent">
 
-
-    <!--TODO: Make these Radio buttons the appropriate shape, larger and possibly contain "Action" "Auto" or "Modi." as appropriate-->
-    <!--TO-POSSIBLY-DO: Set these buttons up in custom ActionBar for this activity-->
-    <RelativeLayout
-        android:id="@+id/sceneNodeTypeSelectorButtons"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_scene_editor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.example.lmont.adventurecreator.SceneEditor">
 
-        <RadioGroup
-            android:id="@+id/nodeTypeRadioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/actionNodeRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Action Node"
-                android:checked="false"/>
-
-            <RadioButton
-                android:id="@+id/autoNodeRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Auto Node"
-                android:checked="false"/>
-
-            <RadioButton
-                android:id="@+id/modifierNodeRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="Modifier Node"
-                android:checked="false"/>
-        </RadioGroup>
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/sceneTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sceneNodeTypeSelectorButtons"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Scene Title" />
-
-        <EditText
-            android:id="@+id/sceneTitleEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Scene Title" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/journalText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sceneTitle"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Journal Text" />
-
-        <EditText
-            android:id="@+id/journalTextEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Journal Text" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/modifiers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/journalText"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Modifiers" />
-
-        <EditText
-            android:id="@+id/modifiersEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Modifiers" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/bodyText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/modifiers"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Body Text" />
-
-        <EditText
-            android:id="@+id/bodyEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Body Text" />
-    </LinearLayout>
-
-    <!--Set Visibility to show when Action Node Radio Button selected-->
-    <LinearLayout
-        android:id="@+id/actionNodeViews"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bodyText"
-        android:orientation="vertical"
-        android:visibility="gone">
-
+        <!--TODO: Make these Radio buttons the appropriate shape, larger and possibly contain "Action" "Auto" or "Modi." as appropriate-->
+        <!--TO-POSSIBLY-DO: Set these buttons up in custom ActionBar for this activity-->
         <RelativeLayout
-            android:id="@+id/actionOne"
-            android:layout_width="wrap_content"
+            android:id="@+id/sceneNodeTypeSelectorButtons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <RadioGroup
+                android:id="@+id/nodeTypeRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/actionNodeRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Action Node" />
+
+                <RadioButton
+                    android:id="@+id/autoNodeRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:checked="false"
+                    android:text="Auto Node" />
+
+                <RadioButton
+                    android:id="@+id/modifierNodeRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:checked="false"
+                    android:text="Modifier Node" />
+            </RadioGroup>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/sceneTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sceneNodeTypeSelectorButtons"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scene Title" />
+
+            <EditText
+                android:id="@+id/sceneTitleEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Scene Title" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/journalText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sceneTitle"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Journal Text" />
+
+            <EditText
+                android:id="@+id/journalTextEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Journal Text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/modifiers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/journalText"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modifiers" />
+
+            <EditText
+                android:id="@+id/modifiersEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Modifiers" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bodyText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/modifiers"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Body Text" />
+
+            <EditText
+                android:id="@+id/bodyEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Body Text" />
+        </LinearLayout>
+
+        <!--Set Visibility to show when Action Node Radio Button selected-->
+        <LinearLayout
+            android:id="@+id/actionNodeViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bodyText"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:id="@+id/actionOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/actionOneVerbs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verb(s)" />
+
+                    <EditText
+                        android:id="@+id/actionOneVerbsEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Verbs" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/actonOneFlagsAndToSceneId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/actionOneVerbs"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/actionOneFlags"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Flags" />
+
+                        <EditText
+                            android:id="@+id/actionOneFlagsEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Flags to Check for" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/actionOneToSceneId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Transition To Scene" />
+
+                        <EditText
+                            android:id="@+id/actionOneToSceneIdEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Transition To Scene" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!--Set Visibility to show when Auto Node Radio Button selected-->
+        <LinearLayout
+            android:id="@+id/autoNodeViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bodyText"
+            android:orientation="vertical"
+            android:visibility="gone">
+
             <LinearLayout
-                android:id="@+id/actionOneVerbs"
-                android:layout_width="match_parent"
+                android:id="@+id/autoToSceneId"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Verb(s)" />
+                    android:text="Transition To Scene" />
 
                 <EditText
-                    android:id="@+id/actionOneVerbsEditText"
+                    android:id="@+id/autoToSceneIdEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Verbs" />
+                    android:hint="Transition To Scene" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--Set Visibility to show when Modifier Node Radio Button selected-->
+        <LinearLayout
+            android:id="@+id/modifierNodeViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bodyText"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/modifierFlags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Flags" />
+
+                <EditText
+                    android:id="@+id/modifierFlagsEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Flags" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/actonOneFlagsAndToSceneId"
+                android:id="@+id/modifierPassToSceneId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/actionOneVerbs"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/actionOneFlags"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:text="Pass Scene" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Flags" />
-
-                    <EditText
-                        android:id="@+id/actionOneFlagsEditText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Flags to Check for" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/actionOneToSceneId"
+                <EditText
+                    android:id="@+id/modifierPassToSceneIdEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:hint="Pass Scene" />
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Transition To Scene" />
+            <LinearLayout
+                android:id="@+id/modifierFailToSceneId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/actionOneToSceneIdEditText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Transition To Scene" />
-                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fail Scene" />
+
+                <EditText
+                    android:id="@+id/modifierFailToSceneIdEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Fail Scene" />
             </LinearLayout>
 
 
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <!--Set Visibility to show when Auto Node Radio Button selected-->
-    <LinearLayout
-        android:id="@+id/autoNodeViews"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bodyText"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:id="@+id/autoToSceneId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Transition To Scene" />
-
-            <EditText
-                android:id="@+id/autoToSceneIdEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Transition To Scene" />
         </LinearLayout>
 
-    </LinearLayout>
-
-    <!--Set Visibility to show when Modifier Node Radio Button selected-->
-    <LinearLayout
-        android:id="@+id/modifierNodeViews"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bodyText"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:id="@+id/modifierFlags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flags" />
-
-            <EditText
-                android:id="@+id/modifierFlagsEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Flags" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/modifierPassToSceneId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pass Scene" />
-
-            <EditText
-                android:id="@+id/modifierPassToSceneIdEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Pass Scene" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/modifierFailToSceneId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fail Scene" />
-
-            <EditText
-                android:id="@+id/modifierFailToSceneIdEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Fail Scene" />
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
