@@ -63,8 +63,8 @@ public class SceneEditor extends AppCompatActivity {
         modifiersEditText = (EditText) findViewById(R.id.modifiersEditText);
         bodyEditText = (EditText) findViewById(R.id.bodyEditText);
 
-        addTransitionButton = (Button) findViewById(R.id.addTransitionButton);
-        transitionsListView = (ListView) findViewById(R.id.transitionListView);
+//        addTransitionButton = (Button) findViewById(R.id.addTransitionButton);
+//        transitionsListView = (ListView) findViewById(R.id.transitionListView);
 
         allTransitionTitles = new ArrayList<>();
         allTransitionIds = new ArrayList<>();
