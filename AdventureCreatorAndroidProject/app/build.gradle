@@ -35,5 +35,5 @@ dependencies {
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.14.2.1'
     compile group: 'junit', name: 'junit', version: '4.12'
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
 }
