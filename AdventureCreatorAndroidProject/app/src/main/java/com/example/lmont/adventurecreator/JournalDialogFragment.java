@@ -1,6 +1,7 @@
 package com.example.lmont.adventurecreator;
 
 import android.app.DialogFragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ public class JournalDialogFragment extends DialogFragment {
 
     TextView journal;
     Button closeJournal;
+    Typeface typeface;
 
     @Nullable
     @Override
@@ -26,6 +28,9 @@ public class JournalDialogFragment extends DialogFragment {
 
         journal = (TextView) rootView.findViewById(R.id.journal);
         closeJournal = (Button) rootView.findViewById(R.id.closeJournal);
+
+        journal.setTypeface(typeface);
+        journal.setTextSize(20);
 
         journal.setText(Player.getInstance().getJournalText());
         closeJournal.setOnClickListener(new View.OnClickListener() {

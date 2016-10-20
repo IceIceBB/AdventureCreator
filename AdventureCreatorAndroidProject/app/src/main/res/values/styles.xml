@@ -38,7 +38,7 @@
         <item name="colorPrimaryDark">@color/fantasyPrimaryDark</item>
         <item name="colorAccent">@color/fantasyAccent</item>
         <item name="colorAccentCustom">@color/fantasyPrimary</item>
-        <item name="colorPrimaryCustom">@color/sciFiPrimary</item>
+        <item name="colorPrimaryCustom">@color/fantasyPrimary</item>
     </style>
 
     <style name="CustomDialog" parent="@style/Theme.AppCompat.Light.Dialog">

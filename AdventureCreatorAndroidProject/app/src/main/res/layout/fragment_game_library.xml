@@ -32,6 +32,7 @@
                 android:layout_height="120dp"
                 android:background="@drawable/book_background"
                 android:textSize="10dp"
+                android:gravity="center"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 
