@@ -5,9 +5,8 @@ import android.animation.ValueAnimator;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
@@ -28,7 +27,6 @@ import android.widget.ViewSwitcher;
 import com.android.volley.Response;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class GamePlayActivity extends AppCompatActivity {

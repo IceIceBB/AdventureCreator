@@ -1,8 +1,12 @@
 package com.example.lmont.adventurecreator;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
+import android.view.View;
+import android.view.Window;
 import android.transition.Fade;
 import android.transition.TransitionManager;
 import android.util.Log;
@@ -33,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        getWindow().setExitTransition(new Explode());
+
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //Remove notification bar
@@ -40,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+
         setup();
-//        test(3);
+//        test(0);
 //        test1UpdateRoutes();
     }
 
@@ -75,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ViewGroup mRootView = (ViewGroup) findViewById(R.id.activity_main);
                 Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
-                view.getContext().startActivity(intent);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+                view.getContext().startActivity(intent, options.toBundle());
             }
         });
         storyCreatorButton = (Button) findViewById(R.id.storyCreatorButton);
@@ -83,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), StoryCreation.class);
-                view.getContext().startActivity(intent);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+                view.getContext().startActivity(intent, options.toBundle());
             }
         });
 

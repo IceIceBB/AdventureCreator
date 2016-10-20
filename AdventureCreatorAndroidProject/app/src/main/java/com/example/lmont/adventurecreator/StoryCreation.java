@@ -3,6 +3,8 @@ package com.example.lmont.adventurecreator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,6 +35,9 @@ public class StoryCreation extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        getWindow().setEnterTransition(new Slide(Gravity.LEFT));
 
         setContentView(R.layout.activity_story_creation);
 
