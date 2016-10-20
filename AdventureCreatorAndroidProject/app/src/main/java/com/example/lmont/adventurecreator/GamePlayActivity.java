@@ -6,7 +6,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
@@ -25,7 +24,6 @@ import android.widget.ViewSwitcher;
 import com.android.volley.Response;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class GamePlayActivity extends AppCompatActivity {
@@ -59,11 +57,11 @@ public class GamePlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         String genre = getIntent().getStringExtra("genre");
-        if (Objects.equals(genre, "scifi")){
+        if (genre.equals("scifi")){
             setTheme(R.style.SciFiTheme);
-        }else if (Objects.equals(genre, "fantasy")){
+        }else if (genre.equals("fantasy")){
             setTheme(R.style.FantasyTheme);
-        }else if (Objects.equals(genre, "horror")) {
+        }else if (genre.equals("horror")) {
             setTheme(R.style.HorrorTheme);
         }
         setContentView(R.layout.activity_game_play);
@@ -344,12 +342,12 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private int getHintColor(String item){
-        if (Objects.equals(item, "primary")) {
+        if (item.equals("primary")) {
             TypedValue typedValue = new TypedValue();
             Resources.Theme theme = context.getTheme();
             theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
             int color = typedValue.data;
-        }else if (Objects.equals(item, "accent")){
+        }else if (item.equals("accent")){
             TypedValue typedValue = new TypedValue();
             Resources.Theme theme = context.getTheme();
             theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
