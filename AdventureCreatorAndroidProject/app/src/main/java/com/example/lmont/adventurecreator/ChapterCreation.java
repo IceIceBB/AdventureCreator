@@ -186,14 +186,24 @@ public class ChapterCreation extends AppCompatActivity {
         Models.Story updatedStory = new Models.Story(storyTitle, storyAuthor, storySummary, storyGenre,"Type", storyTags);
         updatedStory._id = storyId;
 
-        updateStory(updatedStory);
-        super.onBackPressed();
+        //TODO: Disable Buttons, show loading bar
+
+        GameHelper.getInstance(ChapterCreation.this).updateStory(updatedStory, new Response.Listener<Models.Story>() {
+            @Override
+            public void onResponse(Models.Story response) {
+//            TODO: Add call back functionality
+                finish();
+            }
+        });
+//        super.onBackPressed();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         getAllTitlesAndIds();
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allChapterTitles);
+        chaptersListView.setAdapter(arrayAdapter);
         arrayAdapter.notifyDataSetChanged();
     }
 }

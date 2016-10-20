@@ -5,16 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.android.volley.Response;
-
-import java.util.ArrayList;
 
 public class SceneEditor extends AppCompatActivity {
 
@@ -30,8 +26,17 @@ public class SceneEditor extends AppCompatActivity {
     RadioButton modifierNodeRadioButton;
 
     LinearLayout actionNodeViews;
+    EditText actionOneVerbsEditText;
+    EditText actionOneFlagsEditText;
+    EditText actionOneToSceneIdEditText;
+
     LinearLayout autoNodeViews;
+    EditText autoToSceneIdEditText;
+
     LinearLayout modifierNodeViews;
+    EditText modifierFlagsEditText;
+    EditText modifierPassToSceneIdEditText;
+    EditText modifierFailToSceneIdEditText;
 
     EditText sceneTitleEditText;
     EditText journalTextEditText;
@@ -43,12 +48,12 @@ public class SceneEditor extends AppCompatActivity {
     String modifiers;
     String bodyText;
 
-    Button addTransitionButton;
-    ListView transitionsListView;
+//    Button addTransitionButton;
+//    ListView transitionsListView;
 
-    Models.Transition[] allTransitionsArray;
-    ArrayList<String> allTransitionTitles;
-    ArrayList<String> allTransitionIds;
+//    Models.Transition[] allTransitionsArray;
+//    ArrayList<String> allTransitionTitles;
+//    ArrayList<String> allTransitionIds;
 
     ArrayAdapter<String> arrayAdapter;
 
@@ -65,9 +70,17 @@ public class SceneEditor extends AppCompatActivity {
         modifierNodeRadioButton = (RadioButton) findViewById(R.id.modifierNodeRadioButton);
 
         actionNodeViews = (LinearLayout) findViewById(R.id.actionNodeViews);
-        autoNodeViews = (LinearLayout) findViewById(R.id.autoNodeViews);
-        modifierNodeViews = (LinearLayout) findViewById(R.id.modifierNodeViews);
+        actionOneVerbsEditText = (EditText) findViewById(R.id.actionOneVerbsEditText);
+        actionOneFlagsEditText = (EditText) findViewById(R.id.actionOneFlagsEditText);
+        actionOneToSceneIdEditText = (EditText) findViewById(R.id.actionOneToSceneIdEditText);
 
+        autoNodeViews = (LinearLayout) findViewById(R.id.autoNodeViews);
+        autoToSceneIdEditText = (EditText) findViewById(R.id.autoToSceneIdEditText);
+
+        modifierNodeViews = (LinearLayout) findViewById(R.id.modifierNodeViews);
+        modifierFlagsEditText = (EditText) findViewById(R.id.modifierFlagsEditText);
+        modifierPassToSceneIdEditText = (EditText) findViewById(R.id.modifierPassToSceneIdEditText);
+        modifierFailToSceneIdEditText = (EditText) findViewById(R.id.modifierFailToSceneIdEditText);
 
 
 //        TODO: Update db with changes to Title, Journal and Modifiers when exiting this event (or with new button?)
@@ -79,10 +92,10 @@ public class SceneEditor extends AppCompatActivity {
 //        addTransitionButton = (Button) findViewById(R.id.addTransitionButton);
 //        transitionsListView = (ListView) findViewById(R.id.transitionListView);
 
-        allTransitionTitles = new ArrayList<>();
-        allTransitionIds = new ArrayList<>();
+//        allTransitionTitles = new ArrayList<>();
+//        allTransitionIds = new ArrayList<>();
 
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allTransitionTitles);
+//        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allTransitionTitles);
 
 //        TODO: Add new transition (and pull for ID?)
 //        addTransitionButton.setOnClickListener(new View.OnClickListener() {
