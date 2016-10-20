@@ -12,6 +12,8 @@ import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
@@ -34,20 +36,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         getWindow().setExitTransition(new Explode());
-        setContentView(R.layout.activity_main);
 
-        GameHelper.getInstance(this).deleteTransition("580830d0edefd50011b61045", new Response.Listener() {
-            @Override
-            public void onResponse(Object response) {
-                Log.d("LEO", "onResponse: " + response.toString());
-            }
-        });
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        setContentView(R.layout.activity_main);
 
 
         setup();
-//        test(3);
+//        test(0);
 //        test1UpdateRoutes();
     }
 
