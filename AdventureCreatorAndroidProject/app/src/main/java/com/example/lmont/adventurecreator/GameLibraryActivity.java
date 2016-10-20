@@ -4,6 +4,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,12 @@ public class GameLibraryActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_game_library);
 
         Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/fantasy.ttf");
