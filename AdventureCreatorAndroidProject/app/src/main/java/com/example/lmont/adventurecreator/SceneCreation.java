@@ -154,6 +154,7 @@ public class SceneCreation extends AppCompatActivity {
             @Override
             public void onResponse(Models.Chapter response) {
 //            TODO: Add call back functionality
+
             }
         });
     }
@@ -175,7 +176,15 @@ public class SceneCreation extends AppCompatActivity {
         Models.Chapter updatedChapter = new Models.Chapter(chapterTitle, chapterSummary, chapterGoal, storyId);
         updatedChapter._id = chapterId;
 
-        updateChapter(updatedChapter);
+        //TODO: Disable Buttons, show loading bar
+
+        GameHelper.getInstance(SceneCreation.this).updateChapter(updatedChapter, new Response.Listener<Models.Chapter>() {
+            @Override
+            public void onResponse(Models.Chapter response) {
+//            TODO: Add call back functionality
+                finish();
+            }
+        });
         super.onBackPressed();
 
     }
@@ -184,6 +193,8 @@ public class SceneCreation extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getAllTitlesAndIds();
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allSceneTitles);
+        sceneNodeListView.setAdapter(arrayAdapter);
         arrayAdapter.notifyDataSetChanged();
     }
 

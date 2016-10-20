@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Explode;
-import android.view.View;
-import android.view.Window;
-import android.transition.Fade;
-import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         setup();
 //        test(0);
+//        test(1);
+//        test(2);
+//        test(3);
 //        test1UpdateRoutes();
     }
 
