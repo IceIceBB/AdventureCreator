@@ -1,5 +1,6 @@
 package com.example.lmont.adventurecreator;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -34,25 +35,27 @@ public class GameLibraryActivity extends FragmentActivity {
         getWindow().setEnterTransition(new Slide(Gravity.RIGHT));
         setContentView(R.layout.activity_game_library);
 
+        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/fantasy.ttf");
+        Models.Story[] storyArray = GameHelper.getInstance(this).getAllStories();
+
         fantasyPager = (ViewPager) findViewById(R.id.fantasyCarousel);
-        fantasyAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("fantasy"));
+        fantasyAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("fantasy", storyArray), myTypeFace);
         setupPager(fantasyPager, fantasyAdapter);
 
         sciFiPager = (ViewPager) findViewById(R.id.sciFiCarousel);
-        sciFiAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("scifi"));
+        sciFiAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("scifi", storyArray), myTypeFace);
         setupPager(sciFiPager, sciFiAdapter);
 
         horrorPager = (ViewPager) findViewById(R.id.horrorCarousel);
-        horrorAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("horror"));
+        horrorAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("horror", storyArray), myTypeFace);
         setupPager(horrorPager, horrorAdapter);
 
         otherPager = (ViewPager) findViewById(R.id.otherCarousel);
-        otherAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("other"));
+        otherAdapter = new GameLibraryPagerAdapter(this, this.getSupportFragmentManager(), findStoriesOfType("other", storyArray), myTypeFace);
         setupPager(otherPager, otherAdapter);
     }
 
-    private Models.Story[] findStoriesOfType(String genre){
-        Models.Story[] storyArray = GameHelper.getInstance(this).getAllStories();
+    private Models.Story[] findStoriesOfType(String genre, Models.Story[] storyArray){
         ArrayList<Models.Story> stories = new ArrayList<>();
 
         ArrayList<String> preset = new ArrayList<>();
