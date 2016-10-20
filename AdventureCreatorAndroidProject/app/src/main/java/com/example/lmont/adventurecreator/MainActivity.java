@@ -3,7 +3,11 @@ package com.example.lmont.adventurecreator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
+import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
@@ -28,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        GameHelper.getInstance(this).deleteTransition("580830d0edefd50011b61045", new Response.Listener() {
+            @Override
+            public void onResponse(Object response) {
+                Log.d("LEO", "onResponse: " + response.toString());
+            }
+        });
 
         setup();
 //        test(3);
@@ -41,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         deleteDbButton.setVisibility(View.GONE);
         playButton.setVisibility(View.GONE);
     }
-
 
     private void doneLoading() {
         progressBar.setVisibility(View.GONE);
@@ -63,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         libraryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ViewGroup mRootView = (ViewGroup) findViewById(R.id.activity_main);
                 Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
                 view.getContext().startActivity(intent);
             }

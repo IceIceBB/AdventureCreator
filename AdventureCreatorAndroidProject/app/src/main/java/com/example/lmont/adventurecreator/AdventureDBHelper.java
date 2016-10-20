@@ -414,6 +414,10 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         return savedInstance;
     }
 
+    public void deleteTransition(String transitionID) {
+        getWritableDatabase().delete(TRANSITIONS_TABLE_NAME, "_id = '" + transitionID + "'", null);
+    }
+
     public void deleteAll() {
         getWritableDatabase().delete(STORY_TABLE_NAME,null,null);
         getWritableDatabase().delete(CHAPTER_TABLE_NAME,null,null);

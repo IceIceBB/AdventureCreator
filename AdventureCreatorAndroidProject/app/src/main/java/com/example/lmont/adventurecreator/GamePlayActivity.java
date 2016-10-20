@@ -59,7 +59,7 @@ public class GamePlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String genre = getIntent().getStringExtra("genre");
+        String genre = Player.getInstance().genre;
         if (genre.equals("scifi")){
             setTheme(R.style.SciFiTheme);
         }else if (genre.equals("fantasy")){
@@ -74,7 +74,7 @@ public class GamePlayActivity extends AppCompatActivity {
         Typeface myTypeFace = null;
         switch (genre) {
             case "fantasy":
-                myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/tangerine_regular.ttf");
+                myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/tangerine_bold.ttf");
                 sceneText.setTextSize(30);
                 break;
             case "scifi":
@@ -171,7 +171,6 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void playActionScene() {
-        final boolean[] isFound = {false};
         final String userInput = userInputEditText.getText().toString();
         final ArrayList<Models.Transition> values = new ArrayList();
         final int[] loadCounter = {0};
@@ -222,6 +221,7 @@ public class GamePlayActivity extends AppCompatActivity {
                             showHint();
                             break;
                     }
+                    overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
                 }
                 }
             }, null);
@@ -255,6 +255,7 @@ public class GamePlayActivity extends AppCompatActivity {
             break;
         }
         startActivity(intent);
+        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
     }
 
     private void setOnClickListeners() {
@@ -265,6 +266,7 @@ public class GamePlayActivity extends AppCompatActivity {
                 player.getNextScene(transitions[position].toSceneID);
                 Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
             }
         });
 
@@ -297,20 +299,10 @@ public class GamePlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                int theme = 0;
-                String genre = getIntent().getStringExtra("genre");
-                if (genre.equals("scifi")){
-                    theme = R.style.SciFiTheme;
-                }else if (genre.equals("fantasy")){
-                    theme = R.style.FantasyTheme;
-                }else if (genre.equals("horror")) {
-                    theme = R.style.HorrorTheme;
-                }
-
                 FragmentManager fm = getFragmentManager();
                 JournalDialogFragment journalFragment = new JournalDialogFragment();
 
-                journalFragment.typeface = Typeface.createFromAsset(getAssets(), "fonts/beautiful.ttf");
+                journalFragment.typeface = Typeface.createFromAsset(getAssets(), "fonts/tangerine_bold.ttf");
                 journalFragment.setStyle(JournalDialogFragment.STYLE_NORMAL, R.style.CustomDialog);
                 journalFragment.show(fm, "Journal Fragment");
             }
@@ -321,8 +313,6 @@ public class GamePlayActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (!hintReady&&!hintShowing){
-//                    int colorFrom = getResources().getColor(R.color.colorPrimary);
-//                    int colorTo = getResources().getColor(R.color.colorAccent);
                     int colorFrom = getHintColor("primary");
                     int colorTo = getHintColor("accent");
                     ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
@@ -337,7 +327,6 @@ public class GamePlayActivity extends AppCompatActivity {
 
                     colorAnimation.start();
                     hintReady = true;
-                    optionsList.setVisibility(View.GONE);
                 }
                 else if (hintReady&&!hintShowing){
                     showHint();
@@ -350,8 +339,6 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void hideHint() {
-//        int colorFrom = getResources().getColor(R.color.colorAccent);
-//        int colorTo = getResources().getColor(R.color.colorPrimary);
         int colorFrom = getHintColor("accent");
         int colorTo = getHintColor("primary");
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
@@ -366,8 +353,9 @@ public class GamePlayActivity extends AppCompatActivity {
 
         colorAnimation.start();
         hintShowing = false;
-        nextSceneButton.setVisibility(View.VISIBLE);
         optionsList.setVisibility(View.GONE);
+        nextSceneButton.setVisibility(View.VISIBLE);
+        userInputEditText.setVisibility(View.VISIBLE);
     }
 
     private void showHint() {
@@ -380,16 +368,18 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private int getHintColor(String item){
+        int color = 0;
+
         if (item.equals("primary")) {
             TypedValue typedValue = new TypedValue();
             Resources.Theme theme = context.getTheme();
             theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-            int color = typedValue.data;
+            color = typedValue.data;
         }else if (item.equals("accent")){
             TypedValue typedValue = new TypedValue();
             Resources.Theme theme = context.getTheme();
             theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
-            int color = typedValue.data;
+            color = typedValue.data;
         }
         return color;
     }

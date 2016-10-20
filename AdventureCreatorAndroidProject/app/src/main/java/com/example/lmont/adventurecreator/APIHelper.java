@@ -268,4 +268,10 @@ public class APIHelper {
         }, errorListener);
         requestQueue.add(jsonObjectRequest);
     }
+
+    public void deleteTransition(String transitionID, Response.Listener listener, Response.ErrorListener errorListener) {
+        String getURL = TRANSITION_URL + "/" + transitionID;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, getURL, null, listener, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
 }

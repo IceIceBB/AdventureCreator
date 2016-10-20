@@ -24,14 +24,12 @@ public class JournalDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_journal, container, false);
-        getDialog().setTitle("Journal");
 
+        getDialog().setTitle("Journal");
         journal = (TextView) rootView.findViewById(R.id.journal);
         closeJournal = (Button) rootView.findViewById(R.id.closeJournal);
-
         journal.setTypeface(typeface);
-        journal.setTextSize(20);
-
+        journal.setTextSize(40);
         journal.setText(Player.getInstance().getJournalText());
         closeJournal.setOnClickListener(new View.OnClickListener() {
             @Override
