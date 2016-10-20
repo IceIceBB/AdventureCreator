@@ -8,7 +8,7 @@
     tools:context="com.example.lmont.adventurecreator.GamePlayActivity">
 
     <Button
-        android:text="\?"
+        android:text="hint"
         android:layout_height="48dp"
         android:id="@+id/hintButton"
         android:layout_width="48dp"
@@ -43,7 +43,7 @@
         android:elevation="8dp"
         app:layout_constraintVertical_bias="0.32999998"
         android:background="?attr/colorPrimaryCustom"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="#d8000000"/>
 
     <ListView
         app:layout_constraintTop_toBottomOf="@+id/scrollView3"
@@ -140,12 +140,12 @@
         android:layout_width="0dp"
         android:id="@+id/scrollView3"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="300dp"
         android:layout_marginLeft="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_height="155dp"
+        android:layout_height="match_parent"
         android:elevation="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/journalIcon"
