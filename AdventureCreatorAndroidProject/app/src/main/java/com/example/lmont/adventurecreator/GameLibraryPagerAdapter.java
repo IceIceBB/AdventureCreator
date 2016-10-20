@@ -1,5 +1,6 @@
 package com.example.lmont.adventurecreator;
 
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,13 +22,15 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
     private GameLibraryActivity context;
     private FragmentManager fm;
     private float scale;
+    private Typeface myTypeFace;
     Models.Story[] stories;
 
-    public GameLibraryPagerAdapter(GameLibraryActivity context, FragmentManager fm, Models.Story[] stories) {
+    public GameLibraryPagerAdapter(GameLibraryActivity context, FragmentManager fm, Models.Story[] stories , Typeface myTypeFace) {
         super(fm);
         this.fm = fm;
         this.context = context;
         this.stories = stories;
+        this.myTypeFace = myTypeFace;
     }
 
     @Override
@@ -41,6 +44,7 @@ public class GameLibraryPagerAdapter extends FragmentPagerAdapter implements Vie
         position = position % GameLibraryActivity.STORIES;
         GameLibraryFragment gameLibraryFragment = (GameLibraryFragment) GameLibraryFragment.newInstance(context, position, scale);
         gameLibraryFragment.story = stories[position];
+        gameLibraryFragment.myTypeFace = myTypeFace;
         return gameLibraryFragment;
     }
 //      get number of books for each row
