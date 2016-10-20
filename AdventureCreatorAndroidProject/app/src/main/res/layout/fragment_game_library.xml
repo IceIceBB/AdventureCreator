@@ -30,7 +30,9 @@
                 android:id="@+id/storyCover"
                 android:layout_width="80dp"
                 android:layout_height="120dp"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/book_background"
+                android:textSize="10dp"
+                android:gravity="center"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 

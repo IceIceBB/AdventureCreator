@@ -28,7 +28,7 @@ public class ChapterSelectFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_chapters, container, false);
-        getDialog().setTitle("Select a Chapter:");
+        getDialog().setTitle(story.title);
 
         chapterList = (ListView) rootView.findViewById(R.id.chapterList);
 

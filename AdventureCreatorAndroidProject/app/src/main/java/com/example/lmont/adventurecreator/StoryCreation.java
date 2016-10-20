@@ -36,7 +36,6 @@ public class StoryCreation extends AppCompatActivity {
 
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allStoryTitles);
 
-
 //        TODOne: Add new story and pull for ID.
         newStoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,14 +50,11 @@ public class StoryCreation extends AppCompatActivity {
                         "Story Tags");
 
                 addStory(newStory);
-//                getAllTitlesAndIds();
             }
         });
 
-
         getAllTitlesAndIds();
         storyListView.setAdapter(arrayAdapter);
-
 
 //        TODOne: Transition to Chapter Creation with Story id as Intent Extra
         storyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,18 +63,13 @@ public class StoryCreation extends AppCompatActivity {
                 Intent intent = new Intent(StoryCreation.this, ChapterCreation.class);
 
                 intent.putExtra("selectedStoryId", allStoryIds.get(position));
-//                intent.putExtra("selectedStoryTitle", allStoriesArray[position].title);
-////                intent.putExtra("selectedStoryAuthor", allStoriesArray[position].author);
-//                intent.putExtra("selectedStorySummary", allStoriesArray[position].description);
-//                intent.putExtra("selectedStoryGene", allStoriesArray[position].genre);
-//                intent.putExtra("selectedStoryTags", allStoriesArray[position].tags);
+
                 startActivity(intent);
             }
         });
     }
 
-
-    //    TODOne: Get data and populate list view with Story titles (additional info?)
+//    TODOne: Get data and populate list view with Story titles (additional info?)
     public void getAllTitlesAndIds() {
         allStoriesArray = GameHelper.getInstance(this).getAllStories();
 
@@ -104,5 +95,10 @@ public class StoryCreation extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAllTitlesAndIds();
+        arrayAdapter.notifyDataSetChanged();
+    }
 }

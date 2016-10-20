@@ -61,12 +61,12 @@ public class SceneCreation extends AppCompatActivity {
             public void onClick(View view) {
                 getAllTitlesAndIds();
                 Models.Scene newScene = new Models.Scene(
-                        "Scene " + (allScenesArray.length+1),
+                        "Scene " + (allScenesArray.length + 1),
                         "Journal Text",
                         "Flag Modifiers",
                         "Scene Body Text",
                         chapterId);
-                    addScene(newScene);
+                addScene(newScene);
             }
         });
 
@@ -87,6 +87,7 @@ public class SceneCreation extends AppCompatActivity {
 
                 readChapterFormFields();
                 Models.Chapter updatedChapter = new Models.Chapter(chapterTitle, chapterSummary, chapterGoal, storyId);
+                updatedChapter._id = chapterId;
 
                 updateChapter(updatedChapter);
 
@@ -148,8 +149,8 @@ public class SceneCreation extends AppCompatActivity {
         });
     }
 
-    public void updateChapter(Models.Chapter chapter){
-        GameHelper.getInstance(SceneCreation.this).updateChapter(chapter, new Response.Listener<Models.Chapter>(){
+    public void updateChapter(Models.Chapter chapter) {
+        GameHelper.getInstance(SceneCreation.this).updateChapter(chapter, new Response.Listener<Models.Chapter>() {
             @Override
             public void onResponse(Models.Chapter response) {
 //            TODO: Add call back functionality
@@ -157,25 +158,33 @@ public class SceneCreation extends AppCompatActivity {
         });
     }
 
-    public void getAllFormFields(){
+    public void getAllFormFields() {
 //        TODO: Get a single chapter as a Models.Chapter object
-//        Models.Chapter[] allChaptersArray = GameHelper.getInstance(this).getChaptersForStory(storyId);
+        Models.Chapter selectedChapter = GameHelper.getInstance(this).getChapter(chapterId);
 //        Models.Chapter selectedChapter = allChaptersArray[???];
-//        chapterTitle = selectedChapter.title;
-//        chapterGoal = selectedChapter.type;
-//        chapterSummary = selectedChapter.summary;
-//        setChapterFormFields();
+        chapterTitle = selectedChapter.title;
+        chapterGoal = selectedChapter.type;
+        chapterSummary = selectedChapter.summary;
+        setChapterFormFields();
     }
 
     @Override
-    public void onBackPressed(){
-        super.onBackPressed();
+    public void onBackPressed() {
 
         readChapterFormFields();
         Models.Chapter updatedChapter = new Models.Chapter(chapterTitle, chapterSummary, chapterGoal, storyId);
+        updatedChapter._id = chapterId;
 
         updateChapter(updatedChapter);
+        super.onBackPressed();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAllTitlesAndIds();
+        arrayAdapter.notifyDataSetChanged();
     }
 
 }

@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -66,9 +67,30 @@ public class GamePlayActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_game_play);
 
-
-
         setup();
+
+        Typeface myTypeFace = null;
+        switch (genre) {
+            case "fantasy":
+                myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/tangerine_regular.ttf");
+                sceneText.setTextSize(30);
+                break;
+            case "scifi":
+                myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/scifi.ttf");
+                sceneText.setTextSize(20);
+                break;
+            case "horror":
+                myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/Ravenscroft.ttf");
+                sceneText.setTextSize(40);
+                break;
+            default:
+                myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/fantasy.ttf");
+                sceneText.setTypeface(myTypeFace);
+                sceneText.setTextSize(20);
+                break;
+        }
+        sceneText.setTypeface(myTypeFace);
+
     }
 
     private void setup() {
@@ -259,7 +281,8 @@ public class GamePlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (bookmark.getCurrentView() != bookmarkHollow){
-                    return;
+                    Intent intent = new Intent(GamePlayActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }else if(bookmark.getCurrentView() != bookmarkSolid){
                     bookmark.showNext();
                     player.saveGame();
@@ -271,8 +294,21 @@ public class GamePlayActivity extends AppCompatActivity {
         journal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                int theme = 0;
+                String genre = getIntent().getStringExtra("genre");
+                if (genre.equals("scifi")){
+                    theme = R.style.SciFiTheme;
+                }else if (genre.equals("fantasy")){
+                    theme = R.style.FantasyTheme;
+                }else if (genre.equals("horror")) {
+                    theme = R.style.HorrorTheme;
+                }
+
                 FragmentManager fm = getFragmentManager();
                 JournalDialogFragment journalFragment = new JournalDialogFragment();
+
+                journalFragment.typeface = Typeface.createFromAsset(getAssets(), "fonts/beautiful.ttf");
                 journalFragment.setStyle(JournalDialogFragment.STYLE_NORMAL, R.style.CustomDialog);
                 journalFragment.show(fm, "Journal Fragment");
             }
