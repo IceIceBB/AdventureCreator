@@ -28,21 +28,24 @@
                 android:id="@+id/actionNodeRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Action Node" />
+                android:text="Action Node"
+                android:checked="false"/>
 
             <RadioButton
                 android:id="@+id/autoNodeRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Auto Node" />
+                android:text="Auto Node"
+                android:checked="false"/>
 
             <RadioButton
                 android:id="@+id/modifierNodeRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="Modifier Node" />
+                android:text="Modifier Node"
+                android:checked="false"/>
         </RadioGroup>
 
     </RelativeLayout>

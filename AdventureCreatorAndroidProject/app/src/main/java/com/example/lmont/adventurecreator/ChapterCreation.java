@@ -195,7 +195,7 @@ public class ChapterCreation extends AppCompatActivity {
                 finish();
             }
         });
-//        super.onBackPressed();
+        super.onBackPressed();
     }
 
     @Override
