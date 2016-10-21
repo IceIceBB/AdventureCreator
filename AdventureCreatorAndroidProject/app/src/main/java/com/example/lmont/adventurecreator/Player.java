@@ -69,6 +69,10 @@ public class Player {
         return null;
     }
 
+    public String getStoryTitle() {
+        return story.title;
+    }
+
     public Models.Scene getNextScene(String sceneID) {
         for(Models.Scene scene : chapter.scenes) {
             if (scene._id.equals(sceneID)) {

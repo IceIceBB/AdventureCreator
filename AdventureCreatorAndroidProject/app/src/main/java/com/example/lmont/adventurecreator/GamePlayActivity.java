@@ -6,10 +6,12 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -47,6 +49,8 @@ public class GamePlayActivity extends AppCompatActivity {
     EditText userInputEditText;
     ProgressBar loadingProgressBar;
     Context context;
+    boolean helpMode = false;
+    Button helpButton;
 
     Models.Transition[] transitions;
     Player player;
@@ -98,13 +102,12 @@ public class GamePlayActivity extends AppCompatActivity {
                 textSize = 20;
                 break;
         }
-        hintButton.setTypeface(myTypeFace);
-        hintButton.setTextSize(textSize);
+//        hintButton.setTypeface(myTypeFace);
+//        hintButton.setTextSize(textSize);
         nextSceneButton.setTypeface(myTypeFace);
         nextSceneButton.setTextSize(textSize);
         userInputEditText.setTypeface(myTypeFace);
         userInputEditText.setTextSize(textSize);
-
     }
 
     private void setup() {
@@ -121,6 +124,8 @@ public class GamePlayActivity extends AppCompatActivity {
         nextSceneButton = (Button) findViewById(R.id.nextScene);
         userInputEditText = (EditText) findViewById(R.id.editText);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading_progressBar);
+        helpButton = (Button) findViewById(R.id.game_play_help_button);
+
         options = null;
         context = this;
 
@@ -151,6 +156,8 @@ public class GamePlayActivity extends AppCompatActivity {
 
         // Setup Scene Text
         sceneText.setText(player.getCurrentScene().body);
+        getWindow().setTitle(player.getStoryTitle());
+        setTitle(player.getStoryTitle());
 
         // Setup options
         if (sceneType == SceneType.action) {
@@ -158,7 +165,7 @@ public class GamePlayActivity extends AppCompatActivity {
             for(int x=0; x<player.getCurrentScene().transitions.length; x++) {
                 options[x] = player.getCurrentScene().transitions[x].verb;
             }
-            ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);
+            ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, R.layout.options_simple_list_item, options);
             optionsList.setAdapter(optionsAdapter);
         } else {
             options = new String[0];
@@ -285,6 +292,10 @@ public class GamePlayActivity extends AppCompatActivity {
         nextSceneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (helpMode) {
+                    Toast.makeText(context, "Press the proceed button to go to the next scene", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (sceneType != SceneType.action) {
                     playNonActionScene();
                 } else {
@@ -296,6 +307,11 @@ public class GamePlayActivity extends AppCompatActivity {
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (helpMode) {
+                    Toast.makeText(context, "Press the bookmark button to save your progress", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if (bookmark.getCurrentView() != bookmarkHollow){
                     Intent intent = new Intent(GamePlayActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -310,6 +326,10 @@ public class GamePlayActivity extends AppCompatActivity {
         journal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (helpMode) {
+                    Toast.makeText(context, "Press the journal button to check your progress", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 FragmentManager fm = getFragmentManager();
                 JournalDialogFragment journalFragment = new JournalDialogFragment();
@@ -323,6 +343,10 @@ public class GamePlayActivity extends AppCompatActivity {
         hintButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (helpMode) {
+                    Toast.makeText(context, "Press the hint button to see what actions you can take", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 if (!hintReady&&!hintShowing){
                     int colorFrom = getHintColor("primary");
@@ -348,6 +372,39 @@ public class GamePlayActivity extends AppCompatActivity {
                 }
             }
         });
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (helpMode == false) {
+                    helpMode = true;
+                    helpButton.setBackgroundColor(Color.RED);
+                    Toast.makeText(context, "Help Mode On", Toast.LENGTH_SHORT).show();
+                } else {
+                    helpMode = false;
+                    helpButton.setBackgroundColor(Color.GRAY);
+                    Toast.makeText(context, "Help Mode Off", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        userInputEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (helpMode) {
+                    Toast.makeText(context, "You can type what action you want to take in here", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        });
+
+        userInputEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                playActionScene();
+                return false;
+            }
+        });
     }
 
     private void hideHint() {
@@ -368,6 +425,7 @@ public class GamePlayActivity extends AppCompatActivity {
         optionsList.setVisibility(View.GONE);
         nextSceneButton.setVisibility(View.VISIBLE);
         userInputEditText.setVisibility(View.VISIBLE);
+        helpButton.setVisibility(View.VISIBLE);
     }
 
     private void showHint() {
@@ -375,6 +433,7 @@ public class GamePlayActivity extends AppCompatActivity {
         hintShowing = true;
         userInputEditText.setVisibility(View.INVISIBLE);
         nextSceneButton.setVisibility(View.INVISIBLE);
+        helpButton.setVisibility(View.INVISIBLE);
         optionsList.setVisibility(View.VISIBLE);
         optionsList.bringToFront();
     }
