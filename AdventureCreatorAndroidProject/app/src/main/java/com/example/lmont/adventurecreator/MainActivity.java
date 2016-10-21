@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         setup();
+        Toast.makeText(this, "Welcome " + Player.getInstance().getUsername(), Toast.LENGTH_SHORT).show();
+
 //        test(0);
 //        test(1);
 //        test(2);
@@ -101,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
         deleteDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "All Saved Games and Stories Deleted", Toast.LENGTH_SHORT).show();
-                AdventureDBHelper.getInstance(MainActivity.this).deleteAll(true);
+                Toast.makeText(MainActivity.this, "All Saved Games Deleted", Toast.LENGTH_SHORT).show();
+                AdventureDBHelper.getInstance(MainActivity.this).deleteSaves();
             }
         });
         playButton.setOnClickListener(new View.OnClickListener() {

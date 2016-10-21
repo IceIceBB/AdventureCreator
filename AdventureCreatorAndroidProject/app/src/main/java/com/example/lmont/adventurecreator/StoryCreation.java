@@ -1,6 +1,7 @@
 package com.example.lmont.adventurecreator;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Slide;
@@ -28,6 +29,8 @@ public class StoryCreation extends AppCompatActivity {
 
     ArrayAdapter<String> arrayAdapter;
 
+    Button helpButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,8 @@ public class StoryCreation extends AppCompatActivity {
         newStoryButton = (Button) findViewById(R.id.newStoryButton);
         storyListView = (ListView) findViewById(R.id.storyListView);
 
+        helpButton = (Button) findViewById(R.id.readmeButton);
+
         allStoryTitles = new ArrayList<>();
         allStoryIds = new ArrayList<>();
 
@@ -56,8 +61,8 @@ public class StoryCreation extends AppCompatActivity {
             public void onClick(View view) {
                 getAllTitlesAndIds();
                 Models.Story newStory = new Models.Story(
-                        "Story " + (allStoriesArray.length+1),
-                        "Story Author",
+                        Player.getInstance().getUsername() + "'s Story " + (allStoriesArray.length+1),
+                        Player.getInstance().getUsername(),
                         "Story Summary",
                         "Story Genre",
                         "Story Type",
@@ -81,11 +86,19 @@ public class StoryCreation extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StoryCreation.this, WebViewActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 //    TODOne: Get data and populate list view with Story titles (additional info?)
     public void getAllTitlesAndIds() {
-        allStoriesArray = GameHelper.getInstance(this).getAllStories();
+        allStoriesArray = GameHelper.getInstance(this).getMyStories();
 
         allStoryIds.removeAll(allStoryIds);
         allStoryTitles.removeAll(allStoryTitles);

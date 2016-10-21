@@ -386,6 +386,7 @@ public class SceneEditor extends AppCompatActivity {
 
             Models.Scene[] allScenesArray = GameHelper.getInstance(this).getScenesForChapter(chapterId);
             getAllSceneTitlesAndIds(allScenesArray);
+           //TODO
             int previousSpinnerSelectionPosition = allSceneIdsArrayList.indexOf(previousSpinnerSelectionId);
 
             selectedRadioButtonId = nodeTypeRadioGroup.getCheckedRadioButtonId();
@@ -394,6 +395,18 @@ public class SceneEditor extends AppCompatActivity {
                 actionOneVerbsEditText.setText(actionOneVerbs);
                 actionOneFlagsEditText.setText(actionOneFlags);
                 actionOneToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition, true);
+                actionTwoVerbsEditText.setText(actionTwoVerbs);
+                actionTwoFlagsEditText.setText(actionTwoFlags);
+                actionTwoToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition, true);
+                actionThreeVerbsEditText.setText(actionThreeVerbs);
+                actionThreeFlagsEditText.setText(actionThreeFlags);
+                actionThreeToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition, true);
+                actionFourVerbsEditText.setText(actionFourVerbs);
+                actionFourFlagsEditText.setText(actionFourFlags);
+                actionFourToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition, true);
+                actionFiveVerbsEditText.setText(actionFiveVerbs);
+                actionFiveFlagsEditText.setText(actionFiveFlags);
+                actionFiveToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition, true);
 //            actionOneToSceneIdEditText.setText(actionOneToSceneId);
             }
 
@@ -420,6 +433,10 @@ public class SceneEditor extends AppCompatActivity {
             Models.Transition firstTransition = allTransitionsArray[0];
             if (firstTransition.type.equals("action")) {
                 actionOneId = firstTransition._id;
+                actionTwoId = allTransitionsArray[1]._id;
+                actionThreeId = allTransitionsArray[2]._id;
+                actionFourId = allTransitionsArray[3]._id;
+                actionFiveId = allTransitionsArray[4]._id;
             }
             if (firstTransition.type.equals("auto")) {
                 autoId = firstTransition._id;
@@ -483,6 +500,18 @@ public class SceneEditor extends AppCompatActivity {
             actionOneVerbs = allTransitionsArray[0].verb;
             actionOneFlags = allTransitionsArray[0].flag;
             actionOneToSceneId = allTransitionsArray[0].toSceneID;
+            actionTwoVerbs = allTransitionsArray[1].verb;
+            actionTwoFlags = allTransitionsArray[1].flag;
+            actionTwoToSceneId = allTransitionsArray[1].toSceneID;
+            actionThreeVerbs = allTransitionsArray[2].verb;
+            actionThreeFlags = allTransitionsArray[2].flag;
+            actionThreeToSceneId = allTransitionsArray[2].toSceneID;
+            actionFourVerbs = allTransitionsArray[3].verb;
+            actionFourFlags = allTransitionsArray[3].flag;
+            actionFourToSceneId = allTransitionsArray[3].toSceneID;
+            actionFiveVerbs = allTransitionsArray[4].verb;
+            actionFiveFlags = allTransitionsArray[4].flag;
+            actionFiveToSceneId = allTransitionsArray[4].toSceneID;
         }
         if (selectedRadioButton == autoNodeRadioButton) {
             autoToSceneId = allTransitionsArray[0].toSceneID;
@@ -539,15 +568,42 @@ public class SceneEditor extends AppCompatActivity {
             Models.Transition[] allTransitionsArray = GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
             if (allTransitionsArray.length < 1) {
                 readActionFormFields();
-                Models.Transition newActionTransition = new Models.Transition("action", actionOneVerbs, actionOneFlags, "", "", 0, sceneId, actionOneToSceneId);
-                addTransition(newActionTransition);
+                Models.Transition newFirstActionTransition = new Models.Transition("action", actionOneVerbs, actionOneFlags, "", "", 0, sceneId, actionOneToSceneId);
+                addTransition(newFirstActionTransition);
+                Models.Transition newSecondActionTransition = new Models.Transition("action", actionTwoVerbs, actionTwoFlags, "", "", 0, sceneId, actionTwoToSceneId);
+                addTransition(newSecondActionTransition);
+                Models.Transition newThirdActionTransition = new Models.Transition("action", actionThreeVerbs, actionThreeFlags, "", "", 0, sceneId, actionThreeToSceneId);
+                addTransition(newThirdActionTransition);
+                Models.Transition newFourthActionTransition = new Models.Transition("action", actionFourVerbs, actionFourFlags, "", "", 0, sceneId, actionFourToSceneId);
+                addTransition(newFourthActionTransition);
+                Models.Transition newFifthActionTransition = new Models.Transition("action", actionFiveVerbs, actionFiveFlags, "", "", 0, sceneId, actionFiveToSceneId);
+                addTransition(newFifthActionTransition);
+
+
+
+
+
+
+
             } else
                 readActionFormFields();
-            Models.Transition updatedActionTransition = new Models.Transition("action", actionOneVerbs, actionOneFlags, "", "", 0, sceneId, actionOneToSceneId);
+            Models.Transition updatedFirstActionTransition = new Models.Transition("action", actionOneVerbs, actionOneFlags, "", "", 0, sceneId, actionOneToSceneId);
+            Models.Transition updatedSecondActionTransition = new Models.Transition("action", actionTwoVerbs, actionTwoFlags, "", "", 0, sceneId, actionTwoToSceneId);
+            Models.Transition updatedThirdActionTransition = new Models.Transition("action", actionThreeVerbs, actionThreeFlags, "", "", 0, sceneId, actionThreeToSceneId);
+            Models.Transition updatedFourthActionTransition = new Models.Transition("action", actionFourVerbs, actionFourFlags, "", "", 0, sceneId, actionFourToSceneId);
+            Models.Transition updatedFifthActionTransition = new Models.Transition("action", actionFiveVerbs, actionFiveFlags, "", "", 0, sceneId, actionFiveToSceneId);
             //TODO: get transition id at same time as set view, check it here
             getTransitionId();
-            updatedActionTransition._id = actionOneId;
-            updateTransition(updatedActionTransition);
+            updatedFirstActionTransition._id = actionOneId;
+            updatedSecondActionTransition._id = actionTwoId;
+            updatedThirdActionTransition._id = actionThreeId;
+            updatedFourthActionTransition._id = actionFourId;
+            updatedFifthActionTransition._id = actionFiveId;
+            updateTransition(updatedFirstActionTransition);
+            updateTransition(updatedSecondActionTransition);
+            updateTransition(updatedThirdActionTransition);
+            updateTransition(updatedFourthActionTransition);
+            updateTransition(updatedFifthActionTransition);
         }
 
         if (selectedRadioButton == autoNodeRadioButton) {

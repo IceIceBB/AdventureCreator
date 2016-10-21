@@ -9,6 +9,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -19,6 +20,8 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by lmont on 10/10/2016.
@@ -31,6 +34,7 @@ public class APIHelper {
     public final static String SCENE_URL = "https://infinite-shelf-21417.herokuapp.com/adventure/scene";
     public final static String TRANSITION_URL = "https://infinite-shelf-21417.herokuapp.com/adventure/transition";
     public final static String ALL_URL = "https://infinite-shelf-21417.herokuapp.com/adventure/all";
+    public final static String USERS_URL = "https://infinite-shelf-21417.herokuapp.com/adventure/users";
     public final static String SWOOGLE_URL = "http://swoogle.umbc.edu/StsService/GetStsSim?operation=api";
     public final static String TAG = "API_HELPER";
 
@@ -291,5 +295,82 @@ public class APIHelper {
         String getURL = SCENE_URL + "/" + id;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, getURL, null, listener, errorListener);
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public void checkLoginCredentials(String userName, String password, Response.Listener listener, Response.ErrorListener errorListener) {
+        String getURL = USERS_URL + "/" + userName + "/" + password;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, getURL, listener, errorListener);
+        requestQueue.add(stringRequest);
+    }
+
+    public void addNewAccount(String userName, String password, Response.Listener<Boolean> listener, Response.ErrorListener errorListener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("name", userName);
+            jsonBody.put("password", password);
+        } catch (JSONException e) {
+            Log.d(TAG, "addStory: " + e);
+        }
+
+        BooleanRequest booleanRequest = new BooleanRequest(Request.Method.POST, USERS_URL, jsonBody.toString(), listener, errorListener);
+        requestQueue.add(booleanRequest);
+    }
+
+    private class BooleanRequest extends Request<Boolean> {
+        private final Response.Listener<Boolean> mListener;
+        private final Response.ErrorListener mErrorListener;
+        private final String mRequestBody;
+
+        private final String PROTOCOL_CHARSET = "utf-8";
+        private final String PROTOCOL_CONTENT_TYPE = String.format("application/json; charset=%s", PROTOCOL_CHARSET);
+
+        public BooleanRequest(int method, String url, String requestBody, Response.Listener<Boolean> listener, Response.ErrorListener errorListener) {
+            super(method, url, errorListener);
+            this.mListener = listener;
+            this.mErrorListener = errorListener;
+            this.mRequestBody = requestBody;
+        }
+
+        @Override
+        protected Response<Boolean> parseNetworkResponse(NetworkResponse response) {
+            Boolean parsed;
+            try {
+                parsed = Boolean.valueOf(new String(response.data, HttpHeaderParser.parseCharset(response.headers)));
+            } catch (UnsupportedEncodingException e) {
+                parsed = Boolean.valueOf(new String(response.data));
+            }
+            return Response.success(parsed, HttpHeaderParser.parseCacheHeaders(response));
+        }
+
+        @Override
+        protected VolleyError parseNetworkError(VolleyError volleyError) {
+            return super.parseNetworkError(volleyError);
+        }
+
+        @Override
+        protected void deliverResponse(Boolean response) {
+            mListener.onResponse(response);
+        }
+
+        @Override
+        public void deliverError(VolleyError error) {
+            mErrorListener.onErrorResponse(error);
+        }
+
+        @Override
+        public String getBodyContentType() {
+            return PROTOCOL_CONTENT_TYPE;
+        }
+
+        @Override
+        public byte[] getBody() throws AuthFailureError {
+            try {
+                return mRequestBody == null ? null : mRequestBody.getBytes(PROTOCOL_CHARSET);
+            } catch (UnsupportedEncodingException uee) {
+                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s",
+                        mRequestBody, PROTOCOL_CHARSET);
+                return null;
+            }
+        }
     }
 }

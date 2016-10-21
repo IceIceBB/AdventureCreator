@@ -83,7 +83,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         APIHelper.getInstance(getContext()).downloadAll(new Response.Listener<Models.RemoteData>() {
             @Override
             public void onResponse(Models.RemoteData response) {
-                AdventureDBHelper.getInstance(getContext()).deleteAll(false);
+                AdventureDBHelper.getInstance(getContext()).deleteAll();
 
                 Log.d("LEO", "onPerformSync: " + response.toString());
                 for (Models.Story story : response.stories) {

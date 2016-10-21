@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.Window;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class GameLibraryActivity extends FragmentActivity {
@@ -79,12 +80,8 @@ public class GameLibraryActivity extends FragmentActivity {
             }
         }
 
-        Models.Story[] newStoryArray = new Models.Story[stories.size()];
-        for(int x=0; x<stories.size(); x++) {
-            newStoryArray[x] = stories.get(x);
-        }
-
-        return newStoryArray;
+        Collections.sort(stories);
+        return stories.toArray(new Models.Story[stories.size()]);
     }
 
     private void setupPager (ViewPager pager, GameLibraryPagerAdapter adapter){
