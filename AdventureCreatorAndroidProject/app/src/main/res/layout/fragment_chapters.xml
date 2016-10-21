@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:focusableInTouchMode="true">
 
     <ListView
         android:id="@+id/chapterList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"></ListView>
+        android:background="@color/colorPrimaryDark" />
+    <Button
+        android:id="@+id/chaptersselect_cancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:text="Cancel"/>
 
 </LinearLayout>

@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 
@@ -106,6 +109,7 @@ public class ChapterCreation extends AppCompatActivity {
 
         getAllTitlesAndIds();
         chaptersListView.setAdapter(arrayAdapter);
+        updateListViewHeight(chaptersListView);
     }
 
 
@@ -155,7 +159,9 @@ public class ChapterCreation extends AppCompatActivity {
             @Override
             public void onResponse(Models.Chapter response) {
                 getAllTitlesAndIds();
+                updateListViewHeight(chaptersListView);
                 arrayAdapter.notifyDataSetChanged();
+                Toast.makeText(ChapterCreation.this, "Chapter Created", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -165,6 +171,7 @@ public class ChapterCreation extends AppCompatActivity {
             @Override
             public void onResponse(Models.Story response) {
 //            TODO: Add call back functionality
+                Toast.makeText(ChapterCreation.this, "Story Updated", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -186,7 +193,15 @@ public class ChapterCreation extends AppCompatActivity {
         Models.Story updatedStory = new Models.Story(storyTitle, storyAuthor, storySummary, storyGenre,"Type", storyTags);
         updatedStory._id = storyId;
 
-        updateStory(updatedStory);
+        //TODO: Disable Buttons, show loading bar
+
+        GameHelper.getInstance(ChapterCreation.this).updateStory(updatedStory, new Response.Listener<Models.Story>() {
+            @Override
+            public void onResponse(Models.Story response) {
+//            TODO: Add call back functionality
+                finish();
+            }
+        });
         super.onBackPressed();
     }
 
@@ -194,6 +209,28 @@ public class ChapterCreation extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getAllTitlesAndIds();
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allChapterTitles);
+        chaptersListView.setAdapter(arrayAdapter);
         arrayAdapter.notifyDataSetChanged();
+//        Toast.makeText(this, "Chapter Updated", Toast.LENGTH_SHORT).show();
+    }
+
+    public static void updateListViewHeight(ListView myListView) {
+        ListAdapter myListAdapter = myListView.getAdapter();
+        if (myListAdapter == null) {
+            return;
+        }
+        //get listview height
+        int totalHeight = 0;
+        int adapterCount = myListAdapter.getCount();
+        for (int size = 0; size < adapterCount ; size++) {
+            View listItem = myListAdapter.getView(size, null, myListView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        //Change Height of ListView
+        ViewGroup.LayoutParams params = myListView.getLayoutParams();
+        params.height = totalHeight + (myListView.getDividerHeight() * (adapterCount - 1));
+        myListView.setLayoutParams(params);
     }
 }

@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 
@@ -100,6 +103,7 @@ public class SceneCreation extends AppCompatActivity {
 
         getAllTitlesAndIds();
         sceneNodeListView.setAdapter(arrayAdapter);
+        updateListViewHeight(sceneNodeListView);
     }
 
     //        TODOne: Get data and populate list view with Scene titles
@@ -144,7 +148,9 @@ public class SceneCreation extends AppCompatActivity {
             @Override
             public void onResponse(Models.Scene response) {
                 getAllTitlesAndIds();
+                updateListViewHeight(sceneNodeListView);
                 arrayAdapter.notifyDataSetChanged();
+                Toast.makeText(SceneCreation.this, "Scene Created", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -154,6 +160,7 @@ public class SceneCreation extends AppCompatActivity {
             @Override
             public void onResponse(Models.Chapter response) {
 //            TODO: Add call back functionality
+                Toast.makeText(getBaseContext(), "Chapter Updated", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -175,7 +182,15 @@ public class SceneCreation extends AppCompatActivity {
         Models.Chapter updatedChapter = new Models.Chapter(chapterTitle, chapterSummary, chapterGoal, storyId);
         updatedChapter._id = chapterId;
 
-        updateChapter(updatedChapter);
+        //TODO: Disable Buttons, show loading bar
+
+        GameHelper.getInstance(SceneCreation.this).updateChapter(updatedChapter, new Response.Listener<Models.Chapter>() {
+            @Override
+            public void onResponse(Models.Chapter response) {
+//            TODO: Add call back functionality
+                finish();
+            }
+        });
         super.onBackPressed();
 
     }
@@ -184,7 +199,29 @@ public class SceneCreation extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getAllTitlesAndIds();
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allSceneTitles);
+        sceneNodeListView.setAdapter(arrayAdapter);
         arrayAdapter.notifyDataSetChanged();
+//        Toast.makeText(this, "Scene Updated", Toast.LENGTH_SHORT).show();
+    }
+
+    public static void updateListViewHeight(ListView myListView) {
+        ListAdapter myListAdapter = myListView.getAdapter();
+        if (myListAdapter == null) {
+            return;
+        }
+        //get listview height
+        int totalHeight = 0;
+        int adapterCount = myListAdapter.getCount();
+        for (int size = 0; size < adapterCount ; size++) {
+            View listItem = myListAdapter.getView(size, null, myListView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        //Change Height of ListView
+        ViewGroup.LayoutParams params = myListView.getLayoutParams();
+        params.height = totalHeight + (myListView.getDividerHeight() * (adapterCount - 1));
+        myListView.setLayoutParams(params);
     }
 
 }

@@ -77,26 +77,33 @@ public class GamePlayActivity extends AppCompatActivity {
         setup();
 
         Typeface myTypeFace = null;
+        float textSize = 0;
+
         switch (genre) {
             case "fantasy":
                 myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/tangerine_bold.ttf");
-                sceneText.setTextSize(30);
+                textSize = 30;
                 break;
             case "scifi":
                 myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/scifi.ttf");
-                sceneText.setTextSize(20);
+                textSize = 20;
                 break;
             case "horror":
                 myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/Ravenscroft.ttf");
-                sceneText.setTextSize(40);
+                textSize = 40;
                 break;
             default:
                 myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/fantasy.ttf");
                 sceneText.setTypeface(myTypeFace);
-                sceneText.setTextSize(20);
+                textSize = 20;
                 break;
         }
-        sceneText.setTypeface(myTypeFace);
+        hintButton.setTypeface(myTypeFace);
+        hintButton.setTextSize(textSize);
+        nextSceneButton.setTypeface(myTypeFace);
+        nextSceneButton.setTextSize(textSize);
+        userInputEditText.setTypeface(myTypeFace);
+        userInputEditText.setTextSize(textSize);
 
     }
 
@@ -295,7 +302,7 @@ public class GamePlayActivity extends AppCompatActivity {
                 }else if(bookmark.getCurrentView() != bookmarkSolid){
                     bookmark.showNext();
                     player.saveGame();
-                    Toast.makeText(context, "Progress Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Progress Saved\nPress Again To Exit", Toast.LENGTH_LONG).show();
                 }
             }
         });

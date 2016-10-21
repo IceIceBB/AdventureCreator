@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Explode;
-import android.view.View;
-import android.view.Window;
-import android.transition.Fade;
-import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 
@@ -50,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         setup();
 //        test(0);
+//        test(1);
+//        test(2);
+//        test(3);
 //        test1UpdateRoutes();
     }
 
@@ -101,13 +101,15 @@ public class MainActivity extends AppCompatActivity {
         deleteDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AdventureDBHelper.getInstance(MainActivity.this).deleteAll();
+                Toast.makeText(MainActivity.this, "All Saved Games and Stories Deleted", Toast.LENGTH_SHORT).show();
+                AdventureDBHelper.getInstance(MainActivity.this).deleteAll(true);
             }
         });
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startLoading();
+                Toast.makeText(MainActivity.this, "Syncing stories with online database", Toast.LENGTH_SHORT).show();
                 contentObserverHelper.requestSync(new Response.Listener() {
                     @Override
                     public void onResponse(Object response) {

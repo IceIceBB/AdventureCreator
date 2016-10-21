@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 
@@ -126,5 +127,6 @@ public class StoryCreation extends AppCompatActivity {
         super.onResume();
         getAllTitlesAndIds();
         arrayAdapter.notifyDataSetChanged();
+//        Toast.makeText(this, "Story Updated", Toast.LENGTH_SHORT).show();
     }
 }
