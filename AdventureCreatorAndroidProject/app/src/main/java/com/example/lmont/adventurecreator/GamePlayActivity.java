@@ -104,7 +104,6 @@ public class GamePlayActivity extends AppCompatActivity {
         nextSceneButton.setTextSize(textSize);
         userInputEditText.setTypeface(myTypeFace);
         userInputEditText.setTextSize(textSize);
-
     }
 
     private void setup() {
@@ -121,6 +120,7 @@ public class GamePlayActivity extends AppCompatActivity {
         nextSceneButton = (Button) findViewById(R.id.nextScene);
         userInputEditText = (EditText) findViewById(R.id.editText);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading_progressBar);
+
         options = null;
         context = this;
 
@@ -151,6 +151,8 @@ public class GamePlayActivity extends AppCompatActivity {
 
         // Setup Scene Text
         sceneText.setText(player.getCurrentScene().body);
+        getWindow().setTitle(player.getStoryTitle());
+        setTitle(player.getStoryTitle());
 
         // Setup options
         if (sceneType == SceneType.action) {
