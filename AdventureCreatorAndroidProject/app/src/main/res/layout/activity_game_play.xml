@@ -21,32 +21,26 @@
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/editText"
         android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/game_play_help_button"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintRight_toRightOf="@+id/options" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/nextScene"
+        app:layout_constraintRight_toRightOf="@+id/options"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <Button
         android:text="\?"
-        android:layout_height="38dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:id="@+id/game_play_help_button"
         android:layout_width="48dp"
-        app:layout_constraintRight_toRightOf="@+id/hintButton"
         android:background="?attr/colorAccentCustom"
-        app:layout_constraintBottom_toBottomOf="@+id/options" />
-
-    <Button
-        android:id="@+id/helpModeButton"
-        android:layout_width="48dp"
-        android:text="help"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:background="?attr/colorAccentCustom"
-        android:layout_height="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/hintButton"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintRight_toRightOf="@+id/options" />
+        app:layout_constraintBottom_toBottomOf="@+id/options"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/editText"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/hintButton"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_height="48dp" />
 
     <EditText
         android:layout_width="240dp"
@@ -142,7 +136,8 @@
         app:layout_constraintTop_toBottomOf="@+id/editText"
         android:elevation="9dp"
         android:background="?attr/colorAccentCustom"
-        app:layout_constraintVertical_bias="0.16000003" />
+        app:layout_constraintVertical_bias="0.16000003"
+        android:padding="8dp"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
