@@ -4,19 +4,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Response;
+
+import java.util.ArrayList;
+
+//import static com.example.lmont.adventurecreator.R.id.actionOneToSceneIdEditText;
+//import static com.example.lmont.adventurecreator.R.id.autoToSceneIdEditText;
+//import static com.example.lmont.adventurecreator.R.id.modifierFailToSceneIdEditText;
+//import static com.example.lmont.adventurecreator.R.id.modifierPassToSceneIdEditText;
+//import static edu.cmu.lti.jawjaw.pobj.POS.a;
+//import static edu.cmu.lti.jawjaw.pobj.POS.v;
 
 public class SceneEditor extends AppCompatActivity {
 
     String storyId;
     String chapterId;
     String sceneId;
+
+    ArrayList<String> allSceneTitlesArrayList;
+    ArrayList<String> allSceneIdsArrayList;
 
     String actionOneId;
     String autoId;
@@ -33,19 +47,23 @@ public class SceneEditor extends AppCompatActivity {
     LinearLayout actionNodeViews;
     EditText actionOneVerbsEditText;
     EditText actionOneFlagsEditText;
-    EditText actionOneToSceneIdEditText;
+    Spinner actionOneToSceneIdSpinner;
+//    EditText actionOneToSceneIdEditText;
     String actionOneVerbs;
     String actionOneFlags;
     String actionOneToSceneId;
 
     LinearLayout autoNodeViews;
-    EditText autoToSceneIdEditText;
+    Spinner autoToSceneIdSpinner;
+//    EditText autoToSceneIdEditText;
     String autoToSceneId;
 
     LinearLayout modifierNodeViews;
     EditText modifierFlagsEditText;
-    EditText modifierPassToSceneIdEditText;
-    EditText modifierFailToSceneIdEditText;
+    Spinner modifierPassToSceneIdSpinner;
+//    EditText modifierPassToSceneIdEditText;
+    Spinner modifierFailToSceneIdSpinner;
+//    EditText modifierFailToSceneIdEditText;
     String modifierFlags;
     String modifierPassToSceneId;
     String modifierFailToSceneId;
@@ -66,6 +84,9 @@ public class SceneEditor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene_editor);
 
+        allSceneTitlesArrayList = new ArrayList<>();
+        allSceneIdsArrayList = new ArrayList<>();
+
 //        TODOn't: Set number of transitions corespondingly, show/hide new transition button
         nodeTypeRadioGroup = (RadioGroup) findViewById(R.id.nodeTypeRadioGroup);
         actionNodeRadioButton = (RadioButton) findViewById(R.id.actionNodeRadioButton);
@@ -75,15 +96,19 @@ public class SceneEditor extends AppCompatActivity {
         actionNodeViews = (LinearLayout) findViewById(R.id.actionNodeViews);
         actionOneVerbsEditText = (EditText) findViewById(R.id.actionOneVerbsEditText);
         actionOneFlagsEditText = (EditText) findViewById(R.id.actionOneFlagsEditText);
-        actionOneToSceneIdEditText = (EditText) findViewById(R.id.actionOneToSceneIdEditText);
+        actionOneToSceneIdSpinner = (Spinner) findViewById(R.id.actionOneToSceneIdSpinner);
+//        actionOneToSceneIdEditText = (EditText) findViewById(actionOneToSceneIdEditText);
 
         autoNodeViews = (LinearLayout) findViewById(R.id.autoNodeViews);
-        autoToSceneIdEditText = (EditText) findViewById(R.id.autoToSceneIdEditText);
+        autoToSceneIdSpinner = (Spinner) findViewById(R.id.autoToSceneIdSpinner);
+//        autoToSceneIdEditText = (EditText) findViewById(autoToSceneIdEditText);
 
         modifierNodeViews = (LinearLayout) findViewById(R.id.modifierNodeViews);
         modifierFlagsEditText = (EditText) findViewById(R.id.modifierFlagsEditText);
-        modifierPassToSceneIdEditText = (EditText) findViewById(R.id.modifierPassToSceneIdEditText);
-        modifierFailToSceneIdEditText = (EditText) findViewById(R.id.modifierFailToSceneIdEditText);
+        modifierPassToSceneIdSpinner = (Spinner) findViewById(R.id.modifierPassToSceneIdSpinner);
+//        modifierPassToSceneIdEditText = (EditText) findViewById(modifierPassToSceneIdEditText);
+        modifierFailToSceneIdSpinner = (Spinner) findViewById(R.id.modifierFailToSceneIdSpinner);
+//        modifierFailToSceneIdEditText = (EditText) findViewById(modifierFailToSceneIdEditText);
 
 
 //        TODOne: Update db with changes to Title, Journal and Modifiers when exiting this event (or with new button?)
@@ -185,7 +210,6 @@ public class SceneEditor extends AppCompatActivity {
             }
         });
 
-
         getSceneDetails();
 //        getTransitionIds();
         //TODOne: check associated transitions, set Radio button checked based on result
@@ -193,6 +217,24 @@ public class SceneEditor extends AppCompatActivity {
         getAllFormFields();
 
 //        getAllTitlesAndIds();
+
+        Models.Scene[] allScenesArray = GameHelper.getInstance(this).getScenesForChapter(chapterId);
+        getAllSceneTitlesAndIds(allScenesArray);
+
+                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allSceneTitlesArrayList);
+        actionOneToSceneIdSpinner.setAdapter(spinnerAdapter);
+        autoToSceneIdSpinner.setAdapter(spinnerAdapter);
+        modifierPassToSceneIdSpinner.setAdapter(spinnerAdapter);
+        modifierPassToSceneIdSpinner.setAdapter(spinnerAdapter);
+    }
+
+    public void getAllSceneTitlesAndIds(Models.Scene[] allScenesArray){
+        allSceneTitlesArrayList.removeAll(allSceneTitlesArrayList);
+        allSceneIdsArrayList.removeAll(allSceneIdsArrayList);
+        for (int i = 0; i < allScenesArray.length ; i++) {
+            allSceneTitlesArrayList.add(allScenesArray[i].title);
+            allSceneIdsArrayList.add(allScenesArray[i]._id);
+        }
     }
 
     public void getSceneDetails() {
@@ -216,17 +258,17 @@ public class SceneEditor extends AppCompatActivity {
     public void readActionFormFields() {
         actionOneVerbs = actionOneVerbsEditText.getText().toString();
         actionOneFlags = actionOneFlagsEditText.getText().toString();
-        actionOneToSceneId = actionOneToSceneIdEditText.getText().toString();
+//        actionOneToSceneId = actionOneToSceneIdEditText.getText().toString();
     }
 
     public void readAutoFormFields() {
-        autoToSceneId = autoToSceneIdEditText.getText().toString();
+//        autoToSceneId = autoToSceneIdEditText.getText().toString();
     }
 
     public void readModifierFormFields() {
         modifierFlags = modifierFlagsEditText.getText().toString();
-        modifierPassToSceneId = modifierPassToSceneIdEditText.getText().toString();
-        modifierFailToSceneId = modifierFailToSceneIdEditText.getText().toString();
+//        modifierPassToSceneId = modifierPassToSceneIdEditText.getText().toString();
+//        modifierFailToSceneId = modifierFailToSceneIdEditText.getText().toString();
     }
 
     public void setSceneFormFields() {
@@ -242,15 +284,15 @@ public class SceneEditor extends AppCompatActivity {
         if (selectedRadioButton == actionNodeRadioButton) {
             actionOneVerbsEditText.setText(actionOneVerbs);
             actionOneFlagsEditText.setText(actionOneFlags);
-            actionOneToSceneIdEditText.setText(actionOneToSceneId);
+//            actionOneToSceneIdEditText.setText(actionOneToSceneId);
         }
         if (selectedRadioButton == autoNodeRadioButton) {
-            autoToSceneIdEditText.setText(autoToSceneId);
+//            autoToSceneIdEditText.setText(autoToSceneId);
         }
         if (selectedRadioButton == modifierNodeRadioButton) {
             modifierFlagsEditText.setText(modifierFlags);
-            modifierPassToSceneIdEditText.setText(modifierPassToSceneId);
-            modifierFailToSceneIdEditText.setText(modifierFailToSceneId);
+//            modifierPassToSceneIdEditText.setText(modifierPassToSceneId);
+//            modifierFailToSceneIdEditText.setText(modifierFailToSceneId);
         }
 
     }
