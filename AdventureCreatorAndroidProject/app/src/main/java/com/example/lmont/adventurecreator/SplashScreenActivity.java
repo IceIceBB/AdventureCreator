@@ -49,7 +49,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
                 Pair<View, String> pair1 = Pair.create(findViewById(R.id.splash_gamelogo_imageview), "gamelogotransition");
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SplashScreenActivity.this, pair1);
                 startActivity(intent, options.toBundle());

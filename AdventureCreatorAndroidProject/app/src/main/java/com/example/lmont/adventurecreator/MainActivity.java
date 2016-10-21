@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         setup();
+        Toast.makeText(this, "Welcome " + Player.getInstance().getUsername(), Toast.LENGTH_SHORT).show();
+
 //        test(0);
 //        test(1);
 //        test(2);
