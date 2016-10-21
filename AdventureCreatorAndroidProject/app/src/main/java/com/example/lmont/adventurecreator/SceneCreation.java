@@ -63,8 +63,14 @@ public class SceneCreation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getAllTitlesAndIds();
+                String title = "";
+                if (allScenesArray.length < 1) {
+                    title = "intro";
+                } else {
+                    title = "Scene " + (allScenesArray.length + 1);
+                }
                 Models.Scene newScene = new Models.Scene(
-                        "Scene " + (allScenesArray.length + 1),
+                        title,
                         "Journal Text",
                         "Flag Modifiers",
                         "Scene Body Text",

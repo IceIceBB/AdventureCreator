@@ -104,7 +104,7 @@ public class Player {
     }
 
     public void addModifier(String modifier) {
-        String[] stringModifiers = modifier.split(",");
+        String[] stringModifiers = modifier.trim().split(",");
         for(String stringModifier : stringModifiers)
             if (!modifiers.contains(stringModifier))
                 modifiers.add(stringModifier);
@@ -112,7 +112,7 @@ public class Player {
 
     public boolean checkIfPlayerHasModifier(String modifier) {
         boolean contains = false;
-        String[] stringModifiers = modifier.split(",");
+        String[] stringModifiers = modifier.trim().split(",");
         for(String stringModifier : stringModifiers) {
             if (!modifiers.contains(stringModifier)) {
                 return false;
