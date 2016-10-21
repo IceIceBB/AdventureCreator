@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by klaus_000 on 10/17/2016.
@@ -41,14 +42,16 @@ public class ChapterSelectFragment extends DialogFragment {
         for(int x=0; x < story.chapters.length; x++) {
             stringNames[x] = story.chapters[x].title;
         }
-
+        if (stringNames.length <= 0) {
+            preview.setText("There are currently no chapters in this story");
+        }
         chapterList.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, stringNames));
 
         chapterList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 chapterToLoad = i;
-                preview.setText("Preview:\n" + story.chapters[i].summary);
+                preview.setText("Chapter Summary:\n" + story.chapters[i].summary);
             }
         });
 
@@ -63,7 +66,10 @@ public class ChapterSelectFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (chapterToLoad < 0) return;
-                Player.getInstance().loadGame(story, chapterToLoad, story.genre, context);
+                if (Player.getInstance().loadGame(story, chapterToLoad, story.genre, context) == null) {
+                    Toast.makeText(context, "No Intro Found", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(v.getContext(), GamePlayActivity.class);
                 intent.putExtra("genre", story.genre);
                 startActivity(intent);

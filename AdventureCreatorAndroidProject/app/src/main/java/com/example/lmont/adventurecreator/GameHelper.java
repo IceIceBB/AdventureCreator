@@ -224,7 +224,7 @@ public class GameHelper {
         return story;
     }
     public void refreshDB(Response.Listener listener) {
-        dbHelper.deleteAll(false);
+        dbHelper.deleteAll();
         ContentResolverHelper.instance.requestSync(null);
         apiHelper.downloadAll(listener, null);
     }
@@ -248,6 +248,10 @@ public class GameHelper {
 
     public Models.Story getStory(String storyID) {
         return dbHelper.getStory(storyID);
+    }
+
+    public Models.Story[] getMyStories() {
+        return dbHelper.getStoriesBy(Player.getInstance().getUsername());
     }
 
     public Models.Chapter getChapter(String chapterID) {

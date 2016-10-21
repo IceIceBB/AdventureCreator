@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
         deleteDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "All Saved Games and Stories Deleted", Toast.LENGTH_SHORT).show();
-                AdventureDBHelper.getInstance(MainActivity.this).deleteAll(true);
+                Toast.makeText(MainActivity.this, "All Saved Games Deleted", Toast.LENGTH_SHORT).show();
+                AdventureDBHelper.getInstance(MainActivity.this).deleteSaves();
             }
         });
         playButton.setOnClickListener(new View.OnClickListener() {

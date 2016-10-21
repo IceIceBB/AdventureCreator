@@ -16,6 +16,9 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.android.volley.Response;
 
 /**
  * Created by lmont on 10/20/2016.
@@ -36,13 +39,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.custom_transition);
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().setSharedElementEnterTransition(transition);
-        getWindow().setSharedElementReturnTransition(transition);
-
-        //getWindow().setExitTransition(new Explode());
-        getWindow().setEnterTransition(new Fade());
+        getWindow().setExitTransition(new Fade());
 
         setContentView(R.layout.splashscreen);
 
@@ -50,10 +48,8 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                Pair<View, String> pair1 = Pair.create(findViewById(R.id.splash_gamelogo_imageview), "gamelogotransition");
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SplashScreenActivity.this, pair1);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SplashScreenActivity.this);
                 startActivity(intent, options.toBundle());
-                startActivity(intent);
                 this.finish();
             }
             private void finish() {
