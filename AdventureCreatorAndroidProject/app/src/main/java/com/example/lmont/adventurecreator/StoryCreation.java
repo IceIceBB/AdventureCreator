@@ -1,6 +1,7 @@
 package com.example.lmont.adventurecreator;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Slide;
@@ -28,6 +29,8 @@ public class StoryCreation extends AppCompatActivity {
 
     ArrayAdapter<String> arrayAdapter;
 
+    Button helpButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,8 @@ public class StoryCreation extends AppCompatActivity {
 
         newStoryButton = (Button) findViewById(R.id.newStoryButton);
         storyListView = (ListView) findViewById(R.id.storyListView);
+
+        helpButton = (Button) findViewById(R.id.readmeButton);
 
         allStoryTitles = new ArrayList<>();
         allStoryIds = new ArrayList<>();
@@ -78,6 +83,14 @@ public class StoryCreation extends AppCompatActivity {
 
                 intent.putExtra("selectedStoryId", allStoryIds.get(position));
 
+                startActivity(intent);
+            }
+        });
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StoryCreation.this, WebViewActivity.class);
                 startActivity(intent);
             }
         });
