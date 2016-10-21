@@ -198,11 +198,16 @@
                             android:layout_height="wrap_content"
                             android:text="Transition To Scene" />
 
-                        <EditText
-                            android:id="@+id/actionOneToSceneIdEditText"
+                        <Spinner
+                            android:id="@+id/actionOneToSceneIdSpinner"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:hint="Transition To Scene" />
+                            android:layout_height="wrap_content"/>
+
+                        <!--<EditText-->
+                            <!--android:id="@+id/actionOneToSceneIdEditText"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:hint="Transition To Scene" />-->
                     </LinearLayout>
                 </LinearLayout>
 
@@ -231,11 +236,16 @@
                     android:layout_height="wrap_content"
                     android:text="Transition To Scene" />
 
-                <EditText
-                    android:id="@+id/autoToSceneIdEditText"
+                <Spinner
+                    android:id="@+id/autoToSceneIdSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Transition To Scene" />
+                    android:layout_height="wrap_content"/>
+
+                <!--<EditText-->
+                    <!--android:id="@+id/autoToSceneIdEditText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="Transition To Scene" />-->
             </LinearLayout>
 
         </LinearLayout>
@@ -278,11 +288,16 @@
                     android:layout_height="wrap_content"
                     android:text="Pass Scene" />
 
-                <EditText
-                    android:id="@+id/modifierPassToSceneIdEditText"
+                <Spinner
+                    android:id="@+id/modifierPassToSceneIdSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Pass Scene" />
+                    android:layout_height="wrap_content"/>
+
+                <!--<EditText-->
+                    <!--android:id="@+id/modifierPassToSceneIdEditText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="Pass Scene" />-->
             </LinearLayout>
 
             <LinearLayout
@@ -296,11 +311,16 @@
                     android:layout_height="wrap_content"
                     android:text="Fail Scene" />
 
-                <EditText
-                    android:id="@+id/modifierFailToSceneIdEditText"
+                <Spinner
+                    android:id="@+id/modifierFailToSceneIdSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Fail Scene" />
+                    android:layout_height="wrap_content"/>
+
+                <!--<EditText-->
+                    <!--android:id="@+id/modifierFailToSceneIdEditText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="Fail Scene" />-->
             </LinearLayout>
 
 
