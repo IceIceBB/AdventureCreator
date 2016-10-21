@@ -163,7 +163,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/actonOneFlagsAndToSceneId"
+                    android:id="@+id/actionOneFlagsAndToSceneId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/actionOneVerbs"
@@ -201,13 +201,312 @@
                         <Spinner
                             android:id="@+id/actionOneToSceneIdSpinner"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content" />
 
                         <!--<EditText-->
-                            <!--android:id="@+id/actionOneToSceneIdEditText"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:hint="Transition To Scene" />-->
+                        <!--android:id="@+id/actionOneToSceneIdEditText"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Transition To Scene" />-->
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/actionTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/actionTwoVerbs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verb(s)" />
+
+                    <EditText
+                        android:id="@+id/actionTwoVerbsEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Verbs" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/actionTwoFlagsAndToSceneId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/actionTwoVerbs"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/actionTwoFlags"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Flags" />
+
+                        <EditText
+                            android:id="@+id/actionTwoFlagsEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Flags to Check for" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/actionTwoToSceneId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Transition To Scene" />
+
+                        <Spinner
+                            android:id="@+id/actionTwoToSceneIdSpinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <!--<EditText-->
+                        <!--android:id="@+id/actionOneToSceneIdEditText"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Transition To Scene" />-->
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/actionThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/actionThreeVerbs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verb(s)" />
+
+                    <EditText
+                        android:id="@+id/actionThreeVerbsEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Verbs" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/actionThreeFlagsAndToSceneId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/actionThreeVerbs"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/actionThreeFlags"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Flags" />
+
+                        <EditText
+                            android:id="@+id/actionThreeFlagsEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Flags to Check for" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/actionThreeToSceneId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Transition To Scene" />
+
+                        <Spinner
+                            android:id="@+id/actionThreeToSceneIdSpinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <!--<EditText-->
+                        <!--android:id="@+id/actionOneToSceneIdEditText"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Transition To Scene" />-->
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/actionFour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/actionFourVerbs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verb(s)" />
+
+                    <EditText
+                        android:id="@+id/actionFourVerbsEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Verbs" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/actionFourFlagsAndToSceneId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/actionFourVerbs"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/actionFourFlags"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Flags" />
+
+                        <EditText
+                            android:id="@+id/actionFourFlagsEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Flags to Check for" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/actionFourToSceneId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Transition To Scene" />
+
+                        <Spinner
+                            android:id="@+id/actionFourToSceneIdSpinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <!--<EditText-->
+                        <!--android:id="@+id/actionOneToSceneIdEditText"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Transition To Scene" />-->
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/actionFive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/actionFiveVerbs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verb(s)" />
+
+                    <EditText
+                        android:id="@+id/actionFiveVerbsEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Verbs" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/actionFiveFlagsAndToSceneId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/actionFiveVerbs"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/actionFiveFlags"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Flags" />
+
+                        <EditText
+                            android:id="@+id/actionFiveFlagsEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Flags to Check for" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/actionFiveToSceneId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Transition To Scene" />
+
+                        <Spinner
+                            android:id="@+id/actionFiveToSceneIdSpinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <!--<EditText-->
+                        <!--android:id="@+id/actionOneToSceneIdEditText"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Transition To Scene" />-->
                     </LinearLayout>
                 </LinearLayout>
 
@@ -239,13 +538,13 @@
                 <Spinner
                     android:id="@+id/autoToSceneIdSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <!--<EditText-->
-                    <!--android:id="@+id/autoToSceneIdEditText"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:hint="Transition To Scene" />-->
+                <!--android:id="@+id/autoToSceneIdEditText"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="Transition To Scene" />-->
             </LinearLayout>
 
         </LinearLayout>
@@ -291,13 +590,13 @@
                 <Spinner
                     android:id="@+id/modifierPassToSceneIdSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <!--<EditText-->
-                    <!--android:id="@+id/modifierPassToSceneIdEditText"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:hint="Pass Scene" />-->
+                <!--android:id="@+id/modifierPassToSceneIdEditText"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="Pass Scene" />-->
             </LinearLayout>
 
             <LinearLayout
@@ -314,13 +613,13 @@
                 <Spinner
                     android:id="@+id/modifierFailToSceneIdSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <!--<EditText-->
-                    <!--android:id="@+id/modifierFailToSceneIdEditText"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:hint="Fail Scene" />-->
+                <!--android:id="@+id/modifierFailToSceneIdEditText"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="Fail Scene" />-->
             </LinearLayout>
 
 

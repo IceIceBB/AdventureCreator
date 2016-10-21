@@ -41,6 +41,10 @@ public class SceneEditor extends AppCompatActivity {
 
     //Node type confirmation numbers for storage and ignore based on radio button state
     String actionOneId;
+    String actionTwoId;
+    String actionThreeId;
+    String actionFourId;
+    String actionFiveId;
     String autoId;
     String modifierPassId;
     String modifierFailId;
@@ -56,12 +60,37 @@ public class SceneEditor extends AppCompatActivity {
     //Action Node and associated views revealed by action buttone toggle state in OnClick
     LinearLayout actionNodeViews;
     EditText actionOneVerbsEditText;
+    EditText actionTwoVerbsEditText;
+    EditText actionThreeVerbsEditText;
+    EditText actionFourVerbsEditText;
+    EditText actionFiveVerbsEditText;
     EditText actionOneFlagsEditText;
+    EditText actionTwoFlagsEditText;
+    EditText actionThreeFlagsEditText;
+    EditText actionFourFlagsEditText;
+    EditText actionFiveFlagsEditText;
     Spinner actionOneToSceneIdSpinner;
+    Spinner actionTwoToSceneIdSpinner;
+    Spinner actionThreeToSceneIdSpinner;
+    Spinner actionFourToSceneIdSpinner;
+    Spinner actionFiveToSceneIdSpinner;
     //    EditText actionOneToSceneIdEditText;
     String actionOneVerbs;
     String actionOneFlags;
     String actionOneToSceneId;
+    String actionTwoVerbs;
+    String actionTwoFlags;
+    String actionTwoToSceneId;
+    String actionThreeVerbs;
+    String actionThreeFlags;
+    String actionThreeToSceneId;
+    String actionFourVerbs;
+    String actionFourFlags;
+    String actionFourToSceneId;
+    String actionFiveVerbs;
+    String actionFiveFlags;
+    String actionFiveToSceneId;
+
 
     //Auto Node and associated views revealed by action buttone toggle state in OnClick
     LinearLayout autoNodeViews;
@@ -113,6 +142,18 @@ public class SceneEditor extends AppCompatActivity {
         actionOneVerbsEditText = (EditText) findViewById(R.id.actionOneVerbsEditText);
         actionOneFlagsEditText = (EditText) findViewById(R.id.actionOneFlagsEditText);
         actionOneToSceneIdSpinner = (Spinner) findViewById(R.id.actionOneToSceneIdSpinner);
+        actionTwoVerbsEditText = (EditText) findViewById(R.id.actionTwoVerbsEditText);
+        actionTwoFlagsEditText = (EditText) findViewById(R.id.actionTwoFlagsEditText);
+        actionTwoToSceneIdSpinner = (Spinner) findViewById(R.id.actionTwoToSceneIdSpinner);
+        actionThreeVerbsEditText = (EditText) findViewById(R.id.actionThreeVerbsEditText);
+        actionThreeFlagsEditText = (EditText) findViewById(R.id.actionThreeFlagsEditText);
+        actionThreeToSceneIdSpinner = (Spinner) findViewById(R.id.actionThreeToSceneIdSpinner);
+        actionFourVerbsEditText = (EditText) findViewById(R.id.actionFourVerbsEditText);
+        actionFourFlagsEditText = (EditText) findViewById(R.id.actionFourFlagsEditText);
+        actionFourToSceneIdSpinner = (Spinner) findViewById(R.id.actionFourToSceneIdSpinner);
+        actionFiveVerbsEditText = (EditText) findViewById(R.id.actionFiveVerbsEditText);
+        actionFiveFlagsEditText = (EditText) findViewById(R.id.actionFiveFlagsEditText);
+        actionFiveToSceneIdSpinner = (Spinner) findViewById(R.id.actionFiveToSceneIdSpinner);
 //        actionOneToSceneIdEditText = (EditText) findViewById(actionOneToSceneIdEditText);
 
         //Find Auto Node and associated  Spinner to hide and show on Radio Button swap (formerly form field, lol)
@@ -248,6 +289,10 @@ public class SceneEditor extends AppCompatActivity {
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allSceneTitlesArrayList);
         actionOneToSceneIdSpinner.setAdapter(spinnerAdapter);
+        actionTwoToSceneIdSpinner.setAdapter(spinnerAdapter);
+        actionThreeToSceneIdSpinner.setAdapter(spinnerAdapter);
+        actionFourToSceneIdSpinner.setAdapter(spinnerAdapter);
+        actionFiveToSceneIdSpinner.setAdapter(spinnerAdapter);
         autoToSceneIdSpinner.setAdapter(spinnerAdapter);
         modifierPassToSceneIdSpinner.setAdapter(spinnerAdapter);
         modifierPassToSceneIdSpinner.setAdapter(spinnerAdapter);
@@ -288,9 +333,25 @@ public class SceneEditor extends AppCompatActivity {
     public void readActionFormFields() {
         actionOneVerbs = actionOneVerbsEditText.getText().toString();
         actionOneFlags = actionOneFlagsEditText.getText().toString();
+        actionTwoVerbs = actionTwoVerbsEditText.getText().toString();
+        actionTwoFlags = actionTwoFlagsEditText.getText().toString();
+        actionThreeVerbs = actionThreeVerbsEditText.getText().toString();
+        actionThreeFlags = actionThreeFlagsEditText.getText().toString();
+        actionFourVerbs = actionFourVerbsEditText.getText().toString();
+        actionFourFlags = actionFourFlagsEditText.getText().toString();
+        actionFiveVerbs = actionFiveVerbsEditText.getText().toString();
+        actionFiveFlags = actionFiveFlagsEditText.getText().toString();
 
-        int selectedPosition = actionOneToSceneIdSpinner.getSelectedItemPosition();
-        actionOneToSceneId = allSceneIdsArrayList.get(selectedPosition);
+        int selectedOnePosition = actionOneToSceneIdSpinner.getSelectedItemPosition();
+        actionOneToSceneId = allSceneIdsArrayList.get(selectedOnePosition);
+        int selectedTwoPosition = actionTwoToSceneIdSpinner.getSelectedItemPosition();
+        actionTwoToSceneId = allSceneIdsArrayList.get(selectedTwoPosition);
+        int selectedThreePosition = actionThreeToSceneIdSpinner.getSelectedItemPosition();
+        actionThreeToSceneId = allSceneIdsArrayList.get(selectedThreePosition);
+        int selectedFourPosition = actionFourToSceneIdSpinner.getSelectedItemPosition();
+        actionFourToSceneId = allSceneIdsArrayList.get(selectedFourPosition);
+        int selectedFivePosition = actionFiveToSceneIdSpinner.getSelectedItemPosition();
+        actionFiveToSceneId = allSceneIdsArrayList.get(selectedFivePosition);
     }
 
     public void readAutoFormFields() {
