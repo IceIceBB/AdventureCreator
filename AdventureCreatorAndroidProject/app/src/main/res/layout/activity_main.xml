@@ -12,11 +12,13 @@
     tools:context="com.example.lmont.adventurecreator.MainActivity">
 
     <ImageView
+        android:id="@+id/main_gamelogo_imageview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="10dp"
-        android:src="@drawable/game_logo_fantasy_compressed" />
+        android:src="@drawable/game_logo_fantasy_compressed"
+        android:transitionName="gamelogotransition"/>
 
     <LinearLayout
         android:layout_width="match_parent"

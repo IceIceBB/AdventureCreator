@@ -268,4 +268,28 @@ public class APIHelper {
         }, errorListener);
         requestQueue.add(jsonObjectRequest);
     }
+
+    public void deleteTransition(String id, Response.Listener listener, Response.ErrorListener errorListener) {
+        String getURL = TRANSITION_URL + "/" + id;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, getURL, null, listener, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void deleteStory(String id, Response.Listener listener, Response.ErrorListener errorListener) {
+        String getURL = STORY_URL + "/" + id;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, getURL, null, listener, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void deleteChapter(String id, Response.Listener listener, Response.ErrorListener errorListener) {
+        String getURL = CHAPTER_URL + "/" + id;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, getURL, null, listener, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void deleteScene(String id, Response.Listener listener, Response.ErrorListener errorListener) {
+        String getURL = SCENE_URL + "/" + id;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, getURL, null, listener, errorListener);
+        requestQueue.add(jsonObjectRequest);
+    }
 }

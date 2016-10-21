@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 /**
@@ -46,6 +47,14 @@ public class ChapterSelectFragment extends DialogFragment {
                 Intent intent = new Intent(view.getContext(), GamePlayActivity.class);
                 intent.putExtra("genre", story.genre);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
+            }
+        });
+
+        ((Button) rootView.findViewById(R.id.chaptersselect_cancel_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
             }
         });
 

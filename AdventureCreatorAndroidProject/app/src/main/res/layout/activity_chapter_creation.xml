@@ -1,141 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_node_creation"
-    android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.lmont.adventurecreator.SceneCreation">
+    android:layout_width="match_parent">
 
-
-    <LinearLayout
-        android:id="@+id/storyTitle"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_node_creation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.example.lmont.adventurecreator.SceneCreation">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title" />
 
-        <EditText
-            android:id="@+id/storyTitleEditText"
+        <LinearLayout
+            android:id="@+id/storyTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/storyAuthor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/storyTitle"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Author" />
-
-        <EditText
-            android:id="@+id/storyAuthorEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Author" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/storySummary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/storyAuthor"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Summary" />
-
-        <EditText
-            android:id="@+id/storySummaryEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Summary" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/genreAndTags"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/storySummary"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Genre" />
-<!--TODO: Make this a drop down-->
+                android:text="Title" />
+
             <EditText
-                android:id="@+id/storyGenreEditText"
-                android:layout_width="wrap_content"
+                android:id="@+id/storyTitleEditText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Genre" />
+                android:hint="Title" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/storyAuthor"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/storyTitle"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tags" />
+                android:text="Author" />
 
             <EditText
-                android:id="@+id/storyTagsEditText"
+                android:id="@+id/storyAuthorEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Tags" />
+                android:hint="Author" />
         </LinearLayout>
-    </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/genreAndTags">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/storySummary"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chapters" />
+            android:layout_below="@+id/storyAuthor"
+            android:orientation="vertical">
 
-<!--TODO: Add this button to a custom action bar for this activity-->
-        <Button
-            android:id="@+id/addChapterButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="New Chapter" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Summary" />
 
-        <ListView
-            android:id="@+id/chaptersListView"
-            android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/storySummaryEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Summary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/genreAndTags"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/addChapterButton"></ListView>
+            android:layout_below="@+id/storySummary"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Genre" />
+                <!--TODO: Make this a drop down-->
+                <EditText
+                    android:id="@+id/storyGenreEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Genre" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tags" />
+
+                <EditText
+                    android:id="@+id/storyTagsEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Tags" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/genreAndTags">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chapters" />
+
+            <!--TODO: Add this button to a custom action bar for this activity-->
+            <Button
+                android:id="@+id/addChapterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="New Chapter" />
+
+            <ListView
+                android:id="@+id/chaptersListView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/addChapterButton"></ListView>
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-</RelativeLayout>
+</ScrollView>

@@ -2,7 +2,7 @@
 <resources>
     <declare-styleable name="customColors">
         <attr name="colorAccentCustom" format="color|reference" />
-        <attr name="colorPrimaryCustom" format="color" />
+        <attr name="colorPrimaryCustom" format="color|reference" />
         <attr name="colorPrimaryDarkCustom" format="color|reference" />
         <attr name="colorBGCustom" format="color|reference" />
     </declare-styleable>

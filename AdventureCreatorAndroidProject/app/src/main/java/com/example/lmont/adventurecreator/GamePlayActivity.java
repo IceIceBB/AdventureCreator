@@ -5,9 +5,14 @@ import android.animation.ValueAnimator;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,7 +27,6 @@ import android.widget.ViewSwitcher;
 import com.android.volley.Response;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class GamePlayActivity extends AppCompatActivity {
@@ -49,23 +53,58 @@ public class GamePlayActivity extends AppCompatActivity {
     SceneType sceneType;
     String[] options;
 
+    int color;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String genre = getIntent().getStringExtra("genre");
-        if (Objects.equals(genre, "scifi")){
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        String genre = Player.getInstance().genre;
+        if (genre.equals("scifi")){
             setTheme(R.style.SciFiTheme);
-        }else if (Objects.equals(genre, "fantasy")){
+        }else if (genre.equals("fantasy")){
             setTheme(R.style.FantasyTheme);
-        }else if (Objects.equals(genre, "horror")) {
+        }else if (genre.equals("horror")) {
             setTheme(R.style.HorrorTheme);
         }
         setContentView(R.layout.activity_game_play);
 
-
-
         setup();
+
+        Typeface myTypeFace = null;
+        float textSize = 0;
+
+        switch (genre) {
+            case "fantasy":
+                myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/tangerine_bold.ttf");
+                textSize = 30;
+                break;
+            case "scifi":
+                myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/scifi.ttf");
+                textSize = 20;
+                break;
+            case "horror":
+                myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/Ravenscroft.ttf");
+                textSize = 40;
+                break;
+            default:
+                myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/fantasy.ttf");
+                sceneText.setTypeface(myTypeFace);
+                textSize = 20;
+                break;
+        }
+        hintButton.setTypeface(myTypeFace);
+        hintButton.setTextSize(textSize);
+        nextSceneButton.setTypeface(myTypeFace);
+        nextSceneButton.setTextSize(textSize);
+        userInputEditText.setTypeface(myTypeFace);
+        userInputEditText.setTextSize(textSize);
+
     }
 
     private void setup() {
@@ -144,7 +183,6 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void playActionScene() {
-        final boolean[] isFound = {false};
         final String userInput = userInputEditText.getText().toString();
         final ArrayList<Models.Transition> values = new ArrayList();
         final int[] loadCounter = {0};
@@ -195,6 +233,7 @@ public class GamePlayActivity extends AppCompatActivity {
                             showHint();
                             break;
                     }
+                    overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
                 }
                 }
             }, null);
@@ -228,6 +267,7 @@ public class GamePlayActivity extends AppCompatActivity {
             break;
         }
         startActivity(intent);
+        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
     }
 
     private void setOnClickListeners() {
@@ -238,6 +278,7 @@ public class GamePlayActivity extends AppCompatActivity {
                 player.getNextScene(transitions[position].toSceneID);
                 Intent intent = new Intent(GamePlayActivity.this, GamePlayActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
             }
         });
 
@@ -256,11 +297,12 @@ public class GamePlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (bookmark.getCurrentView() != bookmarkHollow){
-                    return;
+                    Intent intent = new Intent(GamePlayActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }else if(bookmark.getCurrentView() != bookmarkSolid){
                     bookmark.showNext();
                     player.saveGame();
-                    Toast.makeText(context, "Progress Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Progress Saved\nPress Again To Exit", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -268,8 +310,11 @@ public class GamePlayActivity extends AppCompatActivity {
         journal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 FragmentManager fm = getFragmentManager();
                 JournalDialogFragment journalFragment = new JournalDialogFragment();
+
+                journalFragment.typeface = Typeface.createFromAsset(getAssets(), "fonts/tangerine_bold.ttf");
                 journalFragment.setStyle(JournalDialogFragment.STYLE_NORMAL, R.style.CustomDialog);
                 journalFragment.show(fm, "Journal Fragment");
             }
@@ -280,8 +325,8 @@ public class GamePlayActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (!hintReady&&!hintShowing){
-                    int colorFrom = getResources().getColor(R.color.colorPrimary);
-                    int colorTo = getResources().getColor(R.color.colorAccent);
+                    int colorFrom = getHintColor("primary");
+                    int colorTo = getHintColor("accent");
                     ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
                     colorAnimation.setDuration(250); // milliseconds
                     colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -294,7 +339,6 @@ public class GamePlayActivity extends AppCompatActivity {
 
                     colorAnimation.start();
                     hintReady = true;
-                    optionsList.setVisibility(View.GONE);
                 }
                 else if (hintReady&&!hintShowing){
                     showHint();
@@ -307,8 +351,8 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void hideHint() {
-        int colorFrom = getResources().getColor(R.color.colorAccent);
-        int colorTo = getResources().getColor(R.color.colorPrimary);
+        int colorFrom = getHintColor("accent");
+        int colorTo = getHintColor("primary");
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(250); // milliseconds
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -321,8 +365,9 @@ public class GamePlayActivity extends AppCompatActivity {
 
         colorAnimation.start();
         hintShowing = false;
-        nextSceneButton.setVisibility(View.VISIBLE);
         optionsList.setVisibility(View.GONE);
+        nextSceneButton.setVisibility(View.VISIBLE);
+        userInputEditText.setVisibility(View.VISIBLE);
     }
 
     private void showHint() {
@@ -332,5 +377,22 @@ public class GamePlayActivity extends AppCompatActivity {
         nextSceneButton.setVisibility(View.INVISIBLE);
         optionsList.setVisibility(View.VISIBLE);
         optionsList.bringToFront();
+    }
+
+    private int getHintColor(String item){
+        int color = 0;
+
+        if (item.equals("primary")) {
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = context.getTheme();
+            theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+            color = typedValue.data;
+        }else if (item.equals("accent")){
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = context.getTheme();
+            theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
+            color = typedValue.data;
+        }
+        return color;
     }
 }

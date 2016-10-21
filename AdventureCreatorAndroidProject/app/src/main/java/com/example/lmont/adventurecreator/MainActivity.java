@@ -1,11 +1,18 @@
 package com.example.lmont.adventurecreator;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 
@@ -26,12 +33,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        getWindow().setExitTransition(new Explode());
+
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
 
         setup();
+//        test(0);
+//        test(1);
 //        test(2);
-//        testUpdateRoutes();
+//        test(3);
+//        test1UpdateRoutes();
     }
 
     private void startLoading() {
@@ -41,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         deleteDbButton.setVisibility(View.GONE);
         playButton.setVisibility(View.GONE);
     }
-
 
     private void doneLoading() {
         progressBar.setVisibility(View.GONE);
@@ -63,8 +81,10 @@ public class MainActivity extends AppCompatActivity {
         libraryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ViewGroup mRootView = (ViewGroup) findViewById(R.id.activity_main);
                 Intent intent = new Intent(view.getContext(), GameLibraryActivity.class);
-                view.getContext().startActivity(intent);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+                view.getContext().startActivity(intent, options.toBundle());
             }
         });
         storyCreatorButton = (Button) findViewById(R.id.storyCreatorButton);
@@ -72,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), StoryCreation.class);
-                view.getContext().startActivity(intent);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+                view.getContext().startActivity(intent, options.toBundle());
             }
         });
 
@@ -80,13 +101,15 @@ public class MainActivity extends AppCompatActivity {
         deleteDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AdventureDBHelper.getInstance(MainActivity.this).deleteAll();
+                Toast.makeText(MainActivity.this, "All Saved Games and Stories Deleted", Toast.LENGTH_SHORT).show();
+                AdventureDBHelper.getInstance(MainActivity.this).deleteAll(true);
             }
         });
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startLoading();
+                Toast.makeText(MainActivity.this, "Syncing stories with online database", Toast.LENGTH_SHORT).show();
                 contentObserverHelper.requestSync(new Response.Listener() {
                     @Override
                     public void onResponse(Object response) {

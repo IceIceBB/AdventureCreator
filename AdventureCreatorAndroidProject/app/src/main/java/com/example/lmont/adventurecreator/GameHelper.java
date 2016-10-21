@@ -224,7 +224,7 @@ public class GameHelper {
         return story;
     }
     public void refreshDB(Response.Listener listener) {
-        dbHelper.deleteAll();
+        dbHelper.deleteAll(false);
         ContentResolverHelper.instance.requestSync(null);
         apiHelper.downloadAll(listener, null);
     }
@@ -260,5 +260,49 @@ public class GameHelper {
 
     public Models.Transition getTransitions(String transitionID) {
         return dbHelper.getTransition(transitionID);
+    }
+
+    public void deleteTransition(final String transitionID, final Response.Listener listener) {
+        apiHelper.deleteTransition(transitionID, new Response.Listener() {
+
+            @Override
+            public void onResponse(Object response) {
+                dbHelper.deleteTransition(transitionID);
+                listener.onResponse(response);
+            }
+        }, null);
+    }
+
+    public void deleteStory(final String storyID, final Response.Listener listener) {
+        apiHelper.deleteStory(storyID, new Response.Listener() {
+
+            @Override
+            public void onResponse(Object response) {
+                dbHelper.deleteStory(storyID);
+                listener.onResponse(response);
+            }
+        }, null);
+    }
+
+    public void deleteChapter(final String chapterID, final Response.Listener listener) {
+        apiHelper.deleteChapter(chapterID, new Response.Listener() {
+
+            @Override
+            public void onResponse(Object response) {
+                dbHelper.deleteChapter(chapterID);
+                listener.onResponse(response);
+            }
+        }, null);
+    }
+
+    public void deleteScene(final String sceneID, final Response.Listener listener) {
+        apiHelper.deleteScene(sceneID, new Response.Listener() {
+
+            @Override
+            public void onResponse(Object response) {
+                dbHelper.deleteScene(sceneID);
+                listener.onResponse(response);
+            }
+        }, null);
     }
 }
