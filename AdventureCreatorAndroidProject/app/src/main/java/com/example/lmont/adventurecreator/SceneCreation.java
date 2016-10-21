@@ -103,6 +103,7 @@ public class SceneCreation extends AppCompatActivity {
 
         getAllTitlesAndIds();
         sceneNodeListView.setAdapter(arrayAdapter);
+        updateListViewHeight(sceneNodeListView);
     }
 
     //        TODOne: Get data and populate list view with Scene titles

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 //import static com.example.lmont.adventurecreator.R.id.actionOneToSceneIdEditText;
 //import static com.example.lmont.adventurecreator.R.id.autoToSceneIdEditText;
@@ -25,18 +26,27 @@ import java.util.ArrayList;
 
 public class SceneEditor extends AppCompatActivity {
 
+    //MEMBER VARIABLE STUFF
+    //strings to catch intent from ChapterEditorAndSceneCreation
     String storyId;
     String chapterId;
     String sceneId;
 
+    //scene title strings for spinner arry spinner and array spinner-id converter
     ArrayList<String> allSceneTitlesArrayList;
     ArrayList<String> allSceneIdsArrayList;
 
+    //Refferences to find any or first Transition currently linked to the scene
+    Models.Transition[] allTransitionsArray;
+    Models.Transition firstTransition;
+
+    //Node type confirmation numbers for storage and ignore based on radio button state
     String actionOneId;
     String autoId;
     String modifierPassId;
     String modifierFailId;
 
+    //RadioGroup and aassociated children and state storage spaces
     RadioGroup nodeTypeRadioGroup;
     int selectedRadioButtonId;
     RadioButton selectedRadioButton;
@@ -44,6 +54,7 @@ public class SceneEditor extends AppCompatActivity {
     RadioButton autoNodeRadioButton;
     RadioButton modifierNodeRadioButton;
 
+    //Action Node and associated views revealed by action buttone toggle state in OnClick
     LinearLayout actionNodeViews;
     EditText actionOneVerbsEditText;
     EditText actionOneFlagsEditText;
@@ -53,11 +64,13 @@ public class SceneEditor extends AppCompatActivity {
     String actionOneFlags;
     String actionOneToSceneId;
 
+    //Auto Node and associated views revealed by action buttone toggle state in OnClick
     LinearLayout autoNodeViews;
     Spinner autoToSceneIdSpinner;
 //    EditText autoToSceneIdEditText;
     String autoToSceneId;
 
+    //ModifierAkaConditional Node and associated views revealed by action buttone toggle state in OnClick
     LinearLayout modifierNodeViews;
     EditText modifierFlagsEditText;
     Spinner modifierPassToSceneIdSpinner;
@@ -68,11 +81,13 @@ public class SceneEditor extends AppCompatActivity {
     String modifierPassToSceneId;
     String modifierFailToSceneId;
 
+    //Scene Edit/Update form fields
     EditText sceneTitleEditText;
     EditText journalTextEditText;
     EditText modifiersEditText;
     EditText bodyEditText;
 
+    //Scene Reference/Search variable for passing
     String sceneTitle;
     String journalText;
     String modifiers;
@@ -84,25 +99,29 @@ public class SceneEditor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene_editor);
 
+        //Enstantiate array lists for spinner to select specific scene in chapter
         allSceneTitlesArrayList = new ArrayList<>();
         allSceneIdsArrayList = new ArrayList<>();
 
-//        TODOn't: Set number of transitions corespondingly, show/hide new transition button
+        //Find RadioGroup view and associated buttons to hide and show form fields and Spinners
         nodeTypeRadioGroup = (RadioGroup) findViewById(R.id.nodeTypeRadioGroup);
         actionNodeRadioButton = (RadioButton) findViewById(R.id.actionNodeRadioButton);
         autoNodeRadioButton = (RadioButton) findViewById(R.id.autoNodeRadioButton);
         modifierNodeRadioButton = (RadioButton) findViewById(R.id.modifierNodeRadioButton);
 
+        //Find Action Node and associated form fields and Spinner to hide and show on Radio Button swap
         actionNodeViews = (LinearLayout) findViewById(R.id.actionNodeViews);
         actionOneVerbsEditText = (EditText) findViewById(R.id.actionOneVerbsEditText);
         actionOneFlagsEditText = (EditText) findViewById(R.id.actionOneFlagsEditText);
         actionOneToSceneIdSpinner = (Spinner) findViewById(R.id.actionOneToSceneIdSpinner);
 //        actionOneToSceneIdEditText = (EditText) findViewById(actionOneToSceneIdEditText);
 
+        //Find Auto Node and associated  Spinner to hide and show on Radio Button swap (formerly form field, lol)
         autoNodeViews = (LinearLayout) findViewById(R.id.autoNodeViews);
         autoToSceneIdSpinner = (Spinner) findViewById(R.id.autoToSceneIdSpinner);
 //        autoToSceneIdEditText = (EditText) findViewById(autoToSceneIdEditText);
 
+        //Find Modifier Node and associated form field and Spinners to hide and show on Radio Button swap
         modifierNodeViews = (LinearLayout) findViewById(R.id.modifierNodeViews);
         modifierFlagsEditText = (EditText) findViewById(R.id.modifierFlagsEditText);
         modifierPassToSceneIdSpinner = (Spinner) findViewById(R.id.modifierPassToSceneIdSpinner);
@@ -112,11 +131,13 @@ public class SceneEditor extends AppCompatActivity {
 
 
 //        TODOne: Update db with changes to Title, Journal and Modifiers when exiting this event (or with new button?)
+        //Scene edit/update form fields
         sceneTitleEditText = (EditText) findViewById(R.id.sceneTitleEditText);
         journalTextEditText = (EditText) findViewById(R.id.journalTextEditText);
         modifiersEditText = (EditText) findViewById(R.id.modifiersEditText);
         bodyEditText = (EditText) findViewById(R.id.bodyEditText);
 
+        //Detect click on any RadioButton
         nodeTypeRadioGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,6 +162,7 @@ public class SceneEditor extends AppCompatActivity {
             }
         });
 
+        //detect click on Action Node RadioButton, show/hide Transition views
         actionNodeRadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,6 +186,7 @@ public class SceneEditor extends AppCompatActivity {
             }
         });
 
+        //Detect click on Auto Node RadioButton, show/hide Transition views
         autoNodeRadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,6 +210,7 @@ public class SceneEditor extends AppCompatActivity {
             }
         });
 
+        //Detect click on Modifier Node RadioButton, show/hide Transition views
         modifierNodeRadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -237,12 +261,15 @@ public class SceneEditor extends AppCompatActivity {
         }
     }
 
+    //GetIntent from ChapterEditAndSceneCreation ListView for ID chain reference, get previous values for form fields and calculate previous Node Type RadioButton selection state, set Scene form fields
     public void getSceneDetails() {
         Intent sceneIntent = getIntent();
         //TODO: set member strings = intent extras
         storyId = sceneIntent.getStringExtra("storyId");
         chapterId = sceneIntent.getStringExtra("chapterId");
         sceneId = sceneIntent.getStringExtra("selectedSceneId");
+
+        getAllFormFields();
 
         setSceneFormFields();
     }
@@ -258,17 +285,25 @@ public class SceneEditor extends AppCompatActivity {
     public void readActionFormFields() {
         actionOneVerbs = actionOneVerbsEditText.getText().toString();
         actionOneFlags = actionOneFlagsEditText.getText().toString();
-//        actionOneToSceneId = actionOneToSceneIdEditText.getText().toString();
+
+        int selectedPosition = actionOneToSceneIdSpinner.getSelectedItemPosition();
+        actionOneToSceneId = allSceneIdsArrayList.get(selectedPosition);
     }
 
     public void readAutoFormFields() {
+        int selectedPosition = autoToSceneIdSpinner.getSelectedItemPosition();
+        autoToSceneId = allSceneIdsArrayList.get(selectedPosition);
 //        autoToSceneId = autoToSceneIdEditText.getText().toString();
     }
 
     public void readModifierFormFields() {
         modifierFlags = modifierFlagsEditText.getText().toString();
-//        modifierPassToSceneId = modifierPassToSceneIdEditText.getText().toString();
-//        modifierFailToSceneId = modifierFailToSceneIdEditText.getText().toString();
+
+        int selectedPassPosition = modifierPassToSceneIdSpinner.getSelectedItemPosition();
+        modifierPassToSceneId = allSceneIdsArrayList.get(selectedPassPosition);
+
+        int selectedFailPosition = modifierFailToSceneIdSpinner.getSelectedItemPosition();
+        modifierFailToSceneId = allSceneIdsArrayList.get(selectedFailPosition);
     }
 
     public void setSceneFormFields() {
@@ -278,20 +313,37 @@ public class SceneEditor extends AppCompatActivity {
         bodyEditText.setText(bodyText);
     }
 
+    //
     public void setTransitionFormFields() {
+        allTransitionsArray = GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
+        firstTransition = allTransitionsArray[0];
+
+        Models.Scene[] allScenesArray = GameHelper.getInstance(this).getScenesForChapter(chapterId);
+        getAllSceneTitlesAndIds(allScenesArray);
+        int previousSpinnerSelectionPosition = Arrays.asList(allSceneIdsArrayList).indexOf(firstTransition.toSceneID);
+
         selectedRadioButtonId = nodeTypeRadioGroup.getCheckedRadioButtonId();
         selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonId);
         if (selectedRadioButton == actionNodeRadioButton) {
             actionOneVerbsEditText.setText(actionOneVerbs);
             actionOneFlagsEditText.setText(actionOneFlags);
-//            actionOneToSceneIdEditText.setText(actionOneToSceneId);
         }
+
+
+            actionOneToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition);
+//            actionOneToSceneIdEditText.setText(actionOneToSceneId);
+
         if (selectedRadioButton == autoNodeRadioButton) {
+            autoToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition);
 //            autoToSceneIdEditText.setText(autoToSceneId);
         }
         if (selectedRadioButton == modifierNodeRadioButton) {
             modifierFlagsEditText.setText(modifierFlags);
+
+            modifierPassToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition);
 //            modifierPassToSceneIdEditText.setText(modifierPassToSceneId);
+
+//            modifierFailToSceneIdSpinner.setSelection(secondPreviousSpinnerSelectionPosition);
 //            modifierFailToSceneIdEditText.setText(modifierFailToSceneId);
         }
 
@@ -344,6 +396,7 @@ public class SceneEditor extends AppCompatActivity {
         });
     }
 
+    //Get previous values for form fields and calculate previous RadioButton selection
     public void getAllFormFields() {
 //        TODOne: Get a single scene as a Models.Scene object
         Models.Scene selectedScene = GameHelper.getInstance(this).getScene(sceneId);
@@ -352,7 +405,7 @@ public class SceneEditor extends AppCompatActivity {
         journalText = selectedScene.journalText;
         modifiers = selectedScene.flagModifiers;
         bodyText = selectedScene.body;
-        setSceneFormFields();
+
 
         //TODO: check associated transitions, set Radio button checked based on result, update view
         setRadioButtons(sceneId);
@@ -372,12 +425,13 @@ public class SceneEditor extends AppCompatActivity {
             modifierPassToSceneId = allTransitionsArray[0].toSceneID;
             modifierFailToSceneId = allTransitionsArray[1].toSceneID;
         }
+        //TODO: Check for better space for this?
         setTransitionFormFields();
     }
 
     public void setRadioButtons(String sceneId) {
-        Models.Transition[] allTransitionsArray = GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
-        Models.Transition firstTransition = allTransitionsArray[0];
+        allTransitionsArray = GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
+        firstTransition = allTransitionsArray[0];
         if (firstTransition.type.equals("action")) {
             actionNodeRadioButton.setChecked(true);
             actionNodeViews.setVisibility(View.VISIBLE);
