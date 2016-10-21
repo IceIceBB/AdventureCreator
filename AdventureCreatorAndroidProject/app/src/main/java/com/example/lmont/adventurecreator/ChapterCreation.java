@@ -109,6 +109,7 @@ public class ChapterCreation extends AppCompatActivity {
 
         getAllTitlesAndIds();
         chaptersListView.setAdapter(arrayAdapter);
+        updateListViewHeight(chaptersListView);
     }
 
 

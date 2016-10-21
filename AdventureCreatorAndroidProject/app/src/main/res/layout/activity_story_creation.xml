@@ -18,6 +18,14 @@
         android:layout_alignParentRight="true"
         android:text="New Story" />
 
+    <Button
+        android:id="@+id/readmeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text= "getting\nstarted" />
+
     <ListView
         android:id="@+id/storyListView"
         android:layout_width="match_parent"

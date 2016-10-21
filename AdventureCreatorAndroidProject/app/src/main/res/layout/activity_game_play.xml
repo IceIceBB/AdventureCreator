@@ -36,6 +36,18 @@
         android:background="?attr/colorAccentCustom"
         app:layout_constraintBottom_toBottomOf="@+id/options" />
 
+    <Button
+        android:id="@+id/helpModeButton"
+        android:layout_width="48dp"
+        android:text="help"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:background="?attr/colorAccentCustom"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/hintButton"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintRight_toRightOf="@+id/options" />
+
     <EditText
         android:layout_width="240dp"
         android:inputType="textPersonName"
@@ -62,7 +74,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         android:visibility="gone"
         android:id="@+id/options"
         android:layout_width="0dp"
