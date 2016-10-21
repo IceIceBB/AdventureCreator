@@ -16,7 +16,7 @@ public class Models {
         public Story story;
     }
 
-    public static class Story {
+    public static class Story implements Comparable{
         public String _id;
         public String title;
         public String creator;
@@ -46,6 +46,11 @@ public class Models {
                     ", tags='" + tags + '\'' +
                     ", chapters=" + Arrays.toString(chapters) +
                     '}' + "\n";
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            return ((Story) o).title.compareTo(this.title);
         }
     }
 

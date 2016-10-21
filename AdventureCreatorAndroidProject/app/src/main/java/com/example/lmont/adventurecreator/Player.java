@@ -28,6 +28,7 @@ public class Player {
     private ArrayList<String> modifiers;
     private String journalText;
     private int journalCounter;
+    private String username;
 
     public String genre = "";
 
@@ -103,7 +104,7 @@ public class Player {
     }
 
     public void addModifier(String modifier) {
-        String[] stringModifiers = modifier.split(",");
+        String[] stringModifiers = modifier.trim().split(",");
         for(String stringModifier : stringModifiers)
             if (!modifiers.contains(stringModifier))
                 modifiers.add(stringModifier);
@@ -111,7 +112,7 @@ public class Player {
 
     public boolean checkIfPlayerHasModifier(String modifier) {
         boolean contains = false;
-        String[] stringModifiers = modifier.split(",");
+        String[] stringModifiers = modifier.trim().split(",");
         for(String stringModifier : stringModifiers) {
             if (!modifiers.contains(stringModifier)) {
                 return false;
@@ -168,6 +169,14 @@ public class Player {
                 currentScene = scene;
             }
         }
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     @Override

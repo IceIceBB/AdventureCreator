@@ -61,8 +61,8 @@ public class StoryCreation extends AppCompatActivity {
             public void onClick(View view) {
                 getAllTitlesAndIds();
                 Models.Story newStory = new Models.Story(
-                        "Story " + (allStoriesArray.length+1),
-                        "Story Author",
+                        Player.getInstance().getUsername() + "'s Story " + (allStoriesArray.length+1),
+                        Player.getInstance().getUsername(),
                         "Story Summary",
                         "Story Genre",
                         "Story Type",
@@ -98,7 +98,7 @@ public class StoryCreation extends AppCompatActivity {
 
 //    TODOne: Get data and populate list view with Story titles (additional info?)
     public void getAllTitlesAndIds() {
-        allStoriesArray = GameHelper.getInstance(this).getAllStories();
+        allStoriesArray = GameHelper.getInstance(this).getMyStories();
 
         allStoryIds.removeAll(allStoryIds);
         allStoryTitles.removeAll(allStoryTitles);

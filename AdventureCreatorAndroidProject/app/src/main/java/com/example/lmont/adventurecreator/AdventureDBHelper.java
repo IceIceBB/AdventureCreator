@@ -129,7 +129,7 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
     public void updateStory(Models.Story story) {
         ContentValues cv = new ContentValues();
         cv.put("title", story.title);
-        cv.put("creator", story.creator);
+        cv.put("creator", Player.getInstance().getUsername());
         cv.put("description", story.description);
         cv.put("genre", story.genre);
         cv.put("tags", story.tags);
@@ -430,12 +430,32 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().delete(SCENES_TABLE_NAME, "_id = '" + id + "'", null);
     }
 
-    public void deleteAll(boolean andSavedGames) {
+    public Models.Story[] getStoriesBy(String author) {
+        Cursor cursor = getReadableDatabase().query(STORY_TABLE_NAME, STORY_COLUMNS, "creator = '" + author + "'", null, null, null, null, null);
+        Models.Story[] stories = new Models.Story[cursor.getCount()];
+        while (cursor.moveToNext()) {
+            stories[cursor.getPosition()] = new Models.Story(
+                    cursor.getString(cursor.getColumnIndex("title")),
+                    cursor.getString(cursor.getColumnIndex("creator")),
+                    cursor.getString(cursor.getColumnIndex("description")),
+                    cursor.getString(cursor.getColumnIndex("genre")),
+                    cursor.getString(cursor.getColumnIndex("type")),
+                    cursor.getString(cursor.getColumnIndex("tags"))
+            );
+            stories[cursor.getPosition()]._id = cursor.getString(cursor.getColumnIndex("_id"));
+        }
+        return stories;
+    }
+
+    public void deleteAll() {
         getWritableDatabase().delete(STORY_TABLE_NAME,null,null);
         getWritableDatabase().delete(CHAPTER_TABLE_NAME,null,null);
         getWritableDatabase().delete(SCENES_TABLE_NAME,null,null);
         getWritableDatabase().delete(TRANSITIONS_TABLE_NAME,null,null);
-        if (andSavedGames)
-            getWritableDatabase().delete(SAVED_INSTANCES_TABLE_NAME,null,null);
+
+    }
+
+    public void deleteSaves() {
+        getWritableDatabase().delete(SAVED_INSTANCES_TABLE_NAME,null,null);
     }
 }

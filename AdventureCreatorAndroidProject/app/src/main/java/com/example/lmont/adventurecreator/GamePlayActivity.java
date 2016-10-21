@@ -171,8 +171,8 @@ public class GamePlayActivity extends AppCompatActivity {
             optionsList.setAdapter(optionsAdapter);
         } else {
             options = new String[0];
-            userInputEditText.setVisibility(View.GONE);
-            hintButton.setVisibility(View.GONE);
+            userInputEditText.setVisibility(View.INVISIBLE);
+            hintButton.setVisibility(View.INVISIBLE);
             if (sceneType == SceneType.end) {
                 nextSceneButton.setText("THE END");
             }
