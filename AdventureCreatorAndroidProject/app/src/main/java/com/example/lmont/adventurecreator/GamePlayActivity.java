@@ -6,7 +6,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -49,7 +48,8 @@ public class GamePlayActivity extends AppCompatActivity {
     EditText userInputEditText;
     ProgressBar loadingProgressBar;
     Context context;
-    boolean helpMode = false;
+    boolean helpMode;
+    boolean helpModeReady;
     Button helpButton;
 
     Models.Transition[] transitions;
@@ -114,6 +114,8 @@ public class GamePlayActivity extends AppCompatActivity {
         // Variable Setup
         hintReady = false;
         hintShowing = false;
+        helpModeReady = false;
+        helpMode = false;
         bookmark = (ViewSwitcher) findViewById(R.id.bookmark);
         bookmarkHollow = (ImageView) findViewById(R.id.bookmarkHollow);
         bookmarkSolid = (ImageView) findViewById(R.id.bookmarkSolid);
@@ -376,13 +378,41 @@ public class GamePlayActivity extends AppCompatActivity {
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (helpMode == false) {
+                if (!helpModeReady&&!helpMode) {
+                    helpModeReady = true;
+                    int colorFrom = getHintColor("primary");
+                    int colorTo = getHintColor("accent");
+                    ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                    colorAnimation.setDuration(250); // milliseconds
+                    colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animator) {
+                            helpButton.setBackgroundColor((int) animator.getAnimatedValue());
+                        }
+                    });
+
+                    colorAnimation.start();
+
+                } else if (helpModeReady&&!helpMode){
                     helpMode = true;
-                    helpButton.setBackgroundColor(Color.RED);
+                    helpModeReady = false;
                     Toast.makeText(context, "Help Mode On", Toast.LENGTH_SHORT).show();
-                } else {
+                } else if (!helpModeReady&&helpMode){
                     helpMode = false;
-                    helpButton.setBackgroundColor(Color.GRAY);
+                    int colorFrom = getHintColor("accent");
+                    int colorTo = getHintColor("primary");
+                    ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                    colorAnimation.setDuration(250); // milliseconds
+                    colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animator) {
+                            helpButton.setBackgroundColor((int) animator.getAnimatedValue());
+                        }
+                    });
+
+                    colorAnimation.start();
                     Toast.makeText(context, "Help Mode Off", Toast.LENGTH_SHORT).show();
                 }
             }
