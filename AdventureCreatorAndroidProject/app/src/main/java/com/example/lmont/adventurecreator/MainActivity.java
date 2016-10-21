@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 
@@ -100,13 +101,15 @@ public class MainActivity extends AppCompatActivity {
         deleteDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AdventureDBHelper.getInstance(MainActivity.this).deleteAll();
+                Toast.makeText(MainActivity.this, "All Saved Games and Stories Deleted", Toast.LENGTH_SHORT).show();
+                AdventureDBHelper.getInstance(MainActivity.this).deleteAll(true);
             }
         });
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startLoading();
+                Toast.makeText(MainActivity.this, "Syncing stories with online database", Toast.LENGTH_SHORT).show();
                 contentObserverHelper.requestSync(new Response.Listener() {
                     @Override
                     public void onResponse(Object response) {

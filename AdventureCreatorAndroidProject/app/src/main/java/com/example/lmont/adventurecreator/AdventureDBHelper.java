@@ -430,11 +430,12 @@ public class AdventureDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().delete(SCENES_TABLE_NAME, "_id = '" + id + "'", null);
     }
 
-    public void deleteAll() {
+    public void deleteAll(boolean andSavedGames) {
         getWritableDatabase().delete(STORY_TABLE_NAME,null,null);
         getWritableDatabase().delete(CHAPTER_TABLE_NAME,null,null);
         getWritableDatabase().delete(SCENES_TABLE_NAME,null,null);
         getWritableDatabase().delete(TRANSITIONS_TABLE_NAME,null,null);
-        getWritableDatabase().delete(SAVED_INSTANCES_TABLE_NAME,null,null);
+        if (andSavedGames)
+            getWritableDatabase().delete(SAVED_INSTANCES_TABLE_NAME,null,null);
     }
 }
