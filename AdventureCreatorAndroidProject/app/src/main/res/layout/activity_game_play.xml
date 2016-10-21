@@ -5,7 +5,8 @@
     android:id="@+id/activity_game_play"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.lmont.adventurecreator.GamePlayActivity">
+    tools:context="com.example.lmont.adventurecreator.GamePlayActivity"
+    android:focusableInTouchMode="true">
 
     <Button
         android:text="hint"
@@ -15,15 +16,25 @@
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:background="?attr/colorAccentCustom"
+        android:elevation="8dp"
+        android:hapticFeedbackEnabled="false"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/editText"
         android:layout_marginLeft="8dp"
-        app:layout_constraintRight_toRightOf="@+id/options"
-        android:elevation="8dp"
-        android:hapticFeedbackEnabled="false"
-        app:layout_constraintBottom_toBottomOf="@+id/options"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/nextScene" />
+        app:layout_constraintBottom_toTopOf="@+id/game_play_help_button"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintRight_toRightOf="@+id/options" />
+
+    <Button
+        android:text="\?"
+        android:layout_height="38dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:id="@+id/game_play_help_button"
+        android:layout_width="48dp"
+        app:layout_constraintRight_toRightOf="@+id/hintButton"
+        android:background="?attr/colorAccentCustom"
+        app:layout_constraintBottom_toBottomOf="@+id/options" />
 
     <EditText
         android:layout_width="240dp"
@@ -43,6 +54,7 @@
         android:elevation="8dp"
         app:layout_constraintVertical_bias="0.13"
         android:background="?attr/colorPrimaryCustom"
+        android:imeActionId="1"
         android:textColor="#d8000000"/>
 
     <ListView
@@ -55,8 +67,9 @@
         android:id="@+id/options"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:textAlignment="center"
         android:background="@color/colorTextView"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.0"/>
 
     <ViewSwitcher
         android:id="@+id/bookmark"
@@ -135,21 +148,6 @@
         android:layout_marginBottom="16dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="39dp"
-        android:id="@+id/gameplay_title_textview"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        android:textAlignment="center"
-        app:layout_constraintRight_toRightOf="@+id/journalIcon"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
-        android:layout_marginBottom="8dp" />
 
     <ScrollView
         android:background="@drawable/square_border"
