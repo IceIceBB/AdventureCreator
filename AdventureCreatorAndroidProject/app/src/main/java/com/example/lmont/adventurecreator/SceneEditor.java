@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.android.volley.Response;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 //import static com.example.lmont.adventurecreator.R.id.actionOneToSceneIdEditText;
 //import static com.example.lmont.adventurecreator.R.id.autoToSceneIdEditText;
@@ -59,7 +58,7 @@ public class SceneEditor extends AppCompatActivity {
     EditText actionOneVerbsEditText;
     EditText actionOneFlagsEditText;
     Spinner actionOneToSceneIdSpinner;
-//    EditText actionOneToSceneIdEditText;
+    //    EditText actionOneToSceneIdEditText;
     String actionOneVerbs;
     String actionOneFlags;
     String actionOneToSceneId;
@@ -67,16 +66,16 @@ public class SceneEditor extends AppCompatActivity {
     //Auto Node and associated views revealed by action buttone toggle state in OnClick
     LinearLayout autoNodeViews;
     Spinner autoToSceneIdSpinner;
-//    EditText autoToSceneIdEditText;
+    //    EditText autoToSceneIdEditText;
     String autoToSceneId;
 
     //ModifierAkaConditional Node and associated views revealed by action buttone toggle state in OnClick
     LinearLayout modifierNodeViews;
     EditText modifierFlagsEditText;
     Spinner modifierPassToSceneIdSpinner;
-//    EditText modifierPassToSceneIdEditText;
+    //    EditText modifierPassToSceneIdEditText;
     Spinner modifierFailToSceneIdSpinner;
-//    EditText modifierFailToSceneIdEditText;
+    //    EditText modifierFailToSceneIdEditText;
     String modifierFlags;
     String modifierPassToSceneId;
     String modifierFailToSceneId;
@@ -238,24 +237,24 @@ public class SceneEditor extends AppCompatActivity {
 //        getTransitionIds();
         //TODOne: check associated transitions, set Radio button checked based on result
 
-        getAllFormFields();
+//        getAllFormFields();
 
 //        getAllTitlesAndIds();
 
         Models.Scene[] allScenesArray = GameHelper.getInstance(this).getScenesForChapter(chapterId);
         getAllSceneTitlesAndIds(allScenesArray);
 
-                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allSceneTitlesArrayList);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allSceneTitlesArrayList);
         actionOneToSceneIdSpinner.setAdapter(spinnerAdapter);
         autoToSceneIdSpinner.setAdapter(spinnerAdapter);
         modifierPassToSceneIdSpinner.setAdapter(spinnerAdapter);
         modifierPassToSceneIdSpinner.setAdapter(spinnerAdapter);
     }
 
-    public void getAllSceneTitlesAndIds(Models.Scene[] allScenesArray){
+    public void getAllSceneTitlesAndIds(Models.Scene[] allScenesArray) {
         allSceneTitlesArrayList.removeAll(allSceneTitlesArrayList);
         allSceneIdsArrayList.removeAll(allSceneIdsArrayList);
-        for (int i = 0; i < allScenesArray.length ; i++) {
+        for (int i = 0; i < allScenesArray.length; i++) {
             allSceneTitlesArrayList.add(allScenesArray[i].title);
             allSceneIdsArrayList.add(allScenesArray[i]._id);
         }
@@ -302,8 +301,8 @@ public class SceneEditor extends AppCompatActivity {
         int selectedPassPosition = modifierPassToSceneIdSpinner.getSelectedItemPosition();
         modifierPassToSceneId = allSceneIdsArrayList.get(selectedPassPosition);
 
-        int selectedFailPosition = modifierFailToSceneIdSpinner.getSelectedItemPosition();
-        modifierFailToSceneId = allSceneIdsArrayList.get(selectedFailPosition);
+//        int selectedFailPosition = modifierFailToSceneIdSpinner.getSelectedItemPosition();
+//        modifierFailToSceneId = allSceneIdsArrayList.get(selectedFailPosition);
     }
 
     public void setSceneFormFields() {
@@ -316,51 +315,54 @@ public class SceneEditor extends AppCompatActivity {
     //
     public void setTransitionFormFields() {
         allTransitionsArray = GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
-        firstTransition = allTransitionsArray[0];
+        if (allTransitionsArray.length > 0) {
+            firstTransition = allTransitionsArray[0];
+            String previousSpinnerSelectionId = firstTransition.toSceneID;
 
-        Models.Scene[] allScenesArray = GameHelper.getInstance(this).getScenesForChapter(chapterId);
-        getAllSceneTitlesAndIds(allScenesArray);
-        int previousSpinnerSelectionPosition = Arrays.asList(allSceneIdsArrayList).indexOf(firstTransition.toSceneID);
+            Models.Scene[] allScenesArray = GameHelper.getInstance(this).getScenesForChapter(chapterId);
+            getAllSceneTitlesAndIds(allScenesArray);
+            int previousSpinnerSelectionPosition = allSceneIdsArrayList.indexOf(previousSpinnerSelectionId);
 
-        selectedRadioButtonId = nodeTypeRadioGroup.getCheckedRadioButtonId();
-        selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonId);
-        if (selectedRadioButton == actionNodeRadioButton) {
-            actionOneVerbsEditText.setText(actionOneVerbs);
-            actionOneFlagsEditText.setText(actionOneFlags);
-        }
-
-
-            actionOneToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition);
+            selectedRadioButtonId = nodeTypeRadioGroup.getCheckedRadioButtonId();
+            selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonId);
+            if (selectedRadioButton == actionNodeRadioButton) {
+                actionOneVerbsEditText.setText(actionOneVerbs);
+                actionOneFlagsEditText.setText(actionOneFlags);
+                actionOneToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition, true);
 //            actionOneToSceneIdEditText.setText(actionOneToSceneId);
+            }
 
-        if (selectedRadioButton == autoNodeRadioButton) {
-            autoToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition);
+            if (selectedRadioButton == autoNodeRadioButton) {
+                autoToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition, false);
 //            autoToSceneIdEditText.setText(autoToSceneId);
-        }
-        if (selectedRadioButton == modifierNodeRadioButton) {
-            modifierFlagsEditText.setText(modifierFlags);
+            }
+            if (selectedRadioButton == modifierNodeRadioButton) {
+                modifierFlagsEditText.setText(modifierFlags);
 
-            modifierPassToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition);
+                modifierPassToSceneIdSpinner.setSelection(previousSpinnerSelectionPosition, false);
 //            modifierPassToSceneIdEditText.setText(modifierPassToSceneId);
 
 //            modifierFailToSceneIdSpinner.setSelection(secondPreviousSpinnerSelectionPosition);
 //            modifierFailToSceneIdEditText.setText(modifierFailToSceneId);
+            }
         }
 
     }
 
-    public void getTransitionId(){
-        Models.Transition[] allTransitionsArray =  GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
-        Models.Transition firstTransition = allTransitionsArray[0];
-        if(firstTransition.type.equals("action")) {
-            actionOneId = firstTransition._id;
-        }
-        if(firstTransition.type.equals("auto")){
-            autoId = firstTransition._id;
-        }
-        if(firstTransition.type.equals("conditional")){
-            modifierPassId = firstTransition._id;
-            modifierFailId = allTransitionsArray[1]._id;
+    public void getTransitionId() {
+        Models.Transition[] allTransitionsArray = GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
+        if (allTransitionsArray.length > 0) {
+            Models.Transition firstTransition = allTransitionsArray[0];
+            if (firstTransition.type.equals("action")) {
+                actionOneId = firstTransition._id;
+            }
+            if (firstTransition.type.equals("auto")) {
+                autoId = firstTransition._id;
+            }
+            if (firstTransition.type.equals("conditional")) {
+                modifierPassId = firstTransition._id;
+                modifierFailId = allTransitionsArray[1]._id;
+            }
         }
     }
 
@@ -431,24 +433,27 @@ public class SceneEditor extends AppCompatActivity {
 
     public void setRadioButtons(String sceneId) {
         allTransitionsArray = GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
-        firstTransition = allTransitionsArray[0];
-        if (firstTransition.type.equals("action")) {
-            actionNodeRadioButton.setChecked(true);
-            actionNodeViews.setVisibility(View.VISIBLE);
-            autoNodeViews.setVisibility(View.GONE);
-            modifierNodeViews.setVisibility(View.GONE);
-        }
-        if (firstTransition.type.equals("auto")) {
-            autoNodeRadioButton.setChecked(true);
-            actionNodeViews.setVisibility(View.GONE);
-            autoNodeViews.setVisibility(View.VISIBLE);
-            modifierNodeViews.setVisibility(View.GONE);
-        }
-        if (firstTransition.type.equals("conditional")) {
-            modifierNodeRadioButton.setChecked(true);
-            actionNodeViews.setVisibility(View.GONE);
-            autoNodeViews.setVisibility(View.GONE);
-            modifierNodeViews.setVisibility(View.VISIBLE);
+        if (allTransitionsArray.length > 0) {
+            firstTransition = allTransitionsArray[0];
+
+            if (firstTransition.type.equals("action")) {
+                actionNodeRadioButton.setChecked(true);
+                actionNodeViews.setVisibility(View.VISIBLE);
+                autoNodeViews.setVisibility(View.GONE);
+                modifierNodeViews.setVisibility(View.GONE);
+            }
+            if (firstTransition.type.equals("auto")) {
+                autoNodeRadioButton.setChecked(true);
+                actionNodeViews.setVisibility(View.GONE);
+                autoNodeViews.setVisibility(View.VISIBLE);
+                modifierNodeViews.setVisibility(View.GONE);
+            }
+            if (firstTransition.type.equals("conditional")) {
+                modifierNodeRadioButton.setChecked(true);
+                actionNodeViews.setVisibility(View.GONE);
+                autoNodeViews.setVisibility(View.GONE);
+                modifierNodeViews.setVisibility(View.VISIBLE);
+            }
         }
 
     }
@@ -467,7 +472,7 @@ public class SceneEditor extends AppCompatActivity {
 
         if (selectedRadioButton == actionNodeRadioButton) {
             Models.Transition[] allTransitionsArray = GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
-            if (allTransitionsArray == null) {
+            if (allTransitionsArray.length < 1) {
                 readActionFormFields();
                 Models.Transition newActionTransition = new Models.Transition("action", actionOneVerbs, actionOneFlags, "", "", 0, sceneId, actionOneToSceneId);
                 addTransition(newActionTransition);
@@ -476,13 +481,13 @@ public class SceneEditor extends AppCompatActivity {
             Models.Transition updatedActionTransition = new Models.Transition("action", actionOneVerbs, actionOneFlags, "", "", 0, sceneId, actionOneToSceneId);
             //TODO: get transition id at same time as set view, check it here
             getTransitionId();
-        updatedActionTransition._id = actionOneId;
+            updatedActionTransition._id = actionOneId;
             updateTransition(updatedActionTransition);
         }
 
         if (selectedRadioButton == autoNodeRadioButton) {
             Models.Transition[] allTransitionsArray = GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
-            if (allTransitionsArray == null) {
+            if (allTransitionsArray.length < 1) {
                 readActionFormFields();
                 Models.Transition newAutoTransition = new Models.Transition("auto", "", "", "", "", 0, sceneId, autoToSceneId);
                 addTransition(newAutoTransition);
@@ -490,13 +495,13 @@ public class SceneEditor extends AppCompatActivity {
                 readAutoFormFields();
             Models.Transition updatedAutoTransition = new Models.Transition("auto", "", "", "", "", 0, sceneId, autoToSceneId);
             getTransitionId();
-        updatedAutoTransition._id = autoId;
+            updatedAutoTransition._id = autoId;
             updateTransition(updatedAutoTransition);
         }
 
         if (selectedRadioButton == modifierNodeRadioButton) {
             Models.Transition[] allTransitionsArray = GameHelper.getInstance(this).getTransitionsForScenes(sceneId);
-            if (allTransitionsArray == null) {
+            if (allTransitionsArray.length < 1) {
                 readModifierFormFields();
                 Models.Transition newModifierPassTransition = new Models.Transition("conditional", "", modifierFlags, "", "", 0, sceneId, modifierPassToSceneId);
                 Models.Transition newModifierFailTransition = new Models.Transition("conditional", "", modifierFlags, "", "", 0, sceneId, modifierFailToSceneId);
@@ -507,8 +512,8 @@ public class SceneEditor extends AppCompatActivity {
             Models.Transition updatedModifierPassTransition = new Models.Transition("conditional", "", modifierFlags, "", "", 0, sceneId, modifierPassToSceneId);
             Models.Transition updatedModifierFailTransition = new Models.Transition("conditional", "", modifierFlags, "", "", 0, sceneId, modifierFailToSceneId);
             getTransitionId();
-        updatedModifierPassTransition._id = modifierPassId;
-        updatedModifierFailTransition._id = modifierFailId;
+            updatedModifierPassTransition._id = modifierPassId;
+            updatedModifierFailTransition._id = modifierFailId;
             updateTransition(updatedModifierPassTransition);
             updateTransition(updatedModifierFailTransition);
         }
