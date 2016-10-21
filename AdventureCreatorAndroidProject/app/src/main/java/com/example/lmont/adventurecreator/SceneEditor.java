@@ -249,6 +249,8 @@ public class SceneEditor extends AppCompatActivity {
         autoToSceneIdSpinner.setAdapter(spinnerAdapter);
         modifierPassToSceneIdSpinner.setAdapter(spinnerAdapter);
         modifierPassToSceneIdSpinner.setAdapter(spinnerAdapter);
+
+        setTransitionFormFields();
     }
 
     public void getAllSceneTitlesAndIds(Models.Scene[] allScenesArray) {
